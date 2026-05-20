@@ -1,0 +1,101 @@
+<view class="container">
+  <!-- 手动录入表单 -->
+  <view class="card">
+    <text class="section-title">手动新增资产</text>
+    
+    <view class="input-field">
+      <text class="input-label">资产类型</text>
+      <picker mode="selector" range="{{assetTypes}}" value="{{selectedTypeIndex}}" bindchange="onAssetTypeChange">
+        <view class="input-box">{{assetTypes[selectedTypeIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="input-field">
+      <text class="input-label">所属账户</text>
+      <picker mode="selector" range="{{accountOptions}}" value="{{selectedAccountIndex}}" bindchange="onAccountChange">
+        <view class="input-box">{{accountOptions[selectedAccountIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="input-field">
+      <text class="input-label">资产名称</text>
+      <input class="input-box" placeholder="例如：茅台" value="{{form.name}}" bindinput="onInputChange" data-field="name" />
+    </view>
+    
+    <view class="input-field">
+      <text class="input-label">资产代码</text>
+      <input class="input-box" placeholder="例如：600519" value="{{form.code}}" bindinput="onInputChange" data-field="code" />
+    </view>
+    
+    <view class="input-field">
+      <text class="input-label">持仓份额</text>
+      <input class="input-box" placeholder="0.00" type="number" value="{{form.total_shares}}" bindinput="onInputChange" data-field="total_shares" />
+    </view>
+    
+    <view class="input-field">
+      <text class="input-label">成本价（元/份）</text>
+      <input class="input-box" placeholder="0.00" type="number" value="{{form.cost_basis}}" bindinput="onInputChange" data-field="cost_basis" />
+    </view>
+    
+    <view class="input-field">
+      <text class="input-label">当前市价（元/份）</text>
+      <input class="input-box" placeholder="0.00" type="number" value="{{form.market_price}}" bindinput="onInputChange" data-field="market_price" />
+    </view>
+
+    <view class="row" style="margin-top: 28rpx; gap: 12rpx;">
+      <button class="button-secondary" bindtap="resetForm" style="flex: 1;">重置</button>
+      <button class="button-primary" bindtap="saveAsset" style="flex: 1.2;">保存资产</button>
+    </view>
+  </view>
+
+  <!-- 批量导入 -->
+  <view class="card">
+    <text class="section-title">批量导入资产</text>
+    <text class="text-muted">上传持仓截图，AI 自动识别多个资产并批量导入。</text>
+    
+    <view class="row" style="margin-top: 20rpx; gap: 12rpx;">
+      <button class="button-secondary" bindtap="selectImage" style="flex: 1;">选择图片</button>
+      <button class="button-secondary" bindtap="takePhoto" style="flex: 1;">拍照识别</button>
+    </view>
+  </view>
+
+  <!-- 批量预览 -->
+  <view class="card" wx:if="{{batchPreview.length}}">
+    <text class="section-title">识别结果预览（{{batchPreview.length}}个）</text>
+    <text class="text-muted">请逐项核对，编辑后批量导入。</text>
+    
+    <view class="batch-preview-list">
+      <view class="batch-item" wx:for="{{batchPreview}}" wx:key="{{index}}">
+        <view class="batch-header">
+          <text class="batch-title">{{item.name}}（{{item.code}}）</text>
+          <text class="batch-remove" bindtap="removeBatchItem" data-index="{{index}}">删除</text>
+        </view>
+        <view class="batch-fields">
+          <view class="batch-field">
+            <text class="batch-label">类型</text>
+            <picker mode="selector" range="{{assetTypes}}" value="{{item.typeIndex}}" bindchange="onBatchTypeChange" data-index="{{index}}">
+              <text class="batch-value">{{assetTypes[item.typeIndex]}}</text>
+            </picker>
+          </view>
+          <view class="batch-field">
+            <text class="batch-label">份额</text>
+            <input class="batch-input" type="number" value="{{item.total_shares}}" bindinput="onBatchFieldChange" data-index="{{index}}" data-field="total_shares" />
+          </view>
+          <view class="batch-field">
+            <text class="batch-label">成本价</text>
+            <input class="batch-input" type="number" value="{{item.cost_basis}}" bindinput="onBatchFieldChange" data-index="{{index}}" data-field="cost_basis" />
+          </view>
+          <view class="batch-field">
+            <text class="batch-label">市价</text>
+            <input class="batch-input" type="number" value="{{item.market_price}}" bindinput="onBatchFieldChange" data-index="{{index}}" data-field="market_price" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="row" style="margin-top: 24rpx; gap: 12rpx;">
+      <button class="button-secondary" bindtap="closeBatchPreview" style="flex: 1;">取消</button>
+      <button class="button-primary" bindtap="saveBatchAssets" style="flex: 1.2;">批量导入</button>
+    </view>
+  </view>
+</view>

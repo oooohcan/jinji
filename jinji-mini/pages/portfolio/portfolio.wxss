@@ -1,0 +1,271 @@
+.portfolio-container {
+  padding-bottom: 100rpx;
+}
+
+/* 顶部汇总卡 */
+.summary-card {
+  background: #FFFFFF;
+  border-radius: 0;
+  padding: 32rpx 24rpx;
+  margin: 0;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24rpx;
+}
+
+.summary-col {
+  flex: 1;
+}
+
+.summary-col .label {
+  color: #999999;
+  font-size: 24rpx;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.summary-col .value {
+  color: #222222;
+}
+
+.summary-divider {
+  width: 1rpx;
+  height: 80rpx;
+  background: #E8E8E8;
+}
+
+.summary-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.privacy-btn {
+  padding: 12rpx 20rpx;
+  background: #F5F2E9;
+  border: none;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: #6F6F6F;
+  width: auto;
+  height: auto;
+  line-height: 1;
+}
+
+.account-link {
+  color: #A44A3F;
+  font-size: 24rpx;
+}
+
+/* 账户筛选 */
+.filter-bar {
+  background: #FEFBF8;
+  padding: 16rpx 24rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.account-selector {
+  display: flex;
+  gap: 12rpx;
+  white-space: nowrap;
+}
+
+.account-item {
+  display: inline-flex;
+  padding: 10rpx 20rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #E8E8E8;
+  border-radius: 22rpx;
+  color: #666666;
+  font-size: 24rpx;
+  white-space: nowrap;
+}
+
+.account-item.active {
+  background: #A44A3F;
+  color: #FFFFFF;
+  border-color: #A44A3F;
+}
+
+/* 排序栏 */
+.sort-bar {
+  display: flex;
+  gap: 0;
+  background: #FFFFFF;
+  border-bottom: 1rpx solid #F0F0F0;
+  padding: 0 24rpx;
+}
+
+.sort-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 12rpx;
+  font-size: 24rpx;
+  color: #999999;
+  border-bottom: 3rpx solid transparent;
+}
+
+.sort-item.active {
+  color: #A44A3F;
+  border-bottom-color: #A44A3F;
+  font-weight: 600;
+}
+
+/* 持仓列表 */
+.portfolio-list {
+  background: #FFFFFF;
+}
+
+.portfolio-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+  text-decoration: none;
+}
+
+.portfolio-item:active {
+  background: #F9F9F9;
+}
+
+.action-bar {
+  display: flex;
+  gap: 12rpx;
+  padding: 20rpx 24rpx;
+  background: #FEFBF8;
+  border-top: 1rpx solid #F5F5F5;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 14rpx 0;
+  background: #A44A3F;
+  color: #FFFFFF;
+  border-radius: 24rpx;
+  text-align: center;
+  font-size: 26rpx;
+  text-decoration: none;
+  display: block;
+}
+
+.action-btn:active {
+  background: #933D38;
+}
+
+.item-left {
+  flex: 0 0 100rpx;
+}
+
+.item-left .code {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 6rpx;
+}
+
+.item-left .name {
+  display: block;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.item-middle {
+  flex: 0 0 80rpx;
+  text-align: center;
+}
+
+.item-middle .label-small {
+  display: block;
+  font-size: 20rpx;
+  color: #CCCCCC;
+  margin-bottom: 6rpx;
+}
+
+.item-middle .value-small {
+  display: block;
+  font-size: 26rpx;
+  color: #222222;
+}
+
+.item-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 24rpx;
+}
+
+.price-info {
+  text-align: right;
+}
+
+.price-info .current-price {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 6rpx;
+}
+
+.price-info .label-small {
+  font-size: 20rpx;
+  color: #CCCCCC;
+}
+
+.pnl-info {
+  text-align: right;
+  min-width: 80rpx;
+}
+
+.pnl-info.positive {
+  color: #2D6A4F;
+}
+
+.pnl-info.negative {
+  color: #A44A3F;
+}
+
+.pnl-value {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.pnl-percent {
+  display: block;
+  font-size: 20rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 40rpx;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-bottom: 40rpx;
+}
+
+.empty-button {
+  padding: 16rpx 40rpx;
+  background: #A44A3F;
+  color: #FFFFFF;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  text-decoration: none;
+}

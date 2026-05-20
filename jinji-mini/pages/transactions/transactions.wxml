@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="card">
+    <text class="section-title">添加交易</text>
+    <view class="input-field">
+      <text class="input-label">选择资产</text>
+      <picker mode="selector" range="{{assetOptions}}" value="{{selectedAssetIndex}}" bindchange="onAssetChange">
+        <view class="input-box">{{assetOptions[selectedAssetIndex] || '请选择资产'}}</view>
+      </picker>
+    </view>
+    <view class="input-field">
+      <text class="input-label">交易类型</text>
+      <picker mode="selector" range="{{transactionTypes}}" value="{{selectedTypeIndex}}" bindchange="onTypeChange">
+        <view class="input-box">{{transactionTypes[selectedTypeIndex]}}</view>
+      </picker>
+    </view>
+    <view class="input-field" wx:if="{{showShareFields}}">
+      <text class="input-label">份额</text>
+      <input class="input-box" type="number" value="{{form.shares}}" bindinput="onInputChange" data-field="shares" />
+    </view>
+    <view class="input-field" wx:if="{{showPriceFields}}">
+      <text class="input-label">每单位价格</text>
+      <input class="input-box" type="number" value="{{form.unit_price}}" bindinput="onInputChange" data-field="unit_price" />
+    </view>
+    <view class="input-field" wx:if="{{showAmountField}}">
+      <text class="input-label">金额</text>
+      <input class="input-box" type="number" value="{{form.amount}}" bindinput="onInputChange" data-field="amount" />
+    </view>
+    <view class="input-field">
+      <text class="input-label">备注</text>
+      <input class="input-box" placeholder="可选" value="{{form.note}}" bindinput="onInputChange" data-field="note" />
+    </view>
+    <view class="row" style="margin-top: 30rpx; justify-content: space-between;">
+      <button class="button-secondary" bindtap="resetForm">重置</button>
+      <button class="button-primary" bindtap="saveTransaction">保存交易</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,81 @@
+<view class="container">
+  <view class="card" style="margin-bottom: 12rpx;">
+    <view class="history-link">
+      <navigator url="/pages/transaction-history/transaction-history" class="link-text">← 查看交易历史</navigator>
+    </view>
+  </view>
+
+  <!-- 快速手动记录交易 -->
+  <view class="card">
+    <text class="section-title">记录交易</text>
+
+    <view class="input-field">
+      <text class="input-label">选择资产</text>
+      <picker mode="selector" range="{{assetOptions}}" value="{{selectedAssetIndex}}" bindchange="onAssetChange">
+        <view class="input-box">{{assetOptions[selectedAssetIndex] || '请选择资产'}}</view>
+      </picker>
+    </view>
+
+    <view class="input-field">
+      <text class="input-label">交易类型</text>
+      <view class="transaction-type-grid">
+        <view class="type-btn {{selectedType === 'BUY' ? 'active' : ''}}" bindtap="selectType" data-type="BUY">
+          <text>买入</text>
+        </view>
+        <view class="type-btn {{selectedType === 'SELL' ? 'active' : ''}}" bindtap="selectType" data-type="SELL">
+          <text>卖出</text>
+        </view>
+        <view class="type-btn {{selectedType === 'DIVIDEND' ? 'active' : ''}}" bindtap="selectType" data-type="DIVIDEND">
+          <text>分红</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="input-field" wx:if="{{showShareFields}}">
+      <text class="input-label">成交份额</text>
+      <input class="input-box" type="number" placeholder="0.00" value="{{form.shares}}" bindinput="onInputChange" data-field="shares" />
+    </view>
+
+    <view class="input-field" wx:if="{{showPriceFields}}">
+      <text class="input-label">成交价格（元/份）</text>
+      <input class="input-box" type="number" placeholder="0.00" value="{{form.unit_price}}" bindinput="onInputChange" data-field="unit_price" />
+    </view>
+
+    <view class="input-field" wx:if="{{showAmountField}}">
+      <text class="input-label">分红金额</text>
+      <input class="input-box" type="number" placeholder="0.00" value="{{form.amount}}" bindinput="onInputChange" data-field="amount" />
+    </view>
+
+    <view class="input-field">
+      <text class="input-label">交易日期</text>
+      <picker mode="date" value="{{form.date}}" start="2020-01-01" bindchange="onDateChange">
+        <view class="input-box">{{form.date}}</view>
+      </picker>
+    </view>
+
+    <view class="input-field">
+      <text class="input-label">关联笔记（可选）</text>
+      <picker mode="selector" range="{{insightLabels}}" value="{{selectedInsightIndex}}" bindchange="onInsightChange">
+        <view class="input-box">{{insightLabels[selectedInsightIndex] || '不关联'}}</view>
+      </picker>
+    </view>
+
+    <view class="input-field">
+      <text class="input-label">备注</text>
+      <input class="input-box" placeholder="输入备注" value="{{form.note}}" bindinput="onInputChange" data-field="note" />
+    </view>
+
+    <button class="button-primary" style="margin-top: 28rpx;" bindtap="saveTransaction">保存交易</button>
+  </view>
+
+  <!-- 批量导入交易 -->
+  <view class="card">
+    <text class="section-title">批量导入交易</text>
+    <text class="text-muted">上传交易截图，自动识别并批量导入。</text>
+    
+    <view class="row" style="margin-top: 20rpx; gap: 12rpx;">
+      <button class="button-secondary" bindtap="selectImage" style="flex: 1;">选择图片</button>
+      <button class="button-secondary" bindtap="takePhoto" style="flex: 1;">拍照识别</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,62 @@
+<view class="container">
+  <view class="me-header">
+    <view class="avatar-section">
+      <view class="avatar">JJ</view>
+      <view class="user-info">
+        <text class="username">JinJI 用户</text>
+        <text class="subtitle">私人投研助手</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="section-title">账户管理</text>
+    <navigator class="menu-item" url="/pages/account/account">
+      <text class="menu-label">我的账户</text>
+      <text class="menu-arrow">></text>
+    </navigator>
+  </view>
+
+  <view class="card">
+    <text class="section-title">数据统计</text>
+    <view class="stat-grid">
+      <view class="stat-box">
+        <text class="stat-value">{{totalAssets}}</text>
+        <text class="stat-label">总持仓</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-value">{{totalTransactions}}</text>
+        <text class="stat-label">交易笔数</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-value">{{totalInsights}}</text>
+        <text class="stat-label">笔记数</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="section-title">设置</text>
+    <view class="setting-item">
+      <text class="setting-label">隐私模式</text>
+      <switch checked="{{privacyMode}}" bindchange="togglePrivacy" style="transform: scale(0.9); transform-origin: right;"></switch>
+    </view>
+    <view class="setting-item">
+      <text class="setting-label">基础货币</text>
+      <picker mode="selector" range="{{currencyOptions}}" value="{{selectedCurrencyIndex}}" bindchange="onCurrencyChange">
+        <text class="setting-value">{{currencyOptions[selectedCurrencyIndex]}}</text>
+      </picker>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="section-title">关于</text>
+    <view class="about-text">
+      <text>JinJI 极简资产管理</text>
+      <text>v1.0.0</text>
+      <text>输入极简，逻辑深刻，界面克制</text>
+    </view>
+  </view>
+
+  <button class="button-secondary" style="margin-top: 40rpx;" bindtap="clearData">清空所有数据</button>
+</view>

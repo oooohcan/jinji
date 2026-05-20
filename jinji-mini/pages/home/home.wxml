@@ -1,0 +1,75 @@
+<view class="container">
+  <view class="card module-card">
+    <view class="module-header">
+      <text class="section-title">模块 B：动态持仓与自动化报表</text>
+      <navigator class="module-link" url="/pages/account/account">管理账户</navigator>
+    </view>
+    <text class="text-muted">展示当前持仓、账户分布、集中度预警与分类统计。</text>
+
+    <view class="dashboard-grid">
+      <view class="stat-card">
+        <text class="stat-label">总资产</text>
+        <text class="stat-value">{{displayTotal}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">今日盈亏</text>
+        <text class="stat-value">{{displayPnL}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">账户数</text>
+        <text class="stat-value">{{accountCount}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">持仓标的</text>
+        <text class="stat-value">{{assetCount}}</text>
+      </view>
+    </view>
+
+    <view class="warning-card">
+      <text class="warning-title">集中度预警</text>
+      <text class="warning-text">{{concentrationWarning}}</text>
+    </view>
+
+    <view class="asset-preview" wx:if="{{filteredAssets.length}}">
+      <text class="section-subtitle">当前账户资产</text>
+      <view class="asset-row">
+        <navigator class="asset-card" wx:for="{{filteredAssets}}" wx:key="id" url="/pages/asset-detail/asset-detail?id={{item.id}}">
+          <text class="asset-name">{{item.name}}</text>
+          <text class="asset-meta">{{item.asset_type}} · {{item.currency}}</text>
+          <text class="asset-summary">市值 {{item.marketValue}}</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <view class="card module-card">
+    <view class="module-header">
+      <text class="section-title">模块 A：智能多维录入系统</text>
+      <navigator class="module-link" url="/pages/asset-add/asset-add">新增资产</navigator>
+    </view>
+    <text class="text-muted">手动录入与截图 OCR 识别双路径，支持分红再投资与现金分红。</text>
+    <view class="row" style="margin-top: 24rpx; gap: 16rpx; flex-wrap: wrap;">
+      <button class="button-primary" bindtap="goToAssetAdd">手动录入</button>
+      <button class="button-secondary" bindtap="openMockOcr">截图识别预览</button>
+    </view>
+  </view>
+
+  <view class="card module-card">
+    <view class="module-header">
+      <text class="section-title">模块 C：AI 投研笔记闭环</text>
+      <navigator class="module-link" url="/pages/insights/insights">打开 AI 脑</navigator>
+    </view>
+    <text class="text-muted">每笔交易关联笔记，AI 自动总结方向、行业、关键词，并提示逻辑冲突。</text>
+    <view class="dashboard-grid" style="margin-top: 24rpx;">
+      <view class="stat-card">
+        <text class="stat-label">笔记数量</text>
+        <text class="stat-value">{{insightsCount}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">最新摘要</text>
+        <text class="stat-value small">{{latestInsightSummary}}</text>
+      </view>
+    </view>
+    <button class="button-primary" style="margin-top: 24rpx;" bindtap="goToInsights">进入 AI 投研</button>
+  </view>
+</view>

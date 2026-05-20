@@ -1,0 +1,95 @@
+<view class="container portfolio-container">
+  <!-- 顶部资产汇总卡 -->
+  <view class="summary-card">
+    <view class="summary-header">
+      <view class="summary-col">
+        <text class="label">总资产</text>
+        <text class="value" style="font-size: 48rpx; font-weight: 700;">{{privacyMode ? '****' : totalAsset}}</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-col">
+        <text class="label">今日盈亏</text>
+        <text class="value {{todayPnLClass}}">{{privacyMode ? '****' : todayPnL}}</text>
+        <text class="label" style="margin-top: 8rpx;">{{todayPnLPercent}}%</text>
+      </view>
+    </view>
+    <view class="summary-footer">
+      <button class="privacy-btn" bindtap="togglePrivacy">{{privacyMode ? '显示' : '隐私'}}</button>
+      <navigator class="account-link" url="/pages/account/account">账户管理</navigator>
+    </view>
+  </view>
+
+  <!-- 账户筛选 -->
+  <view class="filter-bar">
+    <scroll-view scroll-x="true" class="account-selector" scroll-left="0">
+      <view class="account-item {{activeAccountId === 'all' ? 'active' : ''}}" bindtap="selectAccount" data-accountid="all">
+        <text>全部账户</text>
+      </view>
+      <view class="account-item {{activeAccountId === item.id ? 'active' : ''}}" wx:for="{{accounts}}" wx:key="id" bindtap="selectAccount" data-accountid="{{item.id}}">
+        <text>{{item.name}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 排序选项 -->
+  <view class="sort-bar">
+    <view class="sort-item {{sortBy === 'marketValue' ? 'active' : ''}}" bindtap="setSortBy" data-sortby="marketValue">
+      <text>市值</text>
+    </view>
+    <view class="sort-item {{sortBy === 'gainLoss' ? 'active' : ''}}" bindtap="setSortBy" data-sortby="gainLoss">
+      <text>盈亏</text>
+    </view>
+    <view class="sort-item {{sortBy === 'gainLossPercent' ? 'active' : ''}}" bindtap="setSortBy" data-sortby="gainLossPercent">
+      <text>涨跌幅</text>
+    </view>
+    <view class="sort-item {{sortBy === 'name' ? 'active' : ''}}" bindtap="setSortBy" data-sortby="name">
+      <text>名称</text>
+    </view>
+  </view>
+
+  <!-- 持仓列表 -->
+  <view class="portfolio-list" wx:if="{{displayAssets.length}}">
+    <navigator class="portfolio-item" wx:for="{{displayAssets}}" wx:key="id" url="/pages/asset-detail/asset-detail?id={{item.id}}">
+      <!-- 左侧：代码和名称 -->
+      <view class="item-left">
+        <text class="code">{{item.code}}</text>
+        <text class="name">{{item.name}}</text>
+      </view>
+
+      <!-- 中间：数量 -->
+      <view class="item-middle">
+        <text class="label-small">持仓</text>
+        <text class="value-small">{{item.total_shares}}</text>
+      </view>
+
+      <!-- 右侧：价格和盈亏 -->
+      <view class="item-right">
+        <view class="price-info">
+          <text class="current-price">{{item.market_price}}</text>
+          <text class="label-small">现价</text>
+        </view>
+        <view class="pnl-info {{item.pnlClass}}">
+          <text class="pnl-value">{{privacyMode ? '****' : item.gainLoss}}</text>
+          <text class="pnl-percent">{{item.gainLossPercent}}%</text>
+        </view>
+      </view>
+    </navigator>
+
+    <!-- 持仓操作栏 -->
+    <view class="action-bar">
+      <navigator class="action-btn" url="/pages/asset-add/asset-add">
+        <text>+ 新增资产</text>
+      </navigator>
+      <navigator class="action-btn" url="/pages/add-transaction/add-transaction">
+        <text>+ 记录交易</text>
+      </navigator>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text class="empty-text">暂无持仓，开始添加资产</text>
+    <navigator class="empty-button" url="/pages/asset-add/asset-add">
+      <text>立即添加</text>
+    </navigator>
+  </view>
+</view>

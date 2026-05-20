@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="card">
+    <text class="section-title">账户管理</text>
+    <view class="input-field">
+      <text class="input-label">当前账户</text>
+      <picker mode="selector" range="{{accountOptions}}" value="{{selectedAccountIndex}}" bindchange="onAccountSelect">
+        <view class="input-box">{{accountOptions[selectedAccountIndex]}}</view>
+      </picker>
+    </view>
+    <view class="section-title" style="margin-top: 30rpx;">账户列表</view>
+    <view wx:for="{{accounts}}" wx:key="id" class="card" style="padding: 24rpx; background: #F9F6EE; margin-bottom: 20rpx;">
+      <text style="font-size: 30rpx; font-weight: 600;">{{item.name}}</text>
+      <text class="text-muted">类型：{{item.type}}</text>
+    </view>
+    <view class="input-field">
+      <text class="input-label">新增账户名称</text>
+      <input class="input-box" placeholder="例如：自选投资账户" value="{{newAccountName}}" bindinput="onNewAccountInput" />
+    </view>
+    <view class="row" style="margin-top: 24rpx; justify-content: flex-end;">
+      <button class="button-primary" bindtap="addAccount">添加账户</button>
+    </view>
+  </view>
+</view>

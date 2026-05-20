@@ -1,0 +1,62 @@
+<view class="container">
+  <view class="card">
+    <text class="section-title">AI 投研笔记</text>
+    <text class="text-muted">输入链接或观点，AI 自动解析方向、行业、关键词，并校验逻辑。</text>
+    
+    <view class="input-field">
+      <text class="input-label">粘贴链接或观点</text>
+      <textarea class="input-box" placeholder="雪球链接、公众号观点或直接输入文本..." value="{{sourceText}}" bindinput="onSourceInput" style="min-height: 160rpx;"></textarea>
+    </view>
+    
+    <view class="row" style="gap: 12rpx; margin-top: 24rpx;">
+      <button class="button-secondary" bindtap="clearInput" style="flex: 1;">清空</button>
+      <button class="button-primary" bindtap="analyzeText" style="flex: 2;">分析并入库</button>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{result.summary}}">
+    <text class="section-title">AI 摘要</text>
+    <view class="analysis-result">
+      <text class="summary-text">{{result.summary}}</text>
+      
+      <view class="tags-group">
+        <view class="tag-section">
+          <text class="tag-label">方向</text>
+          <text class="tag {{result.direction === '看多' ? 'direction-long' : result.direction === '看空' ? 'direction-short' : 'direction-neutral'}}">{{result.direction}}</text>
+        </view>
+        <view class="tag-section">
+          <text class="tag-label">行业</text>
+          <text class="tag">{{result.industry}}</text>
+        </view>
+      </view>
+
+      <view class="keywords-group">
+        <text class="keywords-label">关键词</text>
+        <view class="keywords">
+          <text class="keyword-item" wx:for="{{result.tags}}" wx:key="{{index}}">{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{result.warning}}" style="background: #FDF2F0;">
+    <text class="section-title" style="color: #A44A3F;">⚠ 逻辑提醒</text>
+    <text class="warning-text">{{result.warning}}</text>
+  </view>
+
+  <view class="card">
+    <text class="section-title">历史笔记</text>
+    <view wx:if="{{insights.length}}">
+      <view class="insight-item" wx:for="{{insights}}" wx:key="id">
+        <view class="insight-meta">
+          <text class="insight-date">{{item.created_at}}</text>
+          <text class="insight-direction {{item.direction === '看多' ? 'direction-long' : item.direction === '看空' ? 'direction-short' : 'direction-neutral'}}">{{item.direction}}</text>
+        </view>
+        <text class="insight-summary">{{item.summary}}</text>
+      </view>
+    </view>
+    <view wx:else>
+      <text class="text-muted">暂无历史笔记</text>
+    </view>
+  </view>
+</view>

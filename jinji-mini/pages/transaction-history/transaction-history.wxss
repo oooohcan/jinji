@@ -1,0 +1,129 @@
+.filter-bar {
+  background: #FEFBF8;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.asset-selector {
+  display: flex;
+  gap: 10rpx;
+  white-space: nowrap;
+  padding: 0 24rpx;
+}
+
+.filter-item {
+  display: inline-flex;
+  padding: 8rpx 16rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #E8E8E8;
+  border-radius: 20rpx;
+  color: #666666;
+  font-size: 24rpx;
+  white-space: nowrap;
+}
+
+.filter-item.active {
+  background: #A44A3F;
+  color: #FFFFFF;
+  border-color: #A44A3F;
+}
+
+.date-header {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 16rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #F5F5F5;
+}
+
+.card:first-child .date-header {
+  border-top: none;
+  padding-top: 0;
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.transaction-row:last-child {
+  border-bottom: none;
+}
+
+.txn-left {
+  flex: 1;
+}
+
+.txn-type {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 4rpx;
+}
+
+.txn-asset {
+  display: block;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.txn-middle {
+  flex: 0 0 80rpx;
+  text-align: center;
+}
+
+.txn-shares {
+  display: block;
+  font-size: 24rpx;
+  color: #222222;
+  margin-bottom: 4rpx;
+}
+
+.txn-meta {
+  display: block;
+  font-size: 20rpx;
+  color: #CCCCCC;
+}
+
+.txn-right {
+  flex: 0 0 100rpx;
+  text-align: right;
+}
+
+.txn-price {
+  display: block;
+  font-size: 26rpx;
+  color: #2D6A4F;
+  margin-bottom: 4rpx;
+}
+
+.txn-price.sell {
+  color: #A44A3F;
+}
+
+.txn-action {
+  display: block;
+  font-size: 20rpx;
+  color: #A44A3F;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #999999;
+}

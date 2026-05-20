@@ -1,0 +1,193 @@
+.asset-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+}
+
+.asset-title {
+  flex: 1;
+}
+
+.asset-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 4rpx;
+}
+
+.asset-code {
+  display: block;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.asset-price {
+  text-align: right;
+}
+
+.asset-value {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2D6A4F;
+  margin-bottom: 4rpx;
+}
+
+.asset-currency {
+  display: block;
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.asset-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.stat-value {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #222222;
+}
+
+.stat-value.positive {
+  color: #2D6A4F;
+}
+
+.stat-value.negative {
+  color: #A44A3F;
+}
+
+.dividend-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.dividend-option {
+  padding: 20rpx 16rpx;
+  background: #F9F6EE;
+  border: 2rpx solid #F0E8E0;
+  border-radius: 16rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dividend-option.active {
+  background: #A44A3F;
+  border-color: #A44A3F;
+}
+
+.option-label {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 6rpx;
+}
+
+.dividend-option.active .option-label {
+  color: #FFFFFF;
+}
+
+.option-desc {
+  display: block;
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.dividend-option.active .option-desc {
+  color: #FFFFFF;
+  opacity: 0.8;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.txn-left {
+  flex: 1;
+}
+
+.txn-type {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 4rpx;
+}
+
+.txn-date {
+  display: block;
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.txn-center {
+  flex: 0 0 140rpx;
+  text-align: center;
+}
+
+.txn-shares {
+  display: block;
+  font-size: 22rpx;
+  color: #222222;
+  margin-bottom: 4rpx;
+}
+
+.txn-price {
+  display: block;
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.txn-right {
+  flex: 0 0 100rpx;
+  text-align: right;
+}
+
+.txn-total {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #222222;
+}
+
+.empty-state {
+  padding: 40rpx 20rpx;
+  text-align: center;
+  color: #999999;
+  font-size: 24rpx;
+}
+
+.button-danger {
+  background: #D4534F;
+  color: #FFFFFF;
+  border: none;
+}

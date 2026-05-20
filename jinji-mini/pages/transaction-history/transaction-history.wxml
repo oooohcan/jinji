@@ -1,0 +1,43 @@
+<view class="container">
+  <view class="card">
+    <text class="section-title">交易历史</text>
+    <text class="text-muted">按时间倒序显示所有交易记录，支持按资产筛选。</text>
+    
+    <view class="filter-bar">
+      <scroll-view scroll-x="true" class="asset-selector">
+        <view class="filter-item {{filterAssetId === 'all' ? 'active' : ''}}" bindtap="filterAsset" data-assetid="all">
+          <text>全部资产</text>
+        </view>
+        <view class="filter-item {{filterAssetId === item.id ? 'active' : ''}}" wx:for="{{assets}}" wx:key="id" bindtap="filterAsset" data-assetid="{{item.id}}">
+          <text>{{item.name}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view wx:if="{{groupedTransactions.length}}">
+    <view class="card" wx:for="{{groupedTransactions}}" wx:key="date">
+      <text class="date-header">{{item.date}}</text>
+      <view class="transaction-list">
+        <view class="transaction-row" wx:for="{{item.transactions}}" wx:key="id" data-txnid="{{item.id}}">
+          <view class="txn-left">
+            <text class="txn-type">{{item.typeLabel}}</text>
+            <text class="txn-asset">{{item.asset_name}}</text>
+          </view>
+          <view class="txn-middle">
+            <text class="txn-shares">{{item.shares || item.amount}}</text>
+            <text class="txn-meta">{{item.shares ? '份' : '元'}}</text>
+          </view>
+          <view class="txn-right">
+            <text class="txn-price {{item.type === 'SELL' ? 'sell' : ''}}">{{item.unit_price || item.amount}}</text>
+            <text class="txn-action" bindtap="undoTransaction" data-txnid="{{item.id}}">撤销</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text class="empty-text">暂无交易历史</text>
+  </view>
+</view>

@@ -1,0 +1,38 @@
+.input-box input {
+  width: 100%;
+}
+
+.history-link {
+  padding: 12rpx 0;
+}
+
+.link-text {
+  color: #A44A3F;
+  font-size: 24rpx;
+  text-decoration: none;
+}
+
+.transaction-type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.type-btn {
+  flex: 1 1 46%;
+  min-width: 140rpx;
+  padding: 18rpx 16rpx;
+  background: #F5F2E9;
+  border: 2rpx solid transparent;
+  border-radius: 24rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #6F6F6F;
+}
+
+.type-btn.active {
+  background: #A44A3F;
+  color: #FFFFFF;
+  border-color: #A44A3F;
+}

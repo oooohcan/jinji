@@ -1,0 +1,76 @@
+<view class="container">
+  <view class="card">
+    <view class="asset-header">
+      <view class="asset-title">
+        <text class="asset-name">{{asset.name}}</text>
+        <text class="asset-code">{{asset.code}}</text>
+      </view>
+      <view class="asset-price">
+        <text class="asset-value">{{displayAsset.displayMarketValue}}</text>
+        <text class="asset-currency">{{asset.currency}}</text>
+      </view>
+    </view>
+
+    <view class="asset-stats">
+      <view class="stat-row">
+        <text class="stat-label">持有份额</text>
+        <text class="stat-value">{{asset.total_shares}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label">成本价</text>
+        <text class="stat-value">{{asset.cost_basis}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label">成本总计</text>
+        <text class="stat-value">{{displayAsset.displayCostValue}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label">市价总计</text>
+        <text class="stat-value {{displayAsset.gainLossPercent >= 0 ? 'positive' : 'negative'}}">{{displayAsset.displayMarketValue}}</text>
+      </view>
+      <view class="stat-row">
+        <text class="stat-label">收益/亏损</text>
+        <text class="stat-value {{displayAsset.gainLossPercent >= 0 ? 'positive' : 'negative'}}">{{displayAsset.gainLoss}} ({{displayAsset.gainLossPercent}}%)</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="section-title">分红核算</text>
+    <view class="dividend-selector">
+      <view class="dividend-option {{asset.dividend_handling === 'REINVEST' ? 'active' : ''}}" bindtap="setDividendHandling" data-method="REINVEST">
+        <text class="option-label">分红再投资</text>
+        <text class="option-desc">分红直接用于买入</text>
+      </view>
+      <view class="dividend-option {{asset.dividend_handling !== 'REINVEST' ? 'active' : ''}}" bindtap="setDividendHandling" data-method="CASH">
+        <text class="option-label">现金分红</text>
+        <text class="option-desc">分红作为现金记录</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="section-title">交易历史</text>
+    <view wx:if="{{assetTransactions.length}}">
+      <view class="transaction-item" wx:for="{{assetTransactions}}" wx:key="id">
+        <view class="txn-left">
+          <text class="txn-type">{{item.typeLabel}}</text>
+          <text class="txn-date">{{item.date}}</text>
+        </view>
+        <view class="txn-center">
+          <text class="txn-shares">{{item.shares}}份</text>
+          <text class="txn-price">@{{item.unit_price}}</text>
+        </view>
+        <view class="txn-right">
+          <text class="txn-total">{{item.total || '-'}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-state">
+      <text>暂无交易历史</text>
+    </view>
+  </view>
+
+  <button class="button-primary" style="margin-top: 28rpx;" bindtap="addTransaction">+ 记录交易</button>
+  <button class="button-danger" style="margin-top: 12rpx;" bindtap="deleteAsset">删除资产</button>
+</view>

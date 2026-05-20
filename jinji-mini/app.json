@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/portfolio/portfolio",
+    "pages/add-transaction/add-transaction",
+    "pages/insights/insights",
+    "pages/me/me",
+    "pages/transaction-history/transaction-history",
+    "pages/asset-detail/asset-detail",
+    "pages/transactions/transactions",
+    "pages/asset-add/asset-add",
+    "pages/account/account"
+  ],
+  "window": {
+    "navigationBarTitleText": "JinJI",
+    "navigationBarBackgroundColor": "#F7F4EE",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F7F4EE",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#9E9E9E",
+    "selectedColor": "#A44A3F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/portfolio/portfolio",
+        "text": "持仓"
+      },
+      {
+        "pagePath": "pages/add-transaction/add-transaction",
+        "text": "新增"
+      },
+      {
+        "pagePath": "pages/insights/insights",
+        "text": "笔记"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "networkTimeout": {
+    "request": 10000
+  },
+  "cloud": true
+}

@@ -1,0 +1,68 @@
+.input-box input {
+  width: 100%;
+}
+
+.batch-preview-list {
+  margin-top: 20rpx;
+}
+
+.batch-item {
+  background: #F9F6EE;
+  border-radius: 24rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  border: 1rpx solid #F0E8E0;
+}
+
+.batch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 1rpx solid #E8E0D8;
+}
+
+.batch-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #222222;
+}
+
+.batch-remove {
+  color: #A44A3F;
+  font-size: 22rpx;
+}
+
+.batch-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+}
+
+.batch-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.batch-label {
+  font-size: 20rpx;
+  color: #999999;
+  margin-bottom: 6rpx;
+}
+
+.batch-value {
+  font-size: 24rpx;
+  color: #333333;
+  padding: 10rpx 12rpx;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+}
+
+.batch-input {
+  padding: 10rpx 12rpx;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  border: 1rpx solid #E8E8E8;
+  font-size: 22rpx;
+}
