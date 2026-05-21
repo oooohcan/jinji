@@ -216,6 +216,7 @@ body {
   gap:16px; 
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 .summary-content {
   flex: 1;
@@ -223,14 +224,15 @@ body {
   justify-content:flex-start; 
   align-items:flex-start; 
   gap:0;
-  width: 100%;
-  max-width: 320px;
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
 }
 .summary-col { 
-  flex:0 0 auto;
-  width: auto;
-  min-width: 0;
-  max-width: none;
+  flex:0 0 110px;
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
 }
 .summary-col:last-of-type {
   text-align: right;
@@ -251,9 +253,9 @@ body {
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
-  width: auto;
-  min-width: 120px;
-  max-width: 150px;
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
@@ -267,9 +269,9 @@ body {
   color: var(--brand-accent);
   font-variant-numeric: lining-nums;
   text-shadow: 0 2px 12px rgba(212,175,55,0.3);
-  width: 100%;
-  min-width: 135px;
-  max-width: 135px;
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 .summary-col .value.small.privacy-hide {
@@ -283,6 +285,7 @@ body {
   align-self:center;
   flex-shrink: 0;
   margin: 0 16px 0 20px;
+  flex:0 0 1px;
 }
 .privacy-toggle {
   width:36px; 
