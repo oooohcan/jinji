@@ -224,13 +224,13 @@ body {
   align-items:flex-start; 
   gap:0;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
 }
 .summary-col { 
-  flex:0 0 135px;
-  width: 135px;
-  min-width: 135px;
-  max-width: 135px;
+  flex:0 0 auto;
+  width: auto;
+  min-width: 0;
+  max-width: none;
 }
 .summary-col:last-of-type {
   text-align: right;
@@ -251,10 +251,15 @@ body {
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
-  width: 100%;
-  min-width: 135px;
-  max-width: 135px;
+  width: auto;
+  min-width: 120px;
+  max-width: 150px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.summary-col .value.privacy-hide {
+  opacity: 0.3;
+  filter: blur(2px);
 }
 .summary-col .value.small { 
   font-size:22px; 
@@ -265,6 +270,11 @@ body {
   width: 100%;
   min-width: 135px;
   max-width: 135px;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.summary-col .value.small.privacy-hide {
+  opacity: 0.3;
+  filter: blur(2px);
 }
 .summary-divider { 
   width:1px; 
@@ -272,7 +282,7 @@ body {
   background:rgba(255,255,255,0.1); 
   align-self:center;
   flex-shrink: 0;
-  margin: 0 10px;
+  margin: 0 16px 0 20px;
 }
 .privacy-toggle {
   width:36px; 
@@ -284,17 +294,21 @@ body {
   display:flex; 
   align-items:center; 
   justify-content:center;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   flex-shrink: 0;
 }
 .privacy-toggle:active { background: rgba(255,255,255,0.15); transform:scale(0.95); }
 .privacy-toggle svg { 
   width:18px; 
   height:18px; 
-  fill:rgba(255,255,255,0.75); 
+  fill:rgba(255,255,255,0.75);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .privacy-toggle.active svg { 
   fill:#fff; 
+}
+.privacy-toggle.active {
+  background:rgba(255,255,255,0.15);
 }
 
 .filter-bar {
@@ -1436,14 +1450,14 @@ body {
     <div class="sort-dropdown">
       <span class="sort-label">持仓</span>
       <div class="sort-control" id="sortControl">
-        <div class="sort-type" id="sortType" onclick="toggleSortMenu()">
-          <span id="sortLabel">市值</span>
-          <svg viewBox="0 0 24 24" class="sort-type-arrow"><path d="M7 10l5 5 5-5z"/></svg>
+        <div class="sort-type" id="sortType">
+          <span id="sortLabel" onclick="toggleSortMenu()">市值</span>
+          <svg viewBox="0 0 24 24" class="sort-type-arrow" onclick="toggleSortMenu()"><path d="M7 10l5 5 5-5z"/></svg>
           <div class="sort-menu" id="sortMenu">
-            <div class="sort-option active" onclick="setSortType('marketValue','市值',event)">市值</div>
-            <div class="sort-option" onclick="setSortType('gainLoss','盈亏',event)">盈亏</div>
-            <div class="sort-option" onclick="setSortType('gainLossPercent','涨跌幅',event)">涨跌幅</div>
-            <div class="sort-option" onclick="setSortType('name','名称',event)">名称</div>
+            <div class="sort-option active" data-type="marketValue" data-label="市值">市值</div>
+            <div class="sort-option" data-type="gainLoss" data-label="盈亏">盈亏</div>
+            <div class="sort-option" data-type="gainLossPercent" data-label="涨跌幅">涨跌幅</div>
+            <div class="sort-option" data-type="name" data-label="名称">名称</div>
           </div>
         </div>
         <div class="sort-divider"></div>
@@ -1789,7 +1803,7 @@ body {
     </div>
 
     <div class="version-info">
-      <span class="version-number">JinJI v1.3.2</span>
+      <span class="version-number">JinJI v1.3.3</span>
       更新于 2026-05-21
     </div>
   </div>
@@ -1883,6 +1897,18 @@ let currentMultiplier = 1;
 const multipliers = [1, 10, 100, 1000];
 let currentMultiplierIndex = 0;
 
+document.addEventListener('DOMContentLoaded', function() {
+  const sortOptions = document.querySelectorAll('.sort-option');
+  sortOptions.forEach(option => {
+    option.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const sortType = this.getAttribute('data-type');
+      const label = this.getAttribute('data-label');
+      setSortType(sortType, label);
+    });
+  });
+});
+
 function switchTab(tabName) {
   if (currentTab === tabName) return;
   
@@ -1903,13 +1929,16 @@ function toggleSortMenu() {
   document.getElementById('sortType').classList.toggle('open', sortMenuOpen);
 }
 
-function setSortType(sortType, label, e) {
-  e.stopPropagation();
+function setSortType(sortType, label) {
   currentSortType = sortType;
   document.getElementById('sortLabel').textContent = label;
   const options = document.querySelectorAll('.sort-option');
-  options.forEach(opt => opt.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  options.forEach(opt => {
+    opt.classList.remove('active');
+    if (opt.getAttribute('data-type') === sortType) {
+      opt.classList.add('active');
+    }
+  });
   toggleSortMenu();
 }
 
@@ -1981,17 +2010,35 @@ function togglePrivacy() {
   const privacyIcon = document.getElementById('privacyIcon');
   
   if (isPrivacyOn) {
-    totalAsset.textContent = '••••••';
-    todayPnL.textContent = '••••';
-    todayPnLPct.textContent = '••';
+    totalAsset.classList.add('privacy-hide');
+    todayPnL.classList.add('privacy-hide');
+    todayPnLPct.classList.add('privacy-hide');
+    setTimeout(() => {
+      totalAsset.textContent = '••••••';
+      todayPnL.textContent = '••••';
+      todayPnLPct.textContent = '••';
+      totalAsset.classList.remove('privacy-hide');
+      todayPnL.classList.remove('privacy-hide');
+      todayPnLPct.classList.remove('privacy-hide');
+    }, 150);
     privacyBtn.classList.add('active');
-    privacyIcon.innerHTML = '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>';
+    setTimeout(() => {
+      privacyIcon.innerHTML = '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>';
+    }, 150);
   } else {
-    totalAsset.textContent = '128,456.30';
-    todayPnL.textContent = '+2,340.50';
-    todayPnLPct.textContent = '+1.85%';
+    totalAsset.classList.add('privacy-hide');
+    todayPnL.classList.add('privacy-hide');
+    todayPnLPct.classList.add('privacy-hide');
     privacyBtn.classList.remove('active');
-    privacyIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+    setTimeout(() => {
+      totalAsset.textContent = '128,456.30';
+      todayPnL.textContent = '+2,340.50';
+      todayPnLPct.textContent = '+1.85%';
+      totalAsset.classList.remove('privacy-hide');
+      todayPnL.classList.remove('privacy-hide');
+      todayPnLPct.classList.remove('privacy-hide');
+      privacyIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+    }, 150);
   }
 }
 
