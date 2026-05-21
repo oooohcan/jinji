@@ -1468,17 +1468,17 @@ body {
         <div class="sort-type" id="sortType">
           <span id="sortLabel" onclick="toggleSortMenu()">市值</span>
           <div class="sort-menu" id="sortMenu">
-            <div class="sort-option active" data-type="marketValue" data-label="市值">市值</div>
-            <div class="sort-option" data-type="gainLoss" data-label="盈亏">盈亏</div>
-            <div class="sort-option" data-type="gainLossPercent" data-label="涨跌幅">涨跌幅</div>
-            <div class="sort-option" data-type="name" data-label="名称">名称</div>
+            <div class="sort-option active" data-type="marketValue" data-label="市值" onclick="setSortType('marketValue','市值')">市值</div>
+            <div class="sort-option" data-type="gainLoss" data-label="盈亏" onclick="setSortType('gainLoss','盈亏')">盈亏</div>
+            <div class="sort-option" data-type="gainLossPercent" data-label="涨跌幅" onclick="setSortType('gainLossPercent','涨跌幅')">涨跌幅</div>
+            <div class="sort-option" data-type="name" data-label="名称" onclick="setSortType('name','名称')">名称</div>
           </div>
         </div>
         <div class="sort-divider"></div>
         <div class="sort-direction" id="sortDirection" onclick="toggleSortDirection()">
-          <svg viewBox="0 0 24 24" id="sortDirIcon">
-            <path d="M7 14l5-5 5 5z" class="arrow-up"/>
-            <path d="M7 10l5 5 5-5z" class="arrow-down"/>
+          <svg viewBox="0 0 24 28" id="sortDirIcon">
+            <path d="M12 2l5 5H7z" class="arrow-up"/>
+            <path d="M12 26l5-5H7z" class="arrow-down"/>
           </svg>
         </div>
       </div>
@@ -1980,11 +1980,12 @@ function sortAssets() {
     
     switch (currentSortType) {
       case 'marketValue':
-        // 使用价格作为市值（简化处理）
-        value = parseFloat(priceEl?.textContent.replace(/,/g, '')) || 0;
+        // 使用价格作为市值（去除¥符号和逗号）
+        const priceText = priceEl?.textContent.replace(/[¥￥$,，]/g, '').trim() || '0';
+        value = parseFloat(priceText) || 0;
         break;
       case 'gainLoss':
-        // 从盈亏文本中提取数值
+        // 从盈亏文本中提取第一个数值
         const pnlText = pnlEl?.textContent || '';
         const pnlMatch = pnlText.match(/([+-]?[\d,]+\.?\d*)/);
         value = pnlMatch ? parseFloat(pnlMatch[1].replace(/,/g, '')) : 0;
@@ -2008,8 +2009,8 @@ function sortAssets() {
     if (typeof valA === 'string') {
       // 名称排序
       return currentSortDirection === 1 
-        ? valB.localeCompare(valA)  // 降序
-        : valA.localeCompare(valB); // 升序或默认
+        ? valB.localeCompare(valA, 'zh-CN')  // 降序
+        : valA.localeCompare(valB, 'zh-CN'); // 升序或默认
     }
     
     if (currentSortDirection === 0) {
