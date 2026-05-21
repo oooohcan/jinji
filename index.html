@@ -237,6 +237,7 @@ body {
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
+  min-width: 140px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .summary-col .value.small { 
@@ -245,6 +246,7 @@ body {
   color: var(--brand-accent);
   font-variant-numeric: lining-nums;
   text-shadow: 0 2px 12px rgba(212,175,55,0.3);
+  min-width: 100px;
 }
 .summary-divider { 
   width:1px; 
@@ -633,7 +635,6 @@ body {
   bottom:0; 
   background:linear-gradient(90deg, var(--brand-light), var(--brand));
   border-radius:22px; 
-  transition:width 0.08s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   opacity: 0.15;
 }
 .slider-thumb {
@@ -646,7 +647,7 @@ body {
   box-shadow:0 3px 12px rgba(164,74,63,0.25); 
   transform:translate(-50%,-50%);
   cursor:grab; 
-  transition:all 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition:box-shadow 0.2s ease, transform 0.2s ease;
   border:2.5px solid var(--brand);
 }
 .slider-thumb:active { 
@@ -1735,10 +1736,10 @@ body {
           </div>
           <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
-        <div class="me-menu-item" onclick="showToast('数据已同步')">
+        <div class="me-menu-item" onclick="showToast('确认注销账户')">
           <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H6c-.55 0-1-.45-1-1s.45-1 1-1h3V8c0-.55.45-1 1-1s1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1z"/></svg>
-            <span class="me-menu-label">数据同步</span>
+            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            <span class="me-menu-label">注销账户</span>
           </div>
           <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
