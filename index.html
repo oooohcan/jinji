@@ -223,10 +223,14 @@ body {
   justify-content:flex-start; 
   align-items:flex-start; 
   gap:0;
+  width: 100%;
+  max-width: 300px;
 }
 .summary-col { 
-  flex:0 0 auto; 
-  width: 45%;
+  flex:0 0 135px;
+  width: 135px;
+  min-width: 135px;
+  max-width: 135px;
 }
 .summary-col:last-of-type {
   text-align: right;
@@ -247,8 +251,9 @@ body {
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
-  min-width: 130px;
-  max-width: 160px;
+  width: 100%;
+  min-width: 135px;
+  max-width: 135px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .summary-col .value.small { 
@@ -257,8 +262,9 @@ body {
   color: var(--brand-accent);
   font-variant-numeric: lining-nums;
   text-shadow: 0 2px 12px rgba(212,175,55,0.3);
-  min-width: 100px;
-  max-width: 130px;
+  width: 100%;
+  min-width: 135px;
+  max-width: 135px;
 }
 .summary-divider { 
   width:1px; 
@@ -266,6 +272,7 @@ body {
   background:rgba(255,255,255,0.1); 
   align-self:center;
   flex-shrink: 0;
+  margin: 0 10px;
 }
 .privacy-toggle {
   width:36px; 
@@ -339,27 +346,51 @@ body {
   position: relative;
 }
 .sort-label { font-size:12px; color:var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
-.sort-select {
+.sort-control {
+  display:flex; 
+  align-items:center; 
+  background:var(--card); 
+  border-radius:100px; 
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+}
+.sort-type {
   display:flex; 
   align-items:center; 
   gap:6px; 
   cursor:pointer; 
-  padding:10px 16px;
-  background:var(--card); 
-  border-radius:100px; 
+  padding:10px 14px;
   font-size:14px; 
   color:var(--text);
   position:relative; 
   transition:all 0.3s; 
   font-weight:500;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  border-radius:100px;
 }
-.sort-select svg { width:14px; height:14px; fill:var(--text-secondary); transition:all 0.3s; }
-.sort-select.open svg { transform:rotate(180deg); }
+.sort-type:hover { background:rgba(0,0,0,0.03); }
+.sort-type svg { width:14px; height:14px; fill:var(--text-secondary); transition:all 0.3s; }
+.sort-type.open svg { transform:rotate(180deg); }
+.sort-divider {
+  width:1px;
+  height:28px;
+  background:rgba(0,0,0,0.08);
+}
+.sort-direction {
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  cursor:pointer; 
+  padding:10px 14px;
+  transition:all 0.2s;
+  border-radius:100px;
+  min-width:44px;
+}
+.sort-direction:hover { background:rgba(0,0,0,0.03); }
+.sort-direction svg { width:16px; height:16px; fill:var(--text-secondary); transition:all 0.2s; }
+.sort-direction.active svg { fill:var(--brand); }
 .sort-menu {
   position:absolute; 
   top:calc(100% + 8px); 
-  right:16px; 
+  left:0; 
   background:var(--card);
   border-radius:var(--radius-sm); 
   box-shadow:0 8px 32px rgba(0,0,0,0.08); 
@@ -1404,14 +1435,20 @@ body {
 
     <div class="sort-dropdown">
       <span class="sort-label">持仓</span>
-      <div class="sort-select" id="sortSelect" onclick="toggleSortMenu()">
-        <span id="sortLabel">市值</span>
-        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-        <div class="sort-menu" id="sortMenu">
-          <div class="sort-option active" onclick="setSort('marketValue','市值',event)">市值</div>
-          <div class="sort-option" onclick="setSort('gainLoss','盈亏',event)">盈亏</div>
-          <div class="sort-option" onclick="setSort('gainLossPercent','涨跌幅',event)">涨跌幅</div>
-          <div class="sort-option" onclick="setSort('name','名称',event)">名称</div>
+      <div class="sort-control" id="sortControl">
+        <div class="sort-type" id="sortType" onclick="toggleSortMenu()">
+          <span id="sortLabel">市值</span>
+          <svg viewBox="0 0 24 24" class="sort-type-arrow"><path d="M7 10l5 5 5-5z"/></svg>
+          <div class="sort-menu" id="sortMenu">
+            <div class="sort-option active" onclick="setSortType('marketValue','市值',event)">市值</div>
+            <div class="sort-option" onclick="setSortType('gainLoss','盈亏',event)">盈亏</div>
+            <div class="sort-option" onclick="setSortType('gainLossPercent','涨跌幅',event)">涨跌幅</div>
+            <div class="sort-option" onclick="setSortType('name','名称',event)">名称</div>
+          </div>
+        </div>
+        <div class="sort-divider"></div>
+        <div class="sort-direction" id="sortDirection" onclick="toggleSortDirection()">
+          <svg viewBox="0 0 24 24" id="sortDirIcon"><path d="M7 14l5-5 5 5z"/><path d="M7 10l5 5 5-5z" style="display:none"/></svg>
         </div>
       </div>
     </div>
@@ -1741,13 +1778,6 @@ body {
     <div class="me-section">
       <div class="me-section-title">设置</div>
       <div class="me-menu">
-        <div class="me-menu-item" onclick="togglePrivacy()">
-          <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
-            <span class="me-menu-label">隐私模式</span>
-          </div>
-          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-        </div>
         <div class="me-menu-item" onclick="showToast('确认注销账户')">
           <div class="me-menu-left">
             <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
@@ -1759,7 +1789,7 @@ body {
     </div>
 
     <div class="version-info">
-      <span class="version-number">JinJI v1.3.1</span>
+      <span class="version-number">JinJI v1.3.2</span>
       更新于 2026-05-21
     </div>
   </div>
@@ -1845,6 +1875,8 @@ body {
 <script>
 let currentTab = 'portfolio';
 let sortMenuOpen = false;
+let currentSortType = 'marketValue';
+let currentSortDirection = 'default'; // 'default', 'desc', 'asc'
 let isPrivacyOn = false;
 let selectedAccount = 'all';
 let currentMultiplier = 1;
@@ -1868,17 +1900,35 @@ function switchTab(tabName) {
 function toggleSortMenu() {
   sortMenuOpen = !sortMenuOpen;
   document.getElementById('sortMenu').classList.toggle('show', sortMenuOpen);
-  document.getElementById('sortSelect').classList.toggle('open', sortMenuOpen);
+  document.getElementById('sortType').classList.toggle('open', sortMenuOpen);
 }
 
-function setSort(sortType, label, e) {
+function setSortType(sortType, label, e) {
   e.stopPropagation();
+  currentSortType = sortType;
   document.getElementById('sortLabel').textContent = label;
   const options = document.querySelectorAll('.sort-option');
   options.forEach(opt => opt.classList.remove('active'));
   event.currentTarget.classList.add('active');
   toggleSortMenu();
-  showToast('已切换排序');
+}
+
+function toggleSortDirection() {
+  const dirIcon = document.getElementById('sortDirIcon');
+  const dirBtn = document.getElementById('sortDirection');
+  
+  if (currentSortDirection === 'default') {
+    currentSortDirection = 'desc';
+    dirIcon.innerHTML = '<path d="M7 14l5-5 5 5z"/>';
+    dirBtn.classList.add('active');
+  } else if (currentSortDirection === 'desc') {
+    currentSortDirection = 'asc';
+    dirIcon.innerHTML = '<path d="M7 10l5 5 5-5z"/>';
+  } else {
+    currentSortDirection = 'default';
+    dirIcon.innerHTML = '<path d="M7 14l5-5 5 5z"/><path d="M7 10l5 5 5-5z" style="display:none"/>';
+    dirBtn.classList.remove('active');
+  }
 }
 
 function selectAccount(element, accountId) {
@@ -1936,14 +1986,12 @@ function togglePrivacy() {
     todayPnLPct.textContent = '••';
     privacyBtn.classList.add('active');
     privacyIcon.innerHTML = '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>';
-    showToast('隐私模式已开启');
   } else {
     totalAsset.textContent = '128,456.30';
     todayPnL.textContent = '+2,340.50';
     todayPnLPct.textContent = '+1.85%';
     privacyBtn.classList.remove('active');
     privacyIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
-    showToast('隐私模式已关闭');
   }
 }
 
