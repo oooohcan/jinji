@@ -1255,6 +1255,50 @@ body {
   font-size:15px;
   font-weight:600;
 }
+.notes-position-ratio {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:600;
+  padding:4px 12px;
+  background:var(--card);
+  border-radius:100px;
+}
+.ratio-bull {
+  color:var(--positive);
+}
+.ratio-vs {
+  color:var(--text-muted);
+  font-weight:400;
+}
+.ratio-bear {
+  color:var(--negative);
+}
+.ratio-bull.majority {
+  font-weight:700;
+  position:relative;
+}
+.ratio-bull.majority::after {
+  content:' ⭐';
+  font-size:12px;
+}
+.ratio-bear.majority {
+  font-weight:700;
+  position:relative;
+}
+.ratio-bear.majority::after {
+  content:' ⭐';
+  font-size:12px;
+}
+.ratio-bull.minor {
+  opacity:0.7;
+  font-weight:400;
+}
+.ratio-bear.minor {
+  opacity:0.7;
+  font-weight:400;
+}
 .notes-add-btn {
   padding:6px 12px;
   background:var(--brand);
@@ -1283,10 +1327,33 @@ body {
   border-radius:var(--radius-xs);
   cursor:pointer;
   transition:all 0.2s;
+  border-left:3px solid transparent;
 }
 .note-item:hover {
   transform:translateX(4px);
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.note-item.note-bull {
+  border-left-color:var(--positive);
+}
+.note-item.note-bear {
+  border-left-color:var(--negative);
+}
+.note-trend-tag {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:4px;
+  font-size:11px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+.tag-bull {
+  background:rgba(46,139,87,0.15);
+  color:var(--positive);
+}
+.tag-bear {
+  background:rgba(205,92,92,0.15);
+  color:var(--negative);
 }
 .note-content {
   font-size:14px;
@@ -2015,7 +2082,7 @@ body {
     </div>
 
     <div class="version-info">
-      <span class="version-number">JinJI v1.3.3</span>
+      <span class="version-number">JinJI v1.3.4</span>
       更新于 2026-05-21
     </div>
   </div>
@@ -2136,21 +2203,42 @@ body {
       <div class="asset-detail-notes">
         <div class="notes-header">
           <span class="notes-title">📝 相关笔记</span>
+          <div class="notes-position-ratio" id="notesPositionRatio">
+            <span class="ratio-bull">看多 2</span>
+            <span class="ratio-vs">:</span>
+            <span class="ratio-bear">看空 1</span>
+          </div>
           <button class="notes-add-btn" onclick="addNoteForAsset()">+ 添加</button>
         </div>
         <div class="notes-list" id="detailNotesList">
-          <div class="note-item">
-            <div class="note-content">"茅台的护城河非常稳固，品牌价值持续提升"</div>
-            <div class="note-meta">2024-01-15 · 第3条相关记录</div>
+          <div class="note-item note-bull">
+            <div class="note-trend-tag tag-bull">看多</div>
+            <div class="note-content">"茅台的护城河非常稳固，品牌价值持续提升，长期看好"</div>
+            <div class="note-meta">
+              <span class="note-date">2026-05-21</span>
+              <span class="note-index">第1条</span>
+            </div>
           </div>
-          <div class="note-item">
-            <div class="note-content">"关注产能扩张计划，年报显示增长潜力"</div>
-            <div class="note-meta">2024-01-20 · 第2条相关记录</div>
+          <div class="note-item note-bull">
+            <div class="note-trend-tag tag-bull">看多</div>
+            <div class="note-content">"关注产能扩张计划，年报显示增长潜力，基本面强劲"</div>
+            <div class="note-meta">
+              <span class="note-date">2026-05-20</span>
+              <span class="note-index">第2条</span>
+            </div>
           </div>
-          <div class="note-item">
-            <div class="note-content">"短期波动不改长期价值投资逻辑"</div>
-            <div class="note-meta">2024-02-05 · 第1条相关记录</div>
+          <div class="note-item note-bear">
+            <div class="note-trend-tag tag-bear">看空</div>
+            <div class="note-content">"短期波动不改长期价值，但短期估值偏高需谨慎"</div>
+            <div class="note-meta">
+              <span class="note-date">2026-05-18</span>
+              <span class="note-index">第3条</span>
+            </div>
           </div>
+        </div>
+        <div class="notes-warning" id="notesWarning" style="display:none;">
+          <span class="warning-icon">⚠️</span>
+          <span class="warning-text">当前决策与笔记观点存在冲突</span>
         </div>
       </div>
     </div>
@@ -2680,9 +2768,65 @@ function openAssetDetail(code) {
   pnlEl.className = isProfit ? 'info-value profit' : 'info-value loss';
   pnlPctEl.className = isProfit ? 'info-value profit' : 'info-value loss';
   
+  // 检测笔记冲突并更新阵营比例
+  checkNoteConflicts(code);
+  
   // 显示模态框
   modal.classList.add('show');
   document.body.style.overflow = 'hidden';
+}
+
+function checkNoteConflicts(assetCode) {
+  const notesList = document.getElementById('detailNotesList');
+  const notesWarning = document.getElementById('notesWarning');
+  const positionRatio = document.getElementById('notesPositionRatio');
+  
+  // 获取所有笔记项
+  const noteItems = notesList.querySelectorAll('.note-item');
+  let bullCount = 0;
+  let bearCount = 0;
+  
+  noteItems.forEach(item => {
+    if (item.classList.contains('note-bull')) {
+      bullCount++;
+    } else if (item.classList.contains('note-bear')) {
+      bearCount++;
+    }
+  });
+  
+  // 更新阵营比例显示
+  const bullSpan = positionRatio.querySelector('.ratio-bull');
+  const bearSpan = positionRatio.querySelector('.ratio-bear');
+  bullSpan.textContent = `看多 ${bullCount}`;
+  bearSpan.textContent = `看空 ${bearCount}`;
+  
+  // 添加多数/少数标识
+  bullSpan.classList.remove('majority', 'minority');
+  bearSpan.classList.remove('majority', 'minority');
+  
+  if (bullCount > 0 && bearCount > 0) {
+    // 存在冲突阵营
+    if (bullCount > bearCount) {
+      bullSpan.classList.add('majority');
+      bearSpan.classList.add('minority');
+    } else if (bearCount > bullCount) {
+      bearSpan.classList.add('majority');
+      bullSpan.classList.add('minority');
+    }
+  } else if (bullCount > 0) {
+    bullSpan.classList.add('majority');
+  } else if (bearCount > 0) {
+    bearSpan.classList.add('majority');
+  }
+  
+  // 检测是否存在阵营冲突（同时存在看多和看空）
+  const hasConflict = bullCount > 0 && bearCount > 0;
+  notesWarning.style.display = hasConflict ? 'flex' : 'none';
+  
+  if (hasConflict) {
+    notesWarning.querySelector('.warning-text').textContent = 
+      `⚠️ 笔记观点存在冲突：${bullCount}条看多 vs ${bearCount}条看空`;
+  }
 }
 
 function closeAssetDetail() {
@@ -2701,8 +2845,37 @@ function editAsset() {
 }
 
 function tradeAsset() {
-  showToast('打开交易页面');
-  closeAssetDetail();
+  const notesList = document.getElementById('detailNotesList');
+  const noteItems = notesList.querySelectorAll('.note-item');
+  let bullNotes = [];
+  let bearNotes = [];
+  
+  noteItems.forEach(item => {
+    if (item.classList.contains('note-bull')) {
+      const content = item.querySelector('.note-content')?.textContent || '';
+      bullNotes.push(content.substring(0, 20) + '...');
+    } else if (item.classList.contains('note-bear')) {
+      const content = item.querySelector('.note-content')?.textContent || '';
+      bearNotes.push(content.substring(0, 20) + '...');
+    }
+  });
+  
+  const hasConflict = bullNotes.length > 0 && bearNotes.length > 0;
+  
+  if (hasConflict) {
+    // 显示冲突确认对话框
+    const confirmMsg = `检测到笔记观点冲突：\n\n🟢 看多 ${bullNotes.length}条\n"${bullNotes[0]}"\n\n🔴 看空 ${bearNotes.length}条\n"${bearNotes[0]}"\n\n是否继续交易？`;
+    
+    if (confirm(confirmMsg)) {
+      showToast('打开交易页面');
+      closeAssetDetail();
+    } else {
+      showToast('已取消交易');
+    }
+  } else {
+    showToast('打开交易页面');
+    closeAssetDetail();
+  }
 }
 
 function simulateUpload() {
