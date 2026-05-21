@@ -447,6 +447,48 @@ body {
 }
 .slider-thumb:active { box-shadow:0 4px 16px rgba(164,74,63,0.35); cursor:grabbing;
 }
+
+/* Slider input */
+.slider-input {
+  background: transparent;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+  width: auto;
+  min-width: 60px;
+  outline: none;
+  padding: 0;
+}
+.slider-input:focus {
+  background: var(--input-bg);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* Multiplier badge */
+.multiplier-badge {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  color: white;
+  padding: 16px 24px;
+  border-radius: 16px;
+  font-size: 24px;
+  font-weight: 700;
+  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(164,74,63,0.3);
+  animation: multiplierPop 0.3s ease;
+}
+@keyframes multiplierPop {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
 .slider-hint {
   display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:4px;
 }
@@ -770,6 +812,76 @@ body {
       </div>
     </div>
 
+    <div class="stats-panel">
+      <div class="stats-panel-header">
+        <span class="stats-panel-title">数据统计</span>
+        <span class="stats-panel-subtitle">近30日</span>
+      </div>
+      <div class="stats-grid">
+        <div class="stats-item">
+          <div class="stats-value">+5,234</div>
+          <div class="stats-label">累计盈亏</div>
+          <div class="stats-trend up">+4.24%</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-value">12</div>
+          <div class="stats-label">交易次数</div>
+          <div class="stats-trend neutral">8笔盈利</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-value">3</div>
+          <div class="stats-label">新增资产</div>
+          <div class="stats-trend neutral">本季度</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-value">85%</div>
+          <div class="stats-label">胜率</div>
+          <div class="stats-trend up">近10笔</div>
+        </div>
+      </div>
+      <div class="stats-chart-placeholder">
+        <div class="line-chart-container">
+          <svg class="line-chart-svg" viewBox="0 0 100 60" preserveAspectRatio="none">
+            <!-- Background grid -->
+            <line x1="0" y1="15" x2="100" y2="15" stroke="#E8E3DA" stroke-width="0.5"/>
+            <line x1="0" y1="30" x2="100" y2="30" stroke="#E8E3DA" stroke-width="0.5"/>
+            <line x1="0" y1="45" x2="100" y2="45" stroke="#E8E3DA" stroke-width="0.5"/>
+            
+            <!-- Area fill -->
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#A44A3F" stop-opacity="0.25"/>
+                <stop offset="50%" stop-color="#A44A3F" stop-opacity="0.1"/>
+                <stop offset="100%" stop-color="#A44A3F" stop-opacity="0.02"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,48 Q8,45 14,42 T28,35 T42,40 T56,28 T70,22 T84,15 T100,12 L100,60 L0,60 Z" fill="url(#lineGradient)"/>
+            
+            <!-- Line -->
+            <path d="M0,48 Q8,45 14,42 T28,35 T42,40 T56,28 T70,22 T84,15 T100,12" 
+                  fill="none" stroke="#A44A3F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            
+            <!-- Data points -->
+            <circle cx="0" cy="48" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+            <circle cx="14" cy="42" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+            <circle cx="28" cy="35" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+            <circle cx="42" cy="40" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+            <circle cx="56" cy="28" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+            <circle cx="70" cy="22" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+            <circle cx="84" cy="15" r="4" fill="#A44A3F" stroke="#fff" stroke-width="2"/>
+            <circle cx="100" cy="12" r="3" fill="#fff" stroke="#A44A3F" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="chart-labels">
+          <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span>
+        </div>
+      </div>
+      <div class="stats-bulletin">
+        <div class="bulletin-dot"></div>
+        <span class="bulletin-text">茅台连续上涨5日，关注回调风险</span>
+      </div>
+    </div>
+
     <div class="sort-dropdown">
       <span class="sort-label">持仓列表</span>
       <div class="sort-select" id="sortSelect" onclick="toggleSortMenu()">
@@ -846,75 +958,6 @@ body {
         </div>
       </div>
     </div>
-
-    <div class="stats-panel">
-      <div class="stats-panel-header">
-        <span class="stats-panel-title">数据统计</span>
-        <span class="stats-panel-subtitle">近30日</span>
-      </div>
-      <div class="stats-grid">
-        <div class="stats-item">
-          <div class="stats-value">+5,234</div>
-          <div class="stats-label">累计盈亏</div>
-          <div class="stats-trend up">+4.24%</div>
-        </div>
-        <div class="stats-item">
-          <div class="stats-value">12</div>
-          <div class="stats-label">交易次数</div>
-          <div class="stats-trend neutral">8笔盈利</div>
-        </div>
-        <div class="stats-item">
-          <div class="stats-value">3</div>
-          <div class="stats-label">新增资产</div>
-          <div class="stats-trend neutral">本季度</div>
-        </div>
-        <div class="stats-item">
-          <div class="stats-value">85%</div>
-          <div class="stats-label">胜率</div>
-          <div class="stats-trend up">近10笔</div>
-        </div>
-      </div>
-      <div class="stats-chart-placeholder">
-        <div class="line-chart-container">
-          <svg class="line-chart-svg" viewBox="0 0 100 60" preserveAspectRatio="none">
-            <!-- Background grid -->
-            <line x1="0" y1="15" x2="100" y2="15" stroke="#f0f0f0" stroke-width="0.5"/>
-            <line x1="0" y1="30" x2="100" y2="30" stroke="#f0f0f0" stroke-width="0.5"/>
-            <line x1="0" y1="45" x2="100" y2="45" stroke="#f0f0f0" stroke-width="0.5"/>
-            
-            <!-- Area fill -->
-            <defs>
-              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#A44A3F" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="#A44A3F" stop-opacity="0.05"/>
-              </linearGradient>
-            </defs>
-            <path d="M0,42 L14,35 L28,45 L42,25 L56,30 L70,18 L84,12 L100,10 L100,60 L0,60 Z" fill="url(#lineGradient)"/>
-            
-            <!-- Line -->
-            <path d="M0,42 L14,35 L28,45 L42,25 L56,30 L70,18 L84,12 L100,10" 
-                  fill="none" stroke="#A44A3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            
-            <!-- Data points -->
-            <circle cx="0" cy="42" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-            <circle cx="14" cy="35" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-            <circle cx="28" cy="45" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-            <circle cx="42" cy="25" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-            <circle cx="56" cy="30" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-            <circle cx="70" cy="18" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-            <circle cx="84" cy="12" r="3" fill="#A44A3F" stroke="#fff" stroke-width="1.5"/>
-            <circle cx="100" cy="10" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="chart-labels">
-          <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span>
-        </div>
-      </div>
-      <div class="stats-bulletin">
-        <div class="bulletin-dot"></div>
-        <span class="bulletin-text">茅台连续上涨5日，关注回调风险</span>
-      </div>
-    </div>
   </div>
 
   <!-- ====== Record Page ====== -->
@@ -969,14 +1012,14 @@ body {
         <label class="form-label">单价 (元)</label>
         <div class="slider-group">
           <div class="slider-display">
-            <span class="slider-value" id="priceValue">1916.00</span>
+            <input type="number" class="slider-input" id="priceValue" value="1916.00" onchange="updateSliderFromInput(this, 'priceSlider')"/>
             <span class="slider-unit">元/份</span>
           </div>
           <div class="slider-track" id="priceSlider">
             <div class="slider-fill" style="width:60%"></div>
             <div class="slider-thumb" style="left:60%"></div>
           </div>
-          <div class="slider-hint"><span>← 加减</span><span>↑↓ 倍数</span></div>
+          <div class="slider-hint"><span>← → 加减</span><span>↑↓ 倍数</span></div>
         </div>
       </div>
 
@@ -984,14 +1027,14 @@ body {
         <label class="form-label">份数</label>
         <div class="slider-group">
           <div class="slider-display">
-            <span class="slider-value" id="sharesValue">8</span>
+            <input type="number" class="slider-input" id="sharesValue" value="8" onchange="updateSliderFromInput(this, 'sharesSlider')"/>
             <span class="slider-unit">份</span>
           </div>
           <div class="slider-track" id="sharesSlider">
             <div class="slider-fill" style="width:30%"></div>
             <div class="slider-thumb" style="left:30%"></div>
           </div>
-          <div class="slider-hint"><span>← 加减</span><span>↑↓ 倍数</span></div>
+          <div class="slider-hint"><span>← → 加减</span><span>↑↓ 倍数</span></div>
         </div>
       </div>
 
@@ -1268,8 +1311,8 @@ body {
     </div>
     
     <div class="version-info">
-      <div class="version-number">v1.0.0</div>
-      <div>更新于 2024-01-01</div>
+      <div class="version-number">v1.0.1</div>
+      <div>更新于 2026-05-21</div>
     </div>
   </div>
 
@@ -1685,6 +1728,57 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
+// Multiplier badge element
+let multiplierBadge = null;
+function showMultiplierBadge(multiplier) {
+  if (multiplierBadge) {
+    document.body.removeChild(multiplierBadge);
+  }
+  multiplierBadge = document.createElement('div');
+  multiplierBadge.className = 'multiplier-badge';
+  multiplierBadge.textContent = `x${multiplier}`;
+  document.body.appendChild(multiplierBadge);
+  
+  setTimeout(() => {
+    if (multiplierBadge && multiplierBadge.parentNode) {
+      multiplierBadge.style.opacity = '0';
+      multiplierBadge.style.transform = 'translate(-50%, -50%) scale(0.9)';
+      multiplierBadge.style.transition = 'all 0.3s ease';
+      setTimeout(() => {
+        if (multiplierBadge && multiplierBadge.parentNode) {
+          document.body.removeChild(multiplierBadge);
+          multiplierBadge = null;
+        }
+      }, 300);
+    }
+  }, 800);
+}
+
+// Update slider from input
+function updateSliderFromInput(input, sliderId) {
+  const track = document.getElementById(sliderId);
+  if (!track) return;
+  
+  const thumb = track.querySelector('.slider-thumb');
+  const fill = track.querySelector('.slider-fill');
+  const val = parseFloat(input.value);
+  
+  // Calculate percentage based on slider type
+  let pct;
+  if (sliderId === 'priceSlider') {
+    pct = Math.max(0, Math.min(1, val / 5000));
+  } else if (sliderId === 'sharesSlider') {
+    pct = Math.max(0, Math.min(1, val / 100));
+  }
+  
+  // Update slider visually
+  fill.style.width = (pct * 100) + '%';
+  thumb.style.left = (pct * 100) + '%';
+  
+  // Store current percentage for reference
+  track.dataset.currentPct = pct;
+}
+
 // Slider interaction
 document.querySelectorAll('.slider-track').forEach(track => {
   let isDragging = false;
@@ -1692,14 +1786,16 @@ document.querySelectorAll('.slider-track').forEach(track => {
   let multiplier = 1;
   const thumb = track.querySelector('.slider-thumb');
   const fill = track.querySelector('.slider-fill');
-  const display = track.parentElement.querySelector('.slider-value');
+  const display = track.parentElement.querySelector('.slider-input');
   let currentPct = parseFloat(thumb.style.left) / 100 || 0.5; // 默认50%
+  track.dataset.currentPct = currentPct;
 
   function updateSlider(clientX, animate = true) {
     const rect = track.getBoundingClientRect();
     let pct = (clientX - rect.left) / rect.width;
     pct = Math.max(0, Math.min(1, pct));
     currentPct = pct;
+    track.dataset.currentPct = pct;
     
     // 控制动画
     if (!animate) {
@@ -1717,10 +1813,10 @@ document.querySelectorAll('.slider-track').forEach(track => {
       const id = track.id;
       if (id === 'priceSlider') {
         const val = Math.round(pct * 5000 * 100) / 100;
-        display.textContent = (val * multiplier).toFixed(2);
+        display.value = (val * multiplier).toFixed(2);
       } else if (id === 'sharesSlider') {
         const val = Math.round(pct * 100);
-        display.textContent = Math.max(1, val * multiplier);
+        display.value = Math.max(1, val * multiplier);
       }
     }
   }
@@ -1733,7 +1829,7 @@ document.querySelectorAll('.slider-track').forEach(track => {
       multiplier = Math.min(16, multiplier * 2);
     }
     if (prevMultiplier !== multiplier) {
-      showToast(`倍数: x${multiplier}`);
+      showMultiplierBadge(multiplier);
       updateSliderFromPct();
     }
   }
@@ -1745,10 +1841,10 @@ document.querySelectorAll('.slider-track').forEach(track => {
       const id = track.id;
       if (id === 'priceSlider') {
         const val = Math.round(currentPct * 5000 * 100) / 100;
-        display.textContent = (val * multiplier).toFixed(2);
+        display.value = (val * multiplier).toFixed(2);
       } else if (id === 'sharesSlider') {
         const val = Math.round(currentPct * 100);
-        display.textContent = Math.max(1, val * multiplier);
+        display.value = Math.max(1, val * multiplier);
       }
     }
   }
