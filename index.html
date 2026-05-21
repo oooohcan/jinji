@@ -1139,6 +1139,199 @@ body {
   -webkit-backdrop-filter: blur(4px);
 }
 .modal-overlay.show { display:flex; }
+
+/* Asset Detail Modal Styles */
+.asset-detail-modal {
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.asset-detail-modal.show {
+  display:flex;
+}
+.asset-detail-card {
+  width:100%;
+  max-width:430px;
+  background:var(--card);
+  border-radius:var(--radius) var(--radius) 0 0;
+  max-height:85vh;
+  overflow-y:auto;
+  animation:slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.asset-detail-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 24px 16px;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  background:var(--card);
+  z-index:10;
+}
+.asset-detail-title {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.asset-detail-code {
+  font-size:14px;
+  color:var(--text-muted);
+  font-weight:500;
+}
+.asset-detail-name {
+  font-size:22px;
+  font-weight:700;
+  font-family:var(--font-display);
+  letter-spacing:-0.02em;
+}
+.asset-detail-close {
+  width:36px;
+  height:36px;
+  border:none;
+  background:rgba(0,0,0,0.05);
+  border-radius:50%;
+  font-size:24px;
+  color:var(--text-secondary);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.2s;
+}
+.asset-detail-close:hover {
+  background:rgba(0,0,0,0.1);
+  transform:scale(1.05);
+}
+.asset-detail-content {
+  padding:24px;
+}
+.asset-detail-info {
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  margin-bottom:32px;
+}
+.info-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.info-row:last-child {
+  border-bottom:none;
+}
+.info-label {
+  font-size:14px;
+  color:var(--text-secondary);
+}
+.info-value {
+  font-size:16px;
+  font-weight:600;
+  font-variant-numeric: lining-nums;
+}
+.info-value.profit {
+  color:var(--positive);
+}
+.info-value.loss {
+  color:var(--negative);
+}
+.asset-detail-notes {
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
+  padding:16px;
+  margin-bottom:24px;
+}
+.notes-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.notes-title {
+  font-size:15px;
+  font-weight:600;
+}
+.notes-add-btn {
+  padding:6px 12px;
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  border-radius:100px;
+  font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.notes-add-btn:hover {
+  transform:scale(1.05);
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+.notes-list {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-height:200px;
+  overflow-y:auto;
+}
+.note-item {
+  background:var(--card);
+  padding:14px;
+  border-radius:var(--radius-xs);
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.note-item:hover {
+  transform:translateX(4px);
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.note-content {
+  font-size:14px;
+  line-height:1.6;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.note-meta {
+  font-size:12px;
+  color:var(--text-muted);
+}
+.asset-detail-actions {
+  display:flex;
+  gap:12px;
+  padding:16px 24px 24px;
+  border-top:1px solid var(--border);
+  position:sticky;
+  bottom:0;
+  background:var(--card);
+}
+.action-btn {
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:var(--radius-sm);
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.action-btn.secondary {
+  background:var(--input-bg);
+  color:var(--text);
+}
+.action-btn.secondary:hover {
+  background:rgba(0,0,0,0.08);
+}
+.action-btn.primary {
+  background:var(--brand);
+  color:#fff;
+}
+.action-btn.primary:hover {
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
 .modal-content {
   width:100%; 
   max-width:430px; 
@@ -1905,6 +2098,70 @@ body {
 
 </div>
 
+<!-- Asset Detail Modal -->
+<div class="modal-overlay asset-detail-modal" id="assetDetailModal">
+  <div class="asset-detail-card">
+    <div class="asset-detail-header">
+      <div class="asset-detail-title">
+        <span class="asset-detail-code" id="detailAssetCode">600519</span>
+        <span class="asset-detail-name" id="detailAssetName">贵州茅台</span>
+      </div>
+      <button class="asset-detail-close" onclick="closeAssetDetail()">×</button>
+    </div>
+    
+    <div class="asset-detail-content">
+      <div class="asset-detail-info">
+        <div class="info-row">
+          <span class="info-label">当前价格</span>
+          <span class="info-value" id="detailPrice">1,916.00</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">持仓成本</span>
+          <span class="info-value" id="detailCost">1,500.00</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">持仓数量</span>
+          <span class="info-value" id="detailQuantity">100</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">盈亏金额</span>
+          <span class="info-value profit" id="detailPnL">+41,600.00</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">盈亏比例</span>
+          <span class="info-value profit" id="detailPnLPct">+27.73%</span>
+        </div>
+      </div>
+      
+      <div class="asset-detail-notes">
+        <div class="notes-header">
+          <span class="notes-title">📝 相关笔记</span>
+          <button class="notes-add-btn" onclick="addNoteForAsset()">+ 添加</button>
+        </div>
+        <div class="notes-list" id="detailNotesList">
+          <div class="note-item">
+            <div class="note-content">"茅台的护城河非常稳固，品牌价值持续提升"</div>
+            <div class="note-meta">2024-01-15 · 第3条相关记录</div>
+          </div>
+          <div class="note-item">
+            <div class="note-content">"关注产能扩张计划，年报显示增长潜力"</div>
+            <div class="note-meta">2024-01-20 · 第2条相关记录</div>
+          </div>
+          <div class="note-item">
+            <div class="note-content">"短期波动不改长期价值投资逻辑"</div>
+            <div class="note-meta">2024-02-05 · 第1条相关记录</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="asset-detail-actions">
+      <button class="action-btn secondary" onclick="editAsset()">✏️ 编辑</button>
+      <button class="action-btn primary" onclick="tradeAsset()">📊 交易</button>
+    </div>
+  </div>
+</div>
+
 <script>
 let currentTab = 'portfolio';
 let sortMenuOpen = false;
@@ -2371,7 +2628,81 @@ function saveRecord(type) {
 }
 
 function openAssetDetail(code) {
-  showToast('查看 ' + code + ' 详情');
+  const modal = document.getElementById('assetDetailModal');
+  const codeEl = document.getElementById('detailAssetCode');
+  const nameEl = document.getElementById('detailAssetName');
+  const priceEl = document.getElementById('detailPrice');
+  const costEl = document.getElementById('detailCost');
+  const qtyEl = document.getElementById('detailQuantity');
+  const pnlEl = document.getElementById('detailPnL');
+  const pnlPctEl = document.getElementById('detailPnLPct');
+  
+  // 根据代码查找资产信息
+  const assetItems = document.querySelectorAll('.asset-item');
+  let assetData = {
+    code: code,
+    name: '未知资产',
+    price: '0.00',
+    pnl: '+0.00',
+    pnlPct: '+0.00%'
+  };
+  
+  assetItems.forEach(item => {
+    if (item.getAttribute('onclick')?.includes(code)) {
+      const codeSpan = item.querySelector('.asset-code');
+      const nameSpan = item.querySelector('.asset-name');
+      const priceSpan = item.querySelector('.asset-price');
+      const pnlSpan = item.querySelector('.asset-pnl');
+      
+      if (codeSpan) assetData.code = codeSpan.textContent;
+      if (nameSpan) assetData.name = nameSpan.textContent;
+      if (priceSpan) assetData.price = priceSpan.textContent;
+      if (pnlSpan) {
+        const pnlText = pnlSpan.textContent;
+        const parts = pnlText.split('·');
+        assetData.pnl = parts[0]?.trim() || '+0.00';
+        assetData.pnlPct = parts[1]?.trim() || '+0.00%';
+      }
+    }
+  });
+  
+  // 填充数据
+  codeEl.textContent = assetData.code;
+  nameEl.textContent = assetData.name;
+  priceEl.textContent = assetData.price;
+  costEl.textContent = '1,500.00'; // 模拟数据
+  qtyEl.textContent = '100'; // 模拟数据
+  pnlEl.textContent = assetData.pnl;
+  pnlPctEl.textContent = assetData.pnlPct;
+  
+  // 判断盈亏颜色
+  const isProfit = !assetData.pnl.startsWith('-');
+  pnlEl.className = isProfit ? 'info-value profit' : 'info-value loss';
+  pnlPctEl.className = isProfit ? 'info-value profit' : 'info-value loss';
+  
+  // 显示模态框
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAssetDetail() {
+  const modal = document.getElementById('assetDetailModal');
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function addNoteForAsset() {
+  showToast('跳转到添加笔记页面');
+  closeAssetDetail();
+}
+
+function editAsset() {
+  showToast('打开编辑资产页面');
+}
+
+function tradeAsset() {
+  showToast('打开交易页面');
+  closeAssetDetail();
 }
 
 function simulateUpload() {
@@ -2426,6 +2757,7 @@ document.addEventListener('click', (e) => {
 document.addEventListener('touchstart', (e) => {
   if (e.target.closest('.modal-overlay') && e.target.classList.contains('modal-overlay')) {
     closeAccountModal();
+    closeAssetDetail();
   }
 });
 </script>
