@@ -365,21 +365,21 @@ body {
 .asset-left { flex:0 0 auto; }
 .asset-code { 
   font-family:var(--font-display); 
-  font-size:16px; 
+  font-size:15px; 
   font-weight:600; 
   color:var(--text); 
   display:block;
   letter-spacing: -0.02em;
 }
 .asset-name { 
-  font-size:12px; 
+  font-size:13px; 
   color:var(--text-muted); 
   display:block; 
-  margin-top:2px; 
+  margin-top:4px; 
 }
 .asset-right { flex:1; text-align:right; }
 .asset-price { 
-  font-size:16px; 
+  font-size:15px; 
   font-weight:600; 
   color:var(--text); 
   display:block;
@@ -1367,13 +1367,13 @@ body {
     <div class="sort-dropdown">
       <span class="sort-label">持仓</span>
       <div class="sort-select" id="sortSelect" onclick="toggleSortMenu()">
-        <span id="sortLabel">按市值排序</span>
+        <span id="sortLabel">市值</span>
         <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
         <div class="sort-menu" id="sortMenu">
-          <div class="sort-option active" onclick="setSort('marketValue','按市值排序',event)">按市值排序</div>
-          <div class="sort-option" onclick="setSort('gainLoss','按盈亏排序',event)">按盈亏排序</div>
-          <div class="sort-option" onclick="setSort('gainLossPercent','按涨跌幅排序',event)">按涨跌幅排序</div>
-          <div class="sort-option" onclick="setSort('name','按名称排序',event)">按名称排序</div>
+          <div class="sort-option active" onclick="setSort('marketValue','市值',event)">市值</div>
+          <div class="sort-option" onclick="setSort('gainLoss','盈亏',event)">盈亏</div>
+          <div class="sort-option" onclick="setSort('gainLossPercent','涨跌幅',event)">涨跌幅</div>
+          <div class="sort-option" onclick="setSort('name','名称',event)">名称</div>
         </div>
       </div>
     </div>
@@ -1721,7 +1721,7 @@ body {
     </div>
 
     <div class="version-info">
-      <span class="version-number">JinJI v1.1.0</span>
+      <span class="version-number">JinJI v1.2.0</span>
       更新于 2026-05-21
     </div>
   </div>
