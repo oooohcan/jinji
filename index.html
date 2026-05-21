@@ -224,7 +224,9 @@ body {
   justify-content:space-between; 
   align-items:center; 
   gap:0;
-  width: 100%;
+  width: 350px;
+  min-width: 350px;
+  max-width: 350px;
 }
 .summary-col { 
   flex:0 1 auto;
@@ -250,9 +252,9 @@ body {
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
-  width: auto;
-  min-width: 80px;
-  max-width: 200px;
+  width: 160px;
+  min-width: 160px;
+  max-width: 160px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
@@ -266,9 +268,9 @@ body {
   color: var(--brand-accent);
   font-variant-numeric: lining-nums;
   text-shadow: 0 2px 12px rgba(212,175,55,0.3);
-  width: auto;
-  min-width: 80px;
-  max-width: 150px;
+  width: 130px;
+  min-width: 130px;
+  max-width: 130px;
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 .summary-col .value.small.privacy-hide {
@@ -365,6 +367,7 @@ body {
   background:var(--card); 
   border-radius:100px; 
   box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  position:relative;
 }
 .sort-type {
   display:flex; 
@@ -2417,7 +2420,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('click', (e) => {
-  if (sortMenuOpen && !e.target.closest('.sort-select')) {
+  if (sortMenuOpen && !e.target.closest('.sort-control')) {
     toggleSortMenu();
   }
 });
