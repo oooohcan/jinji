@@ -224,9 +224,7 @@ body {
   justify-content:space-between; 
   align-items:center; 
   gap:0;
-  width: 350px;
-  min-width: 350px;
-  max-width: 350px;
+  width: 100%;
 }
 .summary-col { 
   flex:0 1 auto;
@@ -252,9 +250,9 @@ body {
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
-  width: 160px;
-  min-width: 160px;
-  max-width: 160px;
+  width: auto;
+  min-width: 80px;
+  max-width: 200px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
@@ -268,9 +266,9 @@ body {
   color: var(--brand-accent);
   font-variant-numeric: lining-nums;
   text-shadow: 0 2px 12px rgba(212,175,55,0.3);
-  width: 130px;
-  min-width: 130px;
-  max-width: 130px;
+  width: auto;
+  min-width: 80px;
+  max-width: 150px;
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 .summary-col .value.small.privacy-hide {
@@ -427,7 +425,8 @@ body {
   border-radius:var(--radius-sm); 
   box-shadow:0 8px 32px rgba(0,0,0,0.08); 
   z-index:50;
-  min-width:160px; 
+  min-width:120px; 
+  max-width:140px;
   overflow:hidden;
   opacity:0; 
   transform:translateY(-8px); 
@@ -1479,9 +1478,9 @@ body {
         </div>
         <div class="sort-divider"></div>
         <div class="sort-direction" id="sortDirection" onclick="toggleSortDirection()">
-          <svg viewBox="0 0 24 28" id="sortDirIcon">
-            <path d="M12 2l5 5H7z" class="arrow-up"/>
-            <path d="M12 26l5-5H7z" class="arrow-down"/>
+          <svg viewBox="0 0 24 24" id="sortDirIcon">
+            <path d="M7 14l5-5 5 5z" class="arrow-up"/>
+            <path d="M7 10l5 5 5-5z" class="arrow-down"/>
           </svg>
         </div>
       </div>
@@ -1983,12 +1982,11 @@ function sortAssets() {
     
     switch (currentSortType) {
       case 'marketValue':
-        // 使用价格作为市值（去除¥符号和逗号）
-        const priceText = priceEl?.textContent.replace(/[¥￥$,，]/g, '').trim() || '0';
-        value = parseFloat(priceText) || 0;
+        // 使用价格作为市值（简化处理）
+        value = parseFloat(priceEl?.textContent.replace(/,/g, '')) || 0;
         break;
       case 'gainLoss':
-        // 从盈亏文本中提取第一个数值
+        // 从盈亏文本中提取数值
         const pnlText = pnlEl?.textContent || '';
         const pnlMatch = pnlText.match(/([+-]?[\d,]+\.?\d*)/);
         value = pnlMatch ? parseFloat(pnlMatch[1].replace(/,/g, '')) : 0;
@@ -2012,8 +2010,8 @@ function sortAssets() {
     if (typeof valA === 'string') {
       // 名称排序
       return currentSortDirection === 1 
-        ? valB.localeCompare(valA, 'zh-CN')  // 降序
-        : valA.localeCompare(valB, 'zh-CN'); // 升序或默认
+        ? valB.localeCompare(valA)  // 降序
+        : valA.localeCompare(valB); // 升序或默认
     }
     
     if (currentSortDirection === 0) {
