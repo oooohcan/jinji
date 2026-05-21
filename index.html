@@ -316,15 +316,16 @@ body {
 .stats-chart-placeholder {
   padding:12px 16px 8px;
 }
-.chart-line {
-  display:flex; align-items:flex-end; gap:6px; height:60px;
-  padding:0 4px;
+.line-chart-container {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  padding: 10px 0;
 }
-.chart-bar {
-  flex:1; background:var(--input-bg); border-radius:4px 4px 0 0;
-  transition:background 0.2s; position:relative;
+.line-chart-svg {
+  width: 100%;
+  height: 100%;
 }
-.chart-bar.active { background:var(--brand); }
 .chart-labels {
   display:flex; justify-content:space-between; padding:4px 4px 0;
   font-size:9px; color:var(--text-muted);
@@ -437,14 +438,15 @@ body {
 }
 .slider-fill {
   position:absolute; left:0; top:0; bottom:0; background:linear-gradient(90deg, var(--brand-light), var(--brand));
-  border-radius:18px; transition:width 0.1s;
+  border-radius:18px; transition:width 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 .slider-thumb {
   position:absolute; top:50%; width:24px; height:24px; background:#fff;
   border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.15); transform:translate(-50%,-50%);
-  cursor:grab; transition:box-shadow 0.2s;
+  cursor:grab; transition:box-shadow 0.2s cubic-bezier(0.4,0,0.2,1), left 0.3s cubic-bezier(0.4,0,0.2,1);
 }
-.slider-thumb:active { box-shadow:0 2px 12px rgba(164,74,63,0.3); cursor:grabbing; }
+.slider-thumb:active { box-shadow:0 4px 16px rgba(164,74,63,0.35); cursor:grabbing;
+}
 .slider-hint {
   display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:4px;
 }
@@ -641,10 +643,73 @@ body {
 .detail-insight-trend { font-size:12px; font-weight:700; margin-top:6px; display:flex; align-items:center; gap:4px; }
 .detail-insight-trend .trend-arrow { font-size:14px; }
 .detail-insight-conflict {
-  background:#FFF8E1; border-radius:var(--radius-xs); padding:8px 12px; margin-top:8px;
-  font-size:11px; color:#F57F17; display:flex; align-items:flex-start; gap:6px;
+    background:#FFF8E1; border-radius:var(--radius-xs); padding:8px 12px; margin-top:8px;
+    font-size:11px; color:#F57F17; display:flex; align-items:flex-start; gap:6px;
 }
-.detail-insight-conflict svg { width:14px; height:14px; fill:#F57F17; flex-shrink:0; margin-top:1px; }
+.detail-insight-conflict svg { width:14px; height:14px; fill:#F57F17; flex-shrink:0; margin-top:1px;
+}
+
+/* Account list styles */
+.account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.account-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--input-bg);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.account-item:active {
+  background: var(--border);
+}
+.account-icon {
+  font-size: 24px;
+}
+.account-info {
+  flex: 1;
+}
+.account-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.account-check {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: transparent;
+  transition: all 0.2s;
+}
+.account-check.active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+/* Version info */
+.version-info {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.version-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
 
 /* ====== Animations ====== */
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -810,14 +875,36 @@ body {
         </div>
       </div>
       <div class="stats-chart-placeholder">
-        <div class="chart-line">
-          <div class="chart-bar" style="height:30%"></div>
-          <div class="chart-bar" style="height:45%"></div>
-          <div class="chart-bar" style="height:25%"></div>
-          <div class="chart-bar" style="height:60%"></div>
-          <div class="chart-bar" style="height:40%"></div>
-          <div class="chart-bar" style="height:75%"></div>
-          <div class="chart-bar active" style="height:85%"></div>
+        <div class="line-chart-container">
+          <svg class="line-chart-svg" viewBox="0 0 100 60" preserveAspectRatio="none">
+            <!-- Background grid -->
+            <line x1="0" y1="15" x2="100" y2="15" stroke="#f0f0f0" stroke-width="0.5"/>
+            <line x1="0" y1="30" x2="100" y2="30" stroke="#f0f0f0" stroke-width="0.5"/>
+            <line x1="0" y1="45" x2="100" y2="45" stroke="#f0f0f0" stroke-width="0.5"/>
+            
+            <!-- Area fill -->
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#A44A3F" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#A44A3F" stop-opacity="0.05"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,42 L14,35 L28,45 L42,25 L56,30 L70,18 L84,12 L100,10 L100,60 L0,60 Z" fill="url(#lineGradient)"/>
+            
+            <!-- Line -->
+            <path d="M0,42 L14,35 L28,45 L42,25 L56,30 L70,18 L84,12 L100,10" 
+                  fill="none" stroke="#A44A3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            
+            <!-- Data points -->
+            <circle cx="0" cy="42" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+            <circle cx="14" cy="35" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+            <circle cx="28" cy="45" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+            <circle cx="42" cy="25" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+            <circle cx="56" cy="30" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+            <circle cx="70" cy="18" r="2" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+            <circle cx="84" cy="12" r="3" fill="#A44A3F" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="100" cy="10" r="2.5" fill="#fff" stroke="#A44A3F" stroke-width="1.5"/>
+          </svg>
         </div>
         <div class="chart-labels">
           <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span>
@@ -1130,31 +1217,10 @@ body {
     <div class="me-section">
       <div class="me-section-title">账户管理</div>
       <div class="me-menu">
-        <div class="me-menu-item" onclick="showToast('养老金账户')">
+        <div class="me-menu-item" onclick="openAccountModal()">
           <div class="me-menu-left">
             <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span class="me-menu-label">养老金账户</span>
-          </div>
-          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-        </div>
-        <div class="me-menu-item" onclick="showToast('激进短线账户')">
-          <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span class="me-menu-label">激进短线账户</span>
-          </div>
-          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-        </div>
-        <div class="me-menu-item" onclick="showToast('招行账户')">
-          <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span class="me-menu-label">招行账户</span>
-          </div>
-          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-        </div>
-        <div class="me-menu-item" onclick="showToast('新增账户')">
-          <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            <span class="me-menu-label" style="color:var(--brand);">新增账户</span>
+            <span class="me-menu-label">管理账户</span>
           </div>
           <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
@@ -1178,13 +1244,7 @@ body {
           </div>
           <span style="font-size:12px;color:var(--text-muted);">CNY</span>
         </div>
-        <div class="me-menu-item" onclick="showToast('数据统计')">
-          <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-            <span class="me-menu-label">数据统计</span>
-          </div>
-          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-        </div>
+
       </div>
     </div>
 
@@ -1205,6 +1265,11 @@ body {
           </div>
         </div>
       </div>
+    </div>
+    
+    <div class="version-info">
+      <div class="version-number">v1.0.0</div>
+      <div>更新于 2024-01-01</div>
     </div>
   </div>
 
@@ -1238,6 +1303,53 @@ body {
         </button>
       </div>
       <div class="modal-body" id="assetDetailBody">
+      </div>
+    </div>
+  </div>
+  
+  <!-- ====== Account Management Modal ====== -->
+  <div class="modal-overlay" id="accountModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title">账户管理</span>
+        <button class="modal-close" onclick="closeAccountModal()">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="account-list">
+          <div class="account-item" onclick="selectAccountFromModal(this, 'all')">
+            <div class="account-icon">💰</div>
+            <div class="account-info">
+              <div class="account-name">全部账户</div>
+            </div>
+            <div class="account-check active">✓</div>
+          </div>
+          <div class="account-item" onclick="selectAccountFromModal(this, 'acc-1')">
+            <div class="account-icon">🏦</div>
+            <div class="account-info">
+              <div class="account-name">养老金账户</div>
+            </div>
+            <div class="account-check"></div>
+          </div>
+          <div class="account-item" onclick="selectAccountFromModal(this, 'acc-2')">
+            <div class="account-icon">📈</div>
+            <div class="account-info">
+              <div class="account-name">激进短线</div>
+            </div>
+            <div class="account-check"></div>
+          </div>
+          <div class="account-item" onclick="selectAccountFromModal(this, 'acc-3')">
+            <div class="account-icon">💳</div>
+            <div class="account-info">
+              <div class="account-name">招行账户</div>
+            </div>
+            <div class="account-check"></div>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%; margin-top:16px;" onclick="showToast('新增账户功能')">
+          + 新增账户
+        </button>
       </div>
     </div>
   </div>
@@ -1534,6 +1646,38 @@ function closeModal() {
   document.getElementById('assetDetailModal').classList.remove('show');
 }
 
+function openAccountModal() {
+  document.getElementById('accountModal').classList.add('show');
+}
+
+function closeAccountModal() {
+  document.getElementById('accountModal').classList.remove('show');
+}
+
+let selectedAccountId = 'all';
+function selectAccountFromModal(el, id) {
+  selectedAccountId = id;
+  // 更新所有勾选状态
+  document.querySelectorAll('#accountModal .account-check').forEach(check => {
+    check.classList.remove('active');
+  });
+  el.querySelector('.account-check').classList.add('active');
+  // 更新首页的账户芯片
+  updateAccountChips(id);
+  showToast('已切换账户');
+  setTimeout(() => closeAccountModal(), 300);
+}
+
+function updateAccountChips(id) {
+  const chips = document.querySelectorAll('.account-chips .chip');
+  chips.forEach(chip => {
+    chip.classList.remove('active');
+    if (chip.getAttribute('onclick').includes(`'${id}'`)) {
+      chip.classList.add('active');
+    }
+  });
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1544,34 +1688,119 @@ function showToast(msg) {
 // Slider interaction
 document.querySelectorAll('.slider-track').forEach(track => {
   let isDragging = false;
+  let lastY = null;
+  let multiplier = 1;
   const thumb = track.querySelector('.slider-thumb');
   const fill = track.querySelector('.slider-fill');
   const display = track.parentElement.querySelector('.slider-value');
+  let currentPct = parseFloat(thumb.style.left) / 100 || 0.5; // 默认50%
 
-  function updateSlider(clientX) {
+  function updateSlider(clientX, animate = true) {
     const rect = track.getBoundingClientRect();
     let pct = (clientX - rect.left) / rect.width;
     pct = Math.max(0, Math.min(1, pct));
+    currentPct = pct;
+    
+    // 控制动画
+    if (!animate) {
+      fill.style.transition = 'none';
+      thumb.style.transition = 'none';
+    } else {
+      fill.style.transition = 'width 0.3s cubic-bezier(0.4,0,0.2,1)';
+      thumb.style.transition = 'left 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s cubic-bezier(0.4,0,0.2,1)';
+    }
+    
     fill.style.width = (pct * 100) + '%';
     thumb.style.left = (pct * 100) + '%';
+    
     if (display) {
       const id = track.id;
       if (id === 'priceSlider') {
         const val = Math.round(pct * 5000 * 100) / 100;
-        display.textContent = val.toFixed(2);
+        display.textContent = (val * multiplier).toFixed(2);
       } else if (id === 'sharesSlider') {
         const val = Math.round(pct * 100);
-        display.textContent = val;
+        display.textContent = Math.max(1, val * multiplier);
       }
     }
   }
 
-  track.addEventListener('mousedown', e => { isDragging = true; updateSlider(e.clientX); });
-  track.addEventListener('touchstart', e => { isDragging = true; updateSlider(e.touches[0].clientX); }, {passive:true});
-  document.addEventListener('mousemove', e => { if(isDragging) updateSlider(e.clientX); });
-  document.addEventListener('touchmove', e => { if(isDragging) updateSlider(e.touches[0].clientX); }, {passive:true});
-  document.addEventListener('mouseup', () => isDragging = false);
-  document.addEventListener('touchend', () => isDragging = false);
+  function handleVerticalMove(deltaY) {
+    const prevMultiplier = multiplier;
+    if (deltaY > 10) {
+      multiplier = Math.max(1, multiplier / 2);
+    } else if (deltaY < -10) {
+      multiplier = Math.min(16, multiplier * 2);
+    }
+    if (prevMultiplier !== multiplier) {
+      showToast(`倍数: x${multiplier}`);
+      updateSliderFromPct();
+    }
+  }
+
+  function updateSliderFromPct() {
+    fill.style.width = (currentPct * 100) + '%';
+    thumb.style.left = (currentPct * 100) + '%';
+    if (display) {
+      const id = track.id;
+      if (id === 'priceSlider') {
+        const val = Math.round(currentPct * 5000 * 100) / 100;
+        display.textContent = (val * multiplier).toFixed(2);
+      } else if (id === 'sharesSlider') {
+        const val = Math.round(currentPct * 100);
+        display.textContent = Math.max(1, val * multiplier);
+      }
+    }
+  }
+
+  track.addEventListener('mousedown', e => { 
+    isDragging = true; 
+    lastY = e.clientY;
+    updateSlider(e.clientX, false); 
+  });
+  track.addEventListener('touchstart', e => { 
+    isDragging = true; 
+    lastY = e.touches[0].clientY;
+    updateSlider(e.touches[0].clientX, false); 
+  }, {passive:true});
+  
+  document.addEventListener('mousemove', e => { 
+    if(isDragging) {
+      if (lastY !== null) {
+        const deltaY = e.clientY - lastY;
+        if (Math.abs(deltaY) > 20) {
+          handleVerticalMove(deltaY);
+          lastY = e.clientY;
+        }
+      }
+      updateSlider(e.clientX, false); 
+    }
+  });
+  document.addEventListener('touchmove', e => { 
+    if(isDragging) {
+      const touch = e.touches[0];
+      if (lastY !== null) {
+        const deltaY = touch.clientY - lastY;
+        if (Math.abs(deltaY) > 20) {
+          handleVerticalMove(deltaY);
+          lastY = touch.clientY;
+        }
+      }
+      updateSlider(touch.clientX, false); 
+    }
+  }, {passive:true});
+  
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    lastY = null;
+  });
+  document.addEventListener('touchend', () => {
+    isDragging = false;
+    lastY = null;
+  });
+  
+  // 初始化显示
+  updateSliderFromPct();
 });
 </script>
 </body>
