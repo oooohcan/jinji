@@ -178,7 +178,7 @@ body {
 
 /* Portfolio */
 .summary-card {
-  background: linear-gradient(160deg, #2a2a2a 0%, #1a1a1a 50%, #0d0d0d 100%);
+  background: linear-gradient(145deg, #8B3A31 0%, #6B2D26 40%, #5A2520 100%);
   border-radius: 0 0 var(--radius) var(--radius);
   padding: 32px 24px 28px;
   color: #fff;
@@ -188,11 +188,11 @@ body {
 .summary-card::before {
   content: '';
   position: absolute;
-  top: -30%;
-  right: -10%;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(ellipse at center, rgba(212,175,55,0.08) 0%, transparent 60%);
+  top: -20%;
+  right: -15%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(212,175,55,0.06) 30%, transparent 70%);
   pointer-events: none;
 }
 .summary-card::after {
@@ -202,7 +202,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 30%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 25%, rgba(0,0,0,0.15) 100%);
   pointer-events: none;
 }
 .summary-header { 
@@ -236,12 +236,14 @@ body {
   font-size:36px; 
   font-weight:600;
   letter-spacing: -0.03em;
+  font-variant-numeric: lining-nums;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .summary-col .value.small { 
   font-size:22px; 
   font-weight:600; 
   color: var(--brand-accent);
+  font-variant-numeric: lining-nums;
   text-shadow: 0 2px 12px rgba(212,175,55,0.3);
 }
 .summary-divider { width:1px; height:60px; background:rgba(255,255,255,0.1); }
@@ -399,6 +401,7 @@ body {
   color:var(--text); 
   display:block;
   letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums;
 }
 .asset-pnl { 
   font-size:13px; 
@@ -451,6 +454,7 @@ body {
   font-weight:600; 
   color:var(--text);
   letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums;
 }
 .stats-label { 
   font-size:11px; 
@@ -598,6 +602,7 @@ body {
   outline: none;
   padding: 0;
   letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums;
 }
 .slider-unit { 
   font-size:13px; 
