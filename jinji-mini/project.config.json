@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": ".",
   "projectname": "jinji",
-  "appid": "wx8de41eeff9fb4587",
+  "appid": "wx2d4814196fe63623",
   "condition": {
     "miniprogram": {
       "list": [
@@ -41,5 +41,6 @@
     "ignore": [],
     "include": []
   },
-  "editorSetting": {}
+  "editorSetting": {},
+  "libVersion": "3.15.2"
 }

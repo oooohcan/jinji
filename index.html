@@ -73,6 +73,11 @@ body {
   pointer-events: auto;
 }
 .page::-webkit-scrollbar { display:none; }
+#page-portfolio {
+  background:
+    linear-gradient(180deg, rgba(164,74,63,0.06) 0%, rgba(250,249,247,0) 260px),
+    var(--bg);
+}
 
 .tab-bar {
   position: fixed;
@@ -155,7 +160,7 @@ body {
   transition: all 0.3s;
   letter-spacing: -0.01em;
 }
-.input-field:focus { 
+.input-field:focus {
   background: #fff;
   box-shadow: 0 0 0 2px var(--brand);
 }
@@ -184,151 +189,178 @@ body {
 
 /* Portfolio */
 .summary-card {
-  background: linear-gradient(145deg, #A44A3F 0%, #8B3A31 50%, #6B2D26 100%);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.58) 100%),
+    linear-gradient(135deg, rgba(164,74,63,0.16), rgba(212,175,55,0.12));
   border-radius: 0 0 var(--radius) var(--radius);
-  padding: 36px 24px 32px;
-  color: #fff;
+  padding: 30px 24px 24px;
+  color: var(--text);
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid rgba(164,74,63,0.12);
+  box-shadow: 0 12px 26px rgba(164,74,63,0.09);
+  margin-bottom: 10px;
 }
 .summary-card::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  right: -15%;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 30%, transparent 70%);
-  pointer-events: none;
-}
-.summary-card::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 30%, rgba(0,0,0,0.1) 100%);
+  height: 6px;
+  background: linear-gradient(90deg, var(--brand-dark), var(--brand), var(--brand-accent));
   pointer-events: none;
 }
-.summary-header { 
-  display:flex; 
-  justify-content:space-between; 
-  align-items:flex-start; 
-  gap:16px; 
+.summary-card::after {
+  content: none;
+}
+.summary-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
   position: relative;
   z-index: 1;
   width: 100%;
 }
 .summary-content {
   flex: 1;
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
-  gap:0;
+  display:grid;
+  grid-template-columns:minmax(158px, 1fr) 1px 104px;
+  align-items:center;
+  column-gap:14px;
   width: 100%;
+  min-width:0;
 }
-.summary-col { 
-  flex:0 1 auto;
-  width: auto;
+.summary-col {
   min-width: 0;
 }
 .summary-col:last-of-type {
   text-align: right;
 }
-.summary-col .label { 
-  color: rgba(255,255,255,0.5); 
-  font-size:12px; 
-  display:block; 
-  margin-bottom:8px; 
+.summary-col .label {
+  color: var(--text-muted);
+  font-size:12px;
+  display:block;
+  margin-bottom:8px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
 }
-.summary-col .value { 
-  color:#fff; 
-  font-family:var(--font-display); 
-  font-size:36px; 
+.summary-col .value {
+  display:block;
+  color:var(--brand-dark);
+  font-family:var(--font-display);
+  font-size:36px;
   font-weight:600;
   letter-spacing: -0.03em;
   font-variant-numeric: lining-nums;
-  width: auto;
-  min-width: 80px;
-  max-width: 200px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  width: 100%;
+  min-width: 0;
+  text-shadow: none;
   transition: opacity 0.3s ease, filter 0.3s ease;
+  white-space:nowrap;
 }
 .summary-col .value.privacy-hide {
   opacity: 0.3;
   filter: blur(2px);
 }
-.summary-col .value.small { 
-  font-size:22px; 
-  font-weight:600; 
-  color: var(--brand-accent);
+.summary-col .value.small {
+  display:block;
+  font-size:22px;
+  font-weight:600;
+  color: var(--positive);
   font-variant-numeric: lining-nums;
-  text-shadow: 0 2px 12px rgba(212,175,55,0.3);
-  width: auto;
-  min-width: 80px;
-  max-width: 150px;
+  text-shadow: none;
+  width: 100%;
+  min-width: 0;
   transition: opacity 0.3s ease, filter 0.3s ease;
+  white-space:nowrap;
 }
 .summary-col .value.small.privacy-hide {
   opacity: 0.3;
   filter: blur(2px);
 }
-.summary-divider { 
-  width:1px; 
-  height:60px; 
-  background:rgba(255,255,255,0.1); 
+.summary-divider {
+  width:1px;
+  height:60px;
+  background:rgba(164,74,63,0.12);
   align-self:center;
-  flex-shrink: 0;
-  margin: 0 16px;
+  margin:0;
 }
 .privacy-toggle {
-  width:36px; 
+  width:36px;
   height:36px;
-  background:rgba(255,255,255,0.08); 
-  border:none; 
+  background:rgba(164,74,63,0.08);
+  border:none;
   border-radius:50%;
-  cursor:pointer; 
-  display:flex; 
-  align-items:center; 
+  cursor:pointer;
+  display:flex;
+  align-items:center;
   justify-content:center;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   flex-shrink: 0;
 }
-.privacy-toggle:active { background: rgba(255,255,255,0.15); transform:scale(0.95); }
-.privacy-toggle svg { 
-  width:18px; 
-  height:18px; 
-  fill:rgba(255,255,255,0.75);
+.privacy-toggle:active { background: rgba(164,74,63,0.14); transform:scale(0.95); }
+.privacy-toggle svg {
+  width:18px;
+  height:18px;
+  fill:var(--brand);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.privacy-toggle.active svg { 
-  fill:#fff; 
+.privacy-toggle.active svg {
+  fill:var(--brand-dark);
 }
 .privacy-toggle.active {
-  background:rgba(255,255,255,0.15);
+  background:rgba(164,74,63,0.14);
 }
 
+.summary-actions {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+  position:relative;
+  z-index:1;
+}
+.summary-add-btn {
+  border:none;
+  border-radius:100px;
+  background:var(--brand);
+  color:#fff;
+  padding:8px 14px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  font-family:var(--font-body);
+  white-space:nowrap;
+  transition:all 0.2s ease;
+}
+.summary-add-btn:active {
+  transform:scale(0.96);
+  background:var(--brand-dark);
+}
 .filter-bar {
-  background: var(--bg);
-  padding: 16px;
+  background: transparent;
+  padding: 0;
   border-bottom: none;
+  min-width: 0;
+  overflow: hidden;
 }
 .account-chips {
   display: flex;
   gap: 8px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  padding: 2px;
+  scrollbar-width: none;
 }
 .account-chips::-webkit-scrollbar { display:none; }
 .chip {
   flex-shrink: 0;
-  padding: 10px 18px;
-  background: var(--card);
-  border: none;
+  padding: 9px 17px;
+  background: #fbfaf8;
+  border: 1px solid rgba(164,74,63,0.05);
   border-radius: 100px;
   font-size: 13px;
   color: var(--text-secondary);
@@ -336,49 +368,91 @@ body {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   white-space: nowrap;
   font-weight: 500;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  box-shadow: none;
 }
-.chip.active { 
-  background: var(--brand); 
-  color: #fff; 
+.chip.active {
+  background: var(--brand);
+  color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-color: var(--brand);
+  box-shadow: 0 8px 16px rgba(164,74,63,0.18);
 }
-.chip.add-account { 
-  font-size: 20px; 
-  padding: 6px 14px; 
+.chip.add-account {
+  font-size: 20px;
+  padding: 6px 14px;
   line-height: 1;
   background: transparent;
   border: 1.5px dashed var(--border);
 }
 
-.sort-dropdown {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 16px 16px;
-  background: var(--bg);
+.holdings-toolbar {
+  margin: 0 16px;
+  padding: 12px 16px 10px;
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(164,74,63,0.06);
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 8px 18px rgba(164,74,63,0.05);
   position: relative;
 }
-.sort-label { font-size:12px; color:var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
-.sort-control {
-  display:flex; 
-  align-items:center; 
-  background:var(--card); 
-  border-radius:100px; 
-  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+.holdings-toolbar-top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.holdings-title {
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  min-width:0;
+}
+.sort-label {
+  flex: 0 0 auto;
+  font-family:var(--font-display);
+  font-size:18px;
+  color:var(--text);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.holdings-count {
+  font-size:12px;
+  color:var(--text-muted);
+  white-space:nowrap;
+}
+.holdings-toolbar .filter-bar {
   position:relative;
 }
+.holdings-toolbar .filter-bar::after {
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  width:28px;
+  height:100%;
+  background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9));
+  pointer-events:none;
+}
+.sort-control {
+  display:flex;
+  align-items:center;
+  background:var(--card);
+  border-radius:100px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  position:relative;
+  flex:0 0 auto;
+}
 .sort-type {
-  display:flex; 
-  align-items:center; 
-  gap:6px; 
-  cursor:pointer; 
+  display:flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
   padding:10px 14px;
-  font-size:14px; 
+  font-size:14px;
   color:var(--text);
-  position:relative; 
-  transition:all 0.3s; 
+  position:relative;
+  transition:all 0.3s;
   font-weight:500;
   border-radius:100px;
 }
@@ -389,61 +463,61 @@ body {
   background:rgba(0,0,0,0.08);
 }
 .sort-direction {
-  display:flex; 
-  align-items:center; 
-  justify-content:center; 
-  cursor:pointer; 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
   padding:10px 14px;
   transition:all 0.2s;
   border-radius:100px;
   min-width:44px;
 }
 .sort-direction:hover { background:rgba(0,0,0,0.03); }
-.sort-direction svg { 
-  width:16px; 
-  height:16px; 
-  fill:var(--text-secondary); 
-  transition:all 0.2s;
-}
-.sort-direction svg .arrow-up { 
+.sort-direction svg {
+  width:16px;
+  height:16px;
   fill:var(--text-secondary);
   transition:all 0.2s;
 }
-.sort-direction svg .arrow-down { 
+.sort-direction svg .arrow-up {
   fill:var(--text-secondary);
   transition:all 0.2s;
 }
-.sort-direction.active-asc svg .arrow-up { 
+.sort-direction svg .arrow-down {
+  fill:var(--text-secondary);
+  transition:all 0.2s;
+}
+.sort-direction.active-asc svg .arrow-up {
   fill:var(--brand);
 }
-.sort-direction.active-desc svg .arrow-down { 
+.sort-direction.active-desc svg .arrow-down {
   fill:var(--brand);
 }
 .sort-menu {
-  position:absolute; 
-  top:calc(100% + 8px); 
-  left: -20px; 
+  position:absolute;
+  top:calc(100% + 8px);
+  left: -20px;
   background:var(--card);
-  border-radius:var(--radius-sm); 
-  box-shadow:0 8px 32px rgba(0,0,0,0.08); 
+  border-radius:var(--radius-sm);
+  box-shadow:0 8px 32px rgba(0,0,0,0.08);
   z-index:50;
-  min-width:120px; 
+  min-width:120px;
   max-width:140px;
   overflow:hidden;
-  opacity:0; 
-  transform:translateY(-8px); 
+  opacity:0;
+  transform:translateY(-8px);
   pointer-events:none;
   transition:all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .sort-menu.show { opacity:1; transform:translateY(0); pointer-events:auto; }
 .sort-option {
-  padding:14px 20px; 
-  font-size:14px; 
-  cursor:pointer; 
+  padding:14px 20px;
+  font-size:14px;
+  cursor:pointer;
   transition:all 0.2s;
-  color:var(--text); 
-  display:flex; 
-  align-items:center; 
+  color:var(--text);
+  display:flex;
+  align-items:center;
   justify-content:space-between;
   font-weight: 400;
 }
@@ -455,194 +529,348 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
+  padding: 16px 18px;
   background: var(--card);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(164,74,63,0.07);
   cursor: pointer;
   transition: all 0.2s;
 }
-.asset-item:first-child { border-top: 1px solid var(--border); }
-.asset-item:active { background: var(--input-bg); }
-.asset-left { flex:0 0 auto; }
-.asset-code { 
-  font-family:var(--font-display); 
-  font-size:15px; 
-  font-weight:600; 
-  color:var(--text); 
+.asset-item:first-child { border-top: 1px solid rgba(164,74,63,0.05); }
+.asset-item:last-child { border-bottom:none; }
+.asset-item:active { background: #faf5f2; }
+#assetList {
+  margin: 0 16px 22px;
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.06);
+  border-top:none;
+  border-radius:0 0 18px 18px;
+  overflow:hidden;
+  box-shadow:0 10px 22px rgba(164,74,63,0.05);
+}
+.asset-empty-state {
+  display:none;
+  padding:30px 22px 34px;
+  text-align:center;
+  background:linear-gradient(180deg, #fff 0%, #fbfaf8 100%);
+}
+.asset-empty-state.show {
+  display:block;
+}
+.asset-empty-title {
+  font-family:var(--font-display);
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.asset-empty-copy {
+  font-size:13px;
+  color:var(--text-muted);
+  line-height:1.6;
+  margin-bottom:18px;
+}
+.asset-empty-action {
+  border:none;
+  border-radius:100px;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+  padding:11px 18px;
+  font-size:13px;
+  font-weight:700;
+  font-family:var(--font-body);
+  cursor:pointer;
+}
+.asset-empty-action:active {
+  transform:scale(0.98);
+}
+.asset-left {
+  flex:0 0 auto;
+  min-width:0;
+}
+.asset-meta {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:7px;
+}
+.asset-type-badge {
+  padding:3px 8px;
+  border-radius:100px;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+  font-size:11px;
+  font-weight:600;
+}
+.asset-hold-days {
+  font-size:11px;
+  color:var(--text-muted);
+}
+.asset-code {
+  font-family:var(--font-display);
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
   display:block;
   letter-spacing: -0.02em;
 }
-.asset-name { 
-  font-size:13px; 
-  color:var(--text-muted); 
-  display:block; 
-  margin-top:4px; 
+.asset-name {
+  font-size:13px;
+  color:var(--text-muted);
+  display:block;
+  margin-top:4px;
 }
-.asset-right { flex:1; text-align:right; }
-.asset-price { 
-  font-size:15px; 
-  font-weight:600; 
-  color:var(--text); 
+.asset-right {
+  flex:1;
+  text-align:right;
+  min-width:128px;
+}
+.asset-value-label {
+  display:block;
+  font-size:10px;
+  color:var(--text-muted);
+  margin-bottom:2px;
+}
+.asset-price {
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
   display:block;
   letter-spacing: -0.02em;
   font-variant-numeric: lining-nums;
 }
-.asset-pnl { 
-  font-size:13px; 
-  font-weight:500; 
-  display:block; 
-  margin-top:4px; 
+.asset-last-price {
+  display:block;
+  margin-top:4px;
+  color:var(--text-muted);
+  font-size:11px;
+}
+.asset-pnl {
+  font-size:13px;
+  font-weight:500;
+  display:block;
+  margin-top:4px;
 }
 .asset-pnl.up { color: var(--positive); }
 .asset-pnl.down { color: var(--negative); }
 
 /* Stats Panel */
 .stats-panel {
-  background:var(--card); 
-  margin:0 16px 16px; 
-  border-radius:var(--radius);
-  box-shadow:var(--shadow); 
+  background:var(--card);
+  margin:0 16px 12px;
+  border-radius:18px;
+  box-shadow:0 8px 20px rgba(164,74,63,0.06);
   overflow:hidden;
+  border:1px solid rgba(164,74,63,0.05);
 }
 .stats-panel-header {
-  display:flex; 
-  justify-content:space-between; 
+  display:flex;
+  justify-content:space-between;
   align-items:center;
-  padding:20px 24px 12px;
+  padding:16px 20px 8px;
 }
-.stats-panel-title { 
-  font-family:var(--font-display); 
-  font-size:18px; 
+.stats-panel-title {
+  font-family:var(--font-display);
+  font-size:18px;
   font-weight:600;
   letter-spacing: -0.02em;
 }
-.stats-panel-subtitle { 
-  font-size:13px; 
-  color:var(--text-muted);
-  font-weight: 400;
+.scope-info-wrap {
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.scope-info-btn {
+  width:24px;
+  height:24px;
+  border:none;
+  border-radius:50%;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:var(--font-body);
+  line-height:1;
+}
+.scope-info-btn:active {
+  transform:scale(0.94);
+  background:rgba(164,74,63,0.14);
+}
+.scope-tip {
+  position:absolute;
+  right:0;
+  top:30px;
+  width:220px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(43,42,39,0.94);
+  color:#fff;
+  font-size:12px;
+  line-height:1.45;
+  box-shadow:0 8px 20px rgba(0,0,0,0.16);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-4px);
+  transition:all 0.2s ease;
+  z-index:30;
+}
+.scope-tip.show {
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
 }
 .stats-grid {
-  display:grid; 
+  display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:1px; 
-  background:var(--border);
+  gap:1px;
+  background:rgba(164,74,63,0.08);
+  margin:0 16px 10px;
+  border-radius:14px;
+  overflow:hidden;
 }
 .stats-item {
-  background:var(--card); 
-  padding:20px 12px; 
+  background:var(--card);
+  padding:12px 6px 11px;
   text-align:center;
 }
-.stats-value { 
-  font-family:var(--font-display); 
-  font-size:18px; 
-  font-weight:600; 
+.stats-value {
+  font-family:var(--font-display);
+  font-size:17px;
+  font-weight:600;
   color:var(--text);
   letter-spacing: -0.02em;
   font-variant-numeric: lining-nums;
 }
-.stats-label { 
-  font-size:11px; 
-  color:var(--text-muted); 
+.stats-label {
+  font-size:11px;
+  color:var(--text-muted);
   margin-top:6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.stats-trend { 
-  font-size:12px; 
-  font-weight:500; 
-  margin-top:4px; 
+.stats-trend {
+  font-size:12px;
+  font-weight:500;
+  margin-top:4px;
 }
 .stats-trend.up { color:var(--positive); }
 .stats-trend.down { color:var(--negative); }
 .stats-trend.neutral { color:var(--text-secondary); }
-
-.stats-chart-placeholder {
-  padding:16px 24px 12px;
+.stats-kline {
+  margin:0 16px 14px;
+  padding:8px 10px 6px;
+  border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,248,245,0.78));
+  border:1px solid rgba(164,74,63,0.06);
 }
-.line-chart-container {
-  position: relative;
-  width: 100%;
-  height: 140px;
-  padding: 10px 0;
-}
-.line-chart-svg {
-  width: 100%;
-  height: 100%;
-}
-.chart-labels {
-  display:flex; 
-  justify-content:space-between; 
-  padding:8px 2px 0;
-  font-size:11px; 
+.chart-legend {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:12px;
+  margin-bottom:2px;
   color:var(--text-muted);
+  font-size:10px;
+  white-space:nowrap;
 }
-
-.stats-bulletin {
-  display:flex; 
-  align-items:center; 
-  gap:10px;
-  padding:14px 24px 20px;
-  border-top:1px solid var(--border);
+.legend-item {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
 }
-.bulletin-dot {
-  width:6px; 
-  height:6px; 
-  border-radius:50%; 
+.legend-mark {
+  width:12px;
+  height:3px;
+  border-radius:999px;
+  background:var(--brand);
+}
+.legend-mark.return {
   background:var(--brand-accent);
-  animation:pulse 2s infinite; 
-  flex-shrink:0;
 }
-.bulletin-text { 
-  font-size:13px; 
-  color:var(--text-secondary);
-  line-height: 1.5;
+.kline-chart-svg {
+  display:block;
+  width:100%;
+  height:76px;
+}
+.kline-grid {
+  stroke:rgba(164,74,63,0.08);
+  stroke-width:0.7;
+}
+.kline-axis-label {
+  font-size:7px;
+  fill:var(--text-muted);
+  font-family:var(--font-body);
+  letter-spacing:0.04em;
+}
+.kline-value-label {
+  font-size:7px;
+  font-weight:700;
+  font-family:var(--font-body);
+}
+.return-line {
+  fill:none;
+  stroke:var(--brand-accent);
+  stroke-width:1.35;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.return-dot {
+  fill:var(--brand-accent);
+  stroke:#fff;
+  stroke-width:0.8;
+}
+.return-label {
+  font-size:7px;
+  font-weight:700;
+  font-family:var(--font-body);
+  fill:var(--brand-accent);
 }
 
 /* Record Page */
 .record-header {
   padding: 28px 24px 12px;
 }
-.record-title { 
-  font-family:var(--font-display); 
-  font-size:28px; 
+.record-title {
+  font-family:var(--font-display);
+  font-size:28px;
   font-weight:600;
   letter-spacing: -0.03em;
 }
 
 .mode-switch {
-  display:flex; 
-  position:relative; 
-  background:var(--input-bg); 
-  border-radius:14px; 
+  display:flex;
+  position:relative;
+  background:var(--input-bg);
+  border-radius:14px;
   padding:4px;
   margin:0 16px 20px;
 }
 .mode-indicator {
-  position:absolute; 
-  top:4px; 
-  left:4px; 
-  height:calc(100% - 8px); 
+  position:absolute;
+  top:4px;
+  left:4px;
+  height:calc(100% - 8px);
   width:calc(50% - 4px);
-  background:var(--card); 
-  border-radius:12px; 
+  background:var(--card);
+  border-radius:12px;
   transition:transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index:0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .mode-indicator.right { transform:translateX(100%); }
 .mode-btn {
-  flex:1; 
-  padding:12px 0; 
-  border-radius:12px; 
-  font-size:14px; 
+  flex:1;
+  padding:12px 0;
+  border-radius:12px;
+  font-size:14px;
   font-weight:500;
-  cursor:pointer; 
-  transition:all 0.3s; 
-  color:var(--text-muted); 
+  cursor:pointer;
+  transition:all 0.3s;
+  color:var(--text-muted);
   border:none;
-  background:transparent; 
-  font-family:var(--font-body); 
-  position:relative; 
+  background:transparent;
+  font-family:var(--font-body);
+  position:relative;
   z-index:1;
   text-align:center;
 }
@@ -652,11 +880,11 @@ body {
   margin: 0 16px 24px;
 }
 .form-group { margin-bottom:18px; }
-.form-label { 
-  font-size:12px; 
-  color:var(--text-muted); 
-  margin-bottom:8px; 
-  display:block; 
+.form-label {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-bottom:8px;
+  display:block;
   font-weight:500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -666,11 +894,11 @@ body {
 
 .slider-group { position:relative; }
 .slider-display {
-  display:flex; 
-  align-items:center; 
+  display:flex;
+  align-items:center;
   justify-content:space-between;
-  background:var(--input-bg); 
-  border-radius:var(--radius-sm); 
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
   padding:14px 18px;
 }
 .slider-input {
@@ -688,79 +916,79 @@ body {
   letter-spacing: -0.02em;
   font-variant-numeric: lining-nums;
 }
-.slider-unit { 
-  font-size:13px; 
-  color:var(--text-muted); 
+.slider-unit {
+  font-size:13px;
+  color:var(--text-muted);
   font-weight: 400;
 }
 .slider-track {
-  width:100%; 
-  height:44px; 
-  position:relative; 
+  width:100%;
+  height:44px;
+  position:relative;
   margin-top:12px;
-  background:var(--input-bg); 
-  border-radius:22px; 
+  background:var(--input-bg);
+  border-radius:22px;
   cursor:pointer;
   touch-action:none;
   overflow:hidden;
 }
 .slider-fill {
-  position:absolute; 
-  left:0; 
-  top:0; 
-  bottom:0; 
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
   background:linear-gradient(90deg, var(--brand-light), var(--brand));
-  border-radius:22px; 
+  border-radius:22px;
   opacity: 0.15;
 }
 .slider-thumb {
-  position:absolute; 
-  top:50%; 
-  width:34px; 
-  height:34px; 
+  position:absolute;
+  top:50%;
+  width:34px;
+  height:34px;
   background:#fff;
-  border-radius:50%; 
-  box-shadow:0 3px 12px rgba(164,74,63,0.25); 
+  border-radius:50%;
+  box-shadow:0 3px 12px rgba(164,74,63,0.25);
   transform:translate(-50%,-50%);
-  cursor:grab; 
+  cursor:grab;
   transition:box-shadow 0.2s ease, transform 0.2s ease;
   border:2.5px solid var(--brand);
 }
-.slider-thumb:active { 
-  box-shadow:0 6px 24px rgba(164,74,63,0.4); 
+.slider-thumb:active {
+  box-shadow:0 6px 24px rgba(164,74,63,0.4);
   cursor:grabbing;
   transform:translate(-50%,-50%) scale(1.08);
 }
 
 .slider-hint {
-  display:flex; 
-  justify-content:space-between; 
-  font-size:11px; 
-  color:var(--text-muted); 
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:var(--text-muted);
   margin-top:8px;
 }
 
 .date-shortcuts {
-  display:flex; 
-  gap:8px; 
-  flex-wrap:wrap; 
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
   margin-top:10px;
 }
 .date-chip {
-  padding:8px 14px; 
-  background:var(--input-bg); 
-  border-radius:100px; 
+  padding:8px 14px;
+  background:var(--input-bg);
+  border-radius:100px;
   font-size:13px;
-  color:var(--text-secondary); 
-  cursor:pointer; 
-  border:none; 
+  color:var(--text-secondary);
+  cursor:pointer;
+  border:none;
   font-family:var(--font-body);
   transition:all 0.2s;
   font-weight: 400;
 }
-.date-chip:active, .date-chip.active { 
-  background:var(--brand); 
-  color:#fff; 
+.date-chip:active, .date-chip.active {
+  background:var(--brand);
+  color:#fff;
 }
 
 .upload-zone {
@@ -775,119 +1003,616 @@ body {
   position: relative;
   overflow: hidden;
 }
-.upload-zone:active { 
-  border-color: var(--brand); 
+.upload-zone:active {
+  border-color: var(--brand);
   background: rgba(164,74,63,0.03);
 }
-.upload-zone.has-image { 
-  border-style: solid; 
+.upload-zone.has-image {
+  border-style: solid;
   border-color: var(--brand-light);
 }
-.upload-icon { 
-  width:40px; 
-  height:40px; 
-  fill: var(--text-muted); 
-  margin-bottom:10px; 
+.upload-icon {
+  width:40px;
+  height:40px;
+  fill: var(--text-muted);
+  margin-bottom:10px;
 }
-.upload-text { 
-  font-size:14px; 
-  color:var(--text-secondary); 
+.upload-text {
+  font-size:14px;
+  color:var(--text-secondary);
   font-weight:500;
 }
-.upload-hint { 
-  font-size:12px; 
-  color:var(--text-muted); 
-  margin-top:6px; 
+.upload-hint {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-top:6px;
 }
 .upload-preview {
-  display:none; 
-  margin-top:16px; 
+  display:none;
+  margin-top:16px;
   position:relative;
 }
-.upload-zone.has-image .upload-placeholder { 
-  display:none; 
+.upload-zone.has-image .upload-placeholder {
+  display:none;
 }
-.upload-zone.has-image .upload-preview { 
-  display:block; 
+.upload-zone.has-image .upload-preview {
+  display:block;
 }
-.preview-img { 
-  width:100%; 
-  border-radius:var(--radius-sm); 
-  max-height:180px; 
+.preview-img {
+  width:100%;
+  border-radius:var(--radius-sm);
+  max-height:180px;
   object-fit:cover;
 }
 .scan-results {
-  margin-top:14px; 
-  display:flex; 
-  flex-direction:column; 
+  margin-top:14px;
+  display:flex;
+  flex-direction:column;
   gap:10px;
 }
 .scan-item {
-  background:var(--input-bg); 
-  border-radius:var(--radius-sm); 
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
   padding:12px 16px;
-  display:flex; 
-  justify-content:space-between; 
+  display:flex;
+  justify-content:space-between;
   align-items:center;
   animation: slideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.scan-item-info { 
-  font-size:13px; 
+.scan-item-info {
+  font-size:13px;
 }
-.scan-item-name { 
-  font-weight:600; 
-  color:var(--text); 
+.scan-item-name {
+  font-weight:600;
+  color:var(--text);
 }
-.scan-item-code { 
-  color:var(--text-muted); 
-  margin-left:8px; 
+.scan-item-code {
+  color:var(--text-muted);
+  margin-left:8px;
 }
 .scan-badge {
-  padding:4px 10px; 
-  border-radius:100px; 
-  font-size:11px; 
+  padding:4px 10px;
+  border-radius:100px;
+  font-size:11px;
   font-weight:600;
 }
-.scan-badge.new { 
-  background:rgba(46,139,87,0.1); 
-  color:var(--positive); 
+.scan-badge.new {
+  background:rgba(46,139,87,0.1);
+  color:var(--positive);
 }
-.scan-badge.exist { 
-  background:rgba(205,92,92,0.1); 
-  color:var(--negative); 
+.scan-badge.exist {
+  background:rgba(205,92,92,0.1);
+  color:var(--negative);
 }
 
 .voice-btn {
-  position:absolute; 
-  top:12px; 
-  right:12px; 
-  width:36px; 
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:36px;
   height:36px;
-  background:var(--brand); 
-  border-radius:50%; 
-  border:none; 
+  background:var(--brand);
+  border-radius:50%;
+  border:none;
   cursor:pointer;
-  display:flex; 
-  align-items:center; 
-  justify-content:center; 
+  display:flex;
+  align-items:center;
+  justify-content:center;
   transition:all 0.3s;
 }
-.voice-btn:active { 
-  transform:scale(0.92); 
+.voice-btn:active {
+  transform:scale(0.92);
 }
-.voice-btn svg { 
-  width:18px; 
-  height:18px; 
-  fill:#fff; 
+.voice-btn svg {
+  width:18px;
+  height:18px;
+  fill:#fff;
+}
+
+/* Shared Bottom Sheets */
+.record-sheet-overlay {
+  background:rgba(0,0,0,0.38);
+}
+.record-sheet,
+.modal-content,
+.asset-detail-card {
+  width:calc(100% - 32px);
+  max-width:398px;
+  background:var(--card);
+  height:88vh;
+  max-height:88vh;
+  border-radius:20px 20px 0 0;
+  overflow:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  clip-path:inset(0 round 20px 20px 0 0);
+  animation:slideUp 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+}
+.record-sheet::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar,
+.asset-detail-card::-webkit-scrollbar,
+.sheet-body::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+.asset-detail-content::-webkit-scrollbar {
+  display:none;
+  width:0;
+  height:0;
+}
+.record-sheet::before,
+.modal-content::before,
+.asset-detail-card::before {
+  content:'';
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:44px;
+  height:4px;
+  border-radius:999px;
+  background:#d8d8d8;
+  z-index:20;
+}
+.record-sheet-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 20px 12px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  flex-shrink:0;
+  background:var(--card);
+  z-index:12;
+}
+.sheet-title {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.sheet-eyebrow {
+  font-size:11px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-weight:600;
+}
+.sheet-name {
+  font-family:var(--font-display);
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+}
+.sheet-status {
+  display:block;
+  margin-top:4px;
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.35;
+  max-width:240px;
+}
+.sheet-status.profit { color:var(--positive); }
+.sheet-status.loss { color:var(--negative); }
+.sheet-close {
+  width:34px;
+  height:34px;
+  border:none;
+  border-radius:50%;
+  background:var(--input-bg);
+  color:var(--text-secondary);
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+.sheet-header-actions {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.asset-search-box {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:14px;
+}
+.asset-search-results {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.asset-search-result {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border:1px solid rgba(164,74,63,0.08);
+  border-radius:14px;
+  background:#fbfaf8;
+  cursor:pointer;
+}
+.asset-search-result.selected {
+  border-color:rgba(164,74,63,0.34);
+  background:rgba(164,74,63,0.07);
+}
+.asset-search-main {
+  min-width:0;
+}
+.asset-search-name {
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+}
+.asset-search-code {
+  display:block;
+  margin-top:2px;
+  font-size:12px;
+  color:var(--text-muted);
+}
+.asset-search-type {
+  flex-shrink:0;
+  padding:5px 9px;
+  border-radius:999px;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+  font-size:12px;
+  font-weight:700;
+}
+.asset-search-empty {
+  padding:12px;
+  border-radius:14px;
+  background:var(--input-bg);
+  color:var(--text-muted);
+  font-size:13px;
+  text-align:center;
+}
+.sheet-save-btn {
+  border:none;
+  border-radius:100px;
+  background:var(--brand);
+  color:#fff;
+  padding:8px 13px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:var(--font-body);
+  white-space:nowrap;
+}
+.sheet-save-btn.secondary {
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+}
+.sheet-save-btn:active {
+  transform:scale(0.96);
+}
+.sheet-body {
+  padding:16px 18px 24px;
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.asset-sheet-nav {
+  position:sticky;
+  top:0;
+  z-index:11;
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:4px;
+  padding:6px;
+  margin:-4px -2px 16px;
+  background:rgba(245,244,242,0.94);
+  border-radius:16px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.asset-sheet-nav button {
+  border:none;
+  border-radius:12px;
+  padding:9px 0;
+  background:transparent;
+  color:var(--text-secondary);
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:var(--font-body);
+}
+.asset-sheet-nav button.active {
+  background:var(--card);
+  color:var(--brand);
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+.asset-sheet-pane {
+  display:none;
+  animation:fadeIn 0.22s ease;
+  min-height:calc(88vh - 170px);
+}
+.asset-sheet-pane.active {
+  display:block;
+}
+.asset-sheet-section,
+.prediction-panel,
+#assetTradeSwitch {
+  scroll-margin-top:126px;
+}
+#assetTradeSwitch {
+  scroll-margin-top:156px;
+}
+.record-sheet .record-form,
+.record-sheet .mode-switch {
+  margin-left:0;
+  margin-right:0;
+}
+.trade-price-row {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+}
+.trade-preview {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:1px;
+  overflow:hidden;
+  border-radius:14px;
+  background:rgba(164,74,63,0.08);
+  margin:4px 0 18px;
+}
+.trade-preview-item {
+  background:#fbfaf8;
+  padding:10px 8px;
+  min-width:0;
+}
+.trade-preview-label {
+  display:block;
+  font-size:10px;
+  color:var(--text-muted);
+  margin-bottom:4px;
+}
+.trade-preview-value {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.share-quick-row {
+  display:flex;
+  gap:8px;
+  margin:8px 0 16px;
+}
+.share-quick-chip {
+  flex:1;
+  border:none;
+  border-radius:100px;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+  padding:8px 0;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:var(--font-body);
+}
+.share-quick-chip:active {
+  transform:scale(0.96);
+  background:rgba(164,74,63,0.14);
+}
+.sheet-context {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:12px;
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
+  margin-bottom:16px;
+}
+.context-item {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.context-label {
+  font-size:11px;
+  color:var(--text-muted);
+}
+.context-value {
+  font-size:14px;
+  font-weight:700;
+  font-variant-numeric:lining-nums;
+}
+.detail-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:16px;
+}
+.detail-card {
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
+  padding:12px;
+  min-height:70px;
+}
+.detail-card.wide {
+  grid-column:1 / -1;
+}
+.detail-label {
+  display:block;
+  font-size:11px;
+  color:var(--text-muted);
+  margin-bottom:6px;
+  letter-spacing:0.04em;
+}
+.detail-value {
+  display:block;
+  font-size:17px;
+  font-weight:700;
+  font-family:var(--font-display);
+  font-variant-numeric:lining-nums;
+}
+.detail-value.profit { color:var(--positive); }
+.detail-value.loss { color:var(--negative); }
+.formula-strip {
+  background:rgba(164,74,63,0.06);
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+  margin-bottom:14px;
+  color:var(--text-secondary);
+  font-size:12px;
+  line-height:1.45;
+}
+.stepper-field {
+  position:relative;
+}
+.stepper-row {
+  display:grid;
+  grid-template-columns:42px 1fr 42px;
+  gap:8px;
+  align-items:center;
+}
+.adjust-btn {
+  height:44px;
+  border:none;
+  border-radius:14px;
+  background:var(--input-bg);
+  color:var(--brand);
+  font-size:20px;
+  font-weight:700;
+  cursor:pointer;
+}
+.adjust-btn:active {
+  transform:scale(0.96);
+  background:rgba(164,74,63,0.1);
+}
+.value-float {
+  position:absolute;
+  right:4px;
+  top:-24px;
+  min-width:74px;
+  padding:5px 9px;
+  border-radius:100px;
+  background:#1a1a1a;
+  color:#fff;
+  font-size:11px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(6px);
+  pointer-events:none;
+  transition:all 0.18s ease;
+  z-index:4;
+}
+.value-float.show {
+  opacity:1;
+  transform:translateY(0);
+}
+.note-summary-panel,
+.prediction-panel,
+.field-editor {
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
+  padding:14px;
+  margin-bottom:16px;
+}
+.panel-title-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.panel-title {
+  font-size:14px;
+  font-weight:700;
+}
+.panel-action {
+  border:none;
+  background:transparent;
+  color:var(--brand);
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.note-summary-item,
+.prediction-item {
+  background:var(--card);
+  border-radius:var(--radius-xs);
+  padding:11px 12px;
+  margin-top:10px;
+}
+.note-summary-item.clickable,
+.prediction-item.clickable {
+  cursor:pointer;
+  transition:transform 0.18s ease, box-shadow 0.18s ease;
+}
+.note-summary-item.clickable:active,
+.prediction-item.clickable:active {
+  transform:scale(0.99);
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+.note-summary-grid {
+  display:grid;
+  grid-template-columns:72px 1fr;
+  gap:6px 10px;
+  font-size:12px;
+  line-height:1.45;
+}
+.note-summary-grid span:nth-child(odd) {
+  color:var(--text-muted);
+}
+.prediction-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.prediction-author {
+  font-size:13px;
+  font-weight:700;
+}
+.prediction-meta {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-top:3px;
+}
+.prediction-price {
+  font-family:var(--font-display);
+  font-size:18px;
+  font-weight:700;
+  color:var(--brand);
+  white-space:nowrap;
+}
+.field-editor {
+  display:none;
+}
+.field-editor.show {
+  display:block;
+}
+.locked-price {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:var(--brand-accent);
+  font-size:12px;
+  font-weight:700;
 }
 
 /* Insights Page */
 .insights-header { padding:28px 24px 4px; }
-.insights-title { 
-  font-family:var(--font-display); 
-  font-size:28px; 
+.insights-title {
+  font-family:var(--font-display);
+  font-size:28px;
   font-weight:600;
   letter-spacing: -0.03em;
+}
+.insights-subtitle {
+  display:block;
+  margin-top:8px;
+  color:var(--text-muted);
+  font-size:13px;
+  line-height:1.5;
 }
 
 .insight-input-card {
@@ -898,15 +1623,24 @@ body {
   overflow: hidden;
   position: relative;
 }
+.insight-input-card::before {
+  content:'AI 分析工作台';
+  display:block;
+  padding:14px 20px 0;
+  color:var(--brand);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.04em;
+}
 .insight-textarea {
-  width:100%; 
-  min-height:120px; 
-  border:none; 
-  padding:20px; 
+  width:100%;
+  min-height:120px;
+  border:none;
+  padding:20px;
   font-size:15px;
-  font-family:var(--font-body); 
-  color:var(--text); 
-  resize:none; 
+  font-family:var(--font-body);
+  color:var(--text);
+  resize:none;
   outline:none;
   background:transparent;
   line-height:1.6;
@@ -914,21 +1648,21 @@ body {
 }
 .insight-textarea::placeholder { color:var(--text-muted); }
 .insight-actions {
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   padding:12px 16px;
   border-top:1px solid var(--border);
 }
 .trash-btn {
-  width:36px; 
-  height:36px; 
-  background:transparent; 
-  border:none; 
+  width:36px;
+  height:36px;
+  background:transparent;
+  border:none;
   cursor:pointer;
-  display:flex; 
-  align-items:center; 
-  justify-content:center; 
+  display:flex;
+  align-items:center;
+  justify-content:center;
   border-radius:50%;
   transition:all 0.2s;
 }
@@ -936,14 +1670,14 @@ body {
 .trash-btn svg { width:18px; height:18px; fill:var(--text-muted); }
 
 .analyze-btn {
-  padding:10px 22px; 
-  background:var(--brand); 
-  color:#fff; 
-  border:none; 
+  padding:10px 22px;
+  background:var(--brand);
+  color:#fff;
+  border:none;
   border-radius:100px;
-  font-size:14px; 
-  font-weight:500; 
-  cursor:pointer; 
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
   font-family:var(--font-body);
   transition:all 0.3s;
 }
@@ -960,90 +1694,253 @@ body {
 }
 .analysis-result.show { display:block; }
 .analysis-header-bar {
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   padding:18px 24px;
   border-bottom:1px solid var(--border);
 }
 .analysis-type-badge {
-  padding:6px 14px; 
-  border-radius:100px; 
-  font-size:12px; 
+  padding:6px 14px;
+  border-radius:100px;
+  font-size:12px;
   font-weight:500;
   background: var(--input-bg);
   color: var(--text-secondary);
 }
 .analysis-body { padding:20px 24px 24px; }
-.analysis-summary { 
-  font-size:15px; 
-  line-height:1.7; 
-  color:var(--text); 
+.analysis-summary {
+  font-size:15px;
+  line-height:1.7;
+  color:var(--text);
   margin-bottom:16px;
   letter-spacing: -0.01em;
 }
-.analysis-tags { 
-  display:flex; 
-  flex-wrap:wrap; 
-  gap:8px; 
-  margin-bottom:16px; 
+.analysis-tags {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:16px;
+}
+.analysis-field-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:rgba(164,74,63,0.08);
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+.analysis-field {
+  background:#fbfaf8;
+  padding:12px;
+  min-width:0;
+}
+.analysis-field span {
+  display:block;
+  color:var(--text-muted);
+  font-size:11px;
+  margin-bottom:5px;
+}
+.analysis-field strong {
+  display:block;
+  color:var(--text);
+  font-size:13px;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .analysis-linked {
-  background:var(--input-bg); 
-  border-radius:var(--radius-sm); 
+  background:var(--input-bg);
+  border-radius:var(--radius-sm);
   padding:16px;
 }
-.analysis-linked-title { 
-  font-size:12px; 
-  color:var(--text-muted); 
-  margin-bottom:10px; 
+.analysis-linked-title {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-bottom:10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
 }
+.analysis-next-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.analysis-action-btn {
+  border:none;
+  border-radius:14px;
+  padding:12px 10px;
+  font-size:13px;
+  font-weight:700;
+  font-family:var(--font-body);
+  cursor:pointer;
+}
+.analysis-action-btn.primary {
+  background:var(--brand);
+  color:#fff;
+}
+.analysis-action-btn.secondary {
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+}
+.analysis-action-btn:active {
+  transform:scale(0.98);
+}
 
-.insight-history { margin:0 16px 24px; }
+.insight-history {
+  margin:0 16px 24px;
+  position:relative;
+}
 .history-item {
-  background:var(--card); 
-  border-radius:var(--radius); 
+  background:var(--card);
+  border-radius:var(--radius);
   margin-bottom:12px;
-  box-shadow:var(--shadow); 
-  overflow:hidden; 
-  cursor:pointer; 
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  cursor:pointer;
   transition:all 0.3s;
+  position:relative;
 }
 .history-item:active { transform: scale(0.995); }
 .history-item-header {
-  padding:18px 20px; 
-  display:flex; 
-  justify-content:space-between; 
+  padding:16px 18px;
+}
+.history-title-row {
+  display:flex;
+  justify-content:space-between;
   align-items:center;
+  gap:12px;
+  margin-bottom:10px;
 }
-.history-item-title { 
-  font-size:14px; 
-  font-weight:500; 
-  flex:1; 
-  overflow:hidden; 
-  text-overflow:ellipsis; 
+.history-item-title {
+  font-size:14px;
+  font-weight:600;
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
   white-space:nowrap;
-  color: var(--text-secondary);
+  color: var(--text);
 }
-.history-item-date { 
-  font-size:12px; 
-  color:var(--text-muted); 
-  margin-left:12px; 
-  flex-shrink:0; 
+.history-item-date {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-left:12px;
+  flex-shrink:0;
+}
+.history-tags-preview {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  overflow:hidden;
+}
+.history-mini-tag {
+  padding:4px 8px;
+  border-radius:100px;
+  font-size:11px;
+  font-weight:600;
+  background:var(--input-bg);
+  color:var(--text-secondary);
+  white-space:nowrap;
+}
+.history-mini-tag.up {
+  background:rgba(46,139,87,0.08);
+  color:var(--positive);
+}
+.history-mini-tag.down {
+  background:rgba(205,92,92,0.08);
+  color:var(--negative);
+}
+.history-asset-pill {
+  margin-left:auto;
+  color:var(--brand);
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
 }
 .history-item-expand {
-  max-height:0; 
-  overflow:hidden; 
+  max-height:0;
+  overflow:hidden;
   transition:max-height 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.history-item.open .history-item-expand { max-height:600px; }
-.history-detail { 
-  padding:0 20px 18px; 
-  border-top:1px solid var(--border); 
+.history-item.open .history-item-expand { max-height:860px; }
+.history-detail {
+  padding:0 20px 18px;
+  border-top:1px solid var(--border);
   padding-top:16px;
+}
+.history-note-copy {
+  font-size:14px;
+  color:var(--text-secondary);
+  line-height:1.6;
+  margin:0 0 14px;
+}
+.history-assets-title {
+  font-size:12px;
+  color:var(--text-muted);
+  font-weight:700;
+  margin:2px 0 8px;
+}
+.history-asset-list {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.history-asset-signal {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+  padding:9px 0;
+  border-top:1px solid rgba(164,74,63,0.08);
+  cursor:pointer;
+  transition:background 0.18s ease, padding 0.18s ease;
+}
+.history-asset-signal:active {
+  background:rgba(164,74,63,0.04);
+  padding-left:6px;
+  padding-right:6px;
+}
+.history-asset-main {
+  min-width:0;
+}
+.history-asset-name {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.history-asset-code {
+  display:block;
+  margin-top:2px;
+  color:var(--text-muted);
+  font-size:11px;
+  font-variant-numeric:lining-nums;
+}
+.history-asset-trend {
+  padding:5px 9px;
+  border-radius:100px;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.history-asset-trend.up {
+  color:var(--positive);
+  background:rgba(46,139,87,0.08);
+}
+.history-asset-trend.down {
+  color:var(--negative);
+  background:rgba(205,92,92,0.08);
+}
+.history-asset-trend.neutral {
+  color:var(--brand);
+  background:rgba(164,74,63,0.08);
 }
 
 /* Me Page */
@@ -1053,69 +1950,113 @@ body {
   background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, transparent 100%);
 }
 .me-avatar {
-  width:80px; 
-  height:80px; 
-  border-radius:50%; 
+  width:80px;
+  height:80px;
+  border-radius:50%;
   background:var(--brand);
-  margin:0 auto 16px; 
-  display:flex; 
-  align-items:center; 
+  margin:0 auto 16px;
+  display:flex;
+  align-items:center;
   justify-content:center;
-  font-size:36px; 
+  font-size:36px;
   color:#fff;
 }
-.me-name { 
-  color:var(--text); 
-  font-family:var(--font-display); 
-  font-size:22px; 
+.me-name {
+  color:var(--text);
+  font-family:var(--font-display);
+  font-size:22px;
   font-weight:600;
   letter-spacing: -0.02em;
 }
+.me-account-pill {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:10px;
+  padding:7px 12px;
+  border-radius:100px;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+  font-size:12px;
+  font-weight:700;
+}
+.me-account-pill::before {
+  content:'';
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--positive);
+}
 .me-stats {
-  display:flex; 
-  justify-content:center; 
-  gap:40px; 
+  display:flex;
+  justify-content:center;
+  gap:40px;
   margin-top:24px;
 }
 .me-stat { text-align:center; }
-.me-stat-val { 
-  color:var(--text); 
-  font-size:24px; 
-  font-weight:600; 
+.me-stat-val {
+  color:var(--text);
+  font-size:24px;
+  font-weight:600;
   display:block;
   font-family: var(--font-display);
   letter-spacing: -0.02em;
 }
-.me-stat-label { 
-  color:var(--text-muted); 
-  font-size:12px; 
+.me-stat-label {
+  color:var(--text-muted);
+  font-size:12px;
   margin-top:4px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 .me-section { margin:12px 16px; }
-.me-section-title { 
-  font-size:12px; 
-  color:var(--text-muted); 
-  margin-bottom:8px; 
+.me-sync-card {
+  margin:12px 16px;
+  padding:16px 18px;
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(164,74,63,0.05);
+}
+.me-sync-title {
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:6px;
+}
+.me-sync-value {
+  display:block;
+  color:var(--text);
+  font-weight:700;
+  font-size:15px;
+}
+.me-sync-meta {
+  display:block;
+  margin-top:5px;
+  color:var(--text-muted);
+  font-size:12px;
+}
+.me-section-title {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-bottom:8px;
   font-weight:500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 .me-menu {
-  background:var(--card); 
-  border-radius:var(--radius); 
-  box-shadow:var(--shadow); 
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
   overflow:hidden;
 }
 .me-menu-item {
-  display:flex; 
-  align-items:center; 
-  justify-content:space-between; 
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   padding:18px 20px;
-  border-bottom:1px solid var(--border); 
-  cursor:pointer; 
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
   transition:all 0.2s;
 }
 .me-menu-item:last-child { border-bottom:none; }
@@ -1127,15 +2068,15 @@ body {
 
 /* Modal */
 .modal-overlay {
-  position:fixed; 
-  top:0; 
-  left:0; 
-  right:0; 
-  bottom:0; 
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
   background:rgba(0,0,0,0.45);
-  z-index:200; 
-  display:none; 
-  align-items:flex-end; 
+  z-index:200;
+  display:none;
+  align-items:flex-end;
   justify-content:center;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -1154,12 +2095,6 @@ body {
   display:flex;
 }
 .asset-detail-card {
-  width:100%;
-  max-width:430px;
-  background:var(--card);
-  border-radius:var(--radius) var(--radius) 0 0;
-  max-height:85vh;
-  overflow-y:auto;
   animation:slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .asset-detail-header {
@@ -1168,8 +2103,8 @@ body {
   align-items:center;
   padding:24px 24px 16px;
   border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
+  position:relative;
+  flex-shrink:0;
   background:var(--card);
   z-index:10;
 }
@@ -1209,6 +2144,11 @@ body {
 }
 .asset-detail-content {
   padding:24px;
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
 }
 .asset-detail-info {
   display:flex;
@@ -1400,46 +2340,47 @@ body {
   box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 .modal-content {
-  width:100%; 
-  max-width:430px; 
-  background:var(--card); 
-  border-radius:var(--radius) var(--radius) 0 0;
-  max-height:85vh; 
-  overflow-y:auto; 
   animation:slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .modal-header {
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
-  padding:22px 24px;
-  border-bottom:1px solid var(--border); 
-  position:sticky; 
-  top:0; 
-  background:var(--card); 
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:26px 24px 18px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  flex-shrink:0;
+  background:var(--card);
   z-index:1;
 }
-.modal-title { 
-  font-family:var(--font-display); 
-  font-size:18px; 
+.modal-title {
+  font-family:var(--font-display);
+  font-size:18px;
   font-weight:600;
   letter-spacing: -0.02em;
 }
-.modal-close { 
-  width:36px; 
-  height:36px; 
-  background:var(--input-bg); 
-  border:none; 
-  border-radius:50%; 
-  cursor:pointer; 
-  display:flex; 
-  align-items:center; 
+.modal-close {
+  width:36px;
+  height:36px;
+  background:var(--input-bg);
+  border:none;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
   justify-content:center;
   transition: all 0.2s;
 }
 .modal-close:active { background: var(--border); }
 .modal-close svg { width:16px; height:16px; fill:var(--text-secondary); }
-.modal-body { padding:16px 24px 28px; }
+.modal-body {
+  padding:16px 24px 28px;
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
 
 /* Account Modal */
 .account-modal-body {
@@ -1520,36 +2461,21 @@ body {
   background: transparent;
 }
 
-/* Version info */
-.version-info {
-  text-align: center;
-  padding: 32px 24px 40px;
-  color: var(--text-muted);
-  font-size: 12px;
-}
-.version-number {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-  display: block;
-}
-
 /* Animations */
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-@keyframes slideUp { 
-  from{opacity:0; transform:translateY(16px)} 
-  to{opacity:1; transform:translateY(0)} 
+@keyframes slideUp {
+  from{opacity:0; transform:translateY(16px)}
+  to{opacity:1; transform:translateY(0)}
 }
-@keyframes pulse { 
-  0%,100%{transform:scale(1); opacity:1;} 
-  50%{transform:scale(1.3); opacity:0.6;} 
+@keyframes pulse {
+  0%,100%{transform:scale(1); opacity:1;}
+  50%{transform:scale(1.3); opacity:0.6;}
 }
-@keyframes bounceIn { 
-  0%{transform:scale(0.85); opacity:0;} 
-  50%{transform:scale(1.03);} 
-  70%{transform:scale(0.98);} 
-  100%{transform:scale(1); opacity:1;} 
+@keyframes bounceIn {
+  0%{transform:scale(0.85); opacity:0;}
+  50%{transform:scale(1.03);}
+  70%{transform:scale(0.98);}
+  100%{transform:scale(1); opacity:1;}
 }
 
 .animate-bounce { animation: bounceIn 0.5s ease; }
@@ -1557,18 +2483,18 @@ body {
 
 /* Toast */
 .toast {
-  position:fixed; 
-  top:44px; 
-  left:50%; 
+  position:fixed;
+  top:44px;
+  left:50%;
   transform:translateX(-50%) translateY(-12px);
-  background:rgba(26,26,26,0.95); 
-  color:#fff; 
-  padding:12px 24px; 
+  background:rgba(26,26,26,0.95);
+  color:#fff;
+  padding:12px 24px;
   border-radius:100px;
-  font-size:13px; 
-  z-index:999; 
-  opacity:0; 
-  transition:all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+  font-size:13px;
+  z-index:999;
+  opacity:0;
+  transition:all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events:none;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -1620,317 +2546,162 @@ body {
           <div class="summary-divider"></div>
           <div class="summary-col">
             <span class="label">今日盈亏</span>
-            <span class="value small" id="todayPnL" style="color:var(--brand-accent);">+2,340.50</span>
+            <span class="value small" id="todayPnL">+2,340.50</span>
             <span class="label" style="margin-top:6px;" id="todayPnLPct">+1.85%</span>
           </div>
         </div>
-        <button class="privacy-toggle" id="privacyBtn" onclick="togglePrivacy()" title="隐私模式">
-          <svg viewBox="0 0 24 24" id="privacyIcon">
-            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="filter-bar">
-      <div class="account-chips">
-        <div class="chip active" onclick="selectAccount(this,'all')">全部账户</div>
-        <div class="chip" onclick="selectAccount(this,'acc-1')">养老金</div>
-        <div class="chip" onclick="selectAccount(this,'acc-2')">激进</div>
-        <div class="chip" onclick="selectAccount(this,'acc-3')">活期</div>
-        <div class="chip add-account" onclick="goToAccountManagement()">＋</div>
+        <div class="summary-actions">
+          <button class="privacy-toggle" id="privacyBtn" onclick="togglePrivacy()" title="隐私模式">
+            <svg viewBox="0 0 24 24" id="privacyIcon">
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+            </svg>
+          </button>
+          <button class="summary-add-btn" onclick="openRecordSheet('new')">新增</button>
+        </div>
       </div>
     </div>
 
     <div class="stats-panel">
       <div class="stats-panel-header">
         <span class="stats-panel-title">概览</span>
-        <span class="stats-panel-subtitle">近七日</span>
+        <div class="scope-info-wrap">
+          <button class="scope-info-btn" onclick="toggleScopeTip(event)" aria-label="资产数据说明">!</button>
+          <div class="scope-tip" id="scopeTip">资产数据以北京时间 13:00 为分界线计算。</div>
+        </div>
       </div>
       <div class="stats-grid">
         <div class="stats-item">
-          <div class="stats-value">+5,234</div>
-          <div class="stats-label">累计盈亏</div>
-          <div class="stats-trend up">+4.24%</div>
+          <div class="stats-value" id="dailyAssetDiff">+2,340.50</div>
+          <div class="stats-label">资产变动</div>
+          <div class="stats-trend up">总资产</div>
         </div>
         <div class="stats-item">
-          <div class="stats-value">12</div>
-          <div class="stats-label">交易次数</div>
-          <div class="stats-trend neutral">8笔盈利</div>
+          <div class="stats-value" id="dailyAssetYield">+1.86%</div>
+          <div class="stats-label">收益率</div>
+          <div class="stats-trend up">当前</div>
         </div>
         <div class="stats-item">
-          <div class="stats-value">3</div>
-          <div class="stats-label">新增资产</div>
-          <div class="stats-trend neutral">本季度</div>
+          <div class="stats-value" id="prevOneValue">126,115</div>
+          <div class="stats-label">前值</div>
+          <div class="stats-trend neutral">T-1</div>
         </div>
         <div class="stats-item">
-          <div class="stats-value">85%</div>
-          <div class="stats-label">胜率</div>
-          <div class="stats-trend up">近10笔</div>
+          <div class="stats-value" id="todayOneValue">128,456</div>
+          <div class="stats-label">当前</div>
+          <div class="stats-trend neutral">T</div>
         </div>
       </div>
-      <div class="stats-chart-placeholder">
-        <div class="line-chart-container">
-          <svg class="line-chart-svg" viewBox="0 0 100 60" preserveAspectRatio="none">
-            <!-- Background grid -->
-            <line x1="0" y1="15" x2="100" y2="15" stroke="#f0f0f0" stroke-width="0.5"/>
-            <line x1="0" y1="30" x2="100" y2="30" stroke="#f0f0f0" stroke-width="0.5"/>
-            <line x1="0" y1="45" x2="100" y2="45" stroke="#f0f0f0" stroke-width="0.5"/>
-            
-            <!-- Candlesticks -->
-            <!-- Day 1: Red -->
-            <line x1="7" y1="38" x2="7" y2="50" stroke="#CD5C5C" stroke-width="1"/>
-            <rect x="4" y="40" width="6" height="8" fill="#CD5C5C" rx="1"/>
-            <!-- Day 2: Green -->
-            <line x1="21" y1="32" x2="21" y2="46" stroke="#2E8B57" stroke-width="1"/>
-            <rect x="18" y="34" width="6" height="10" fill="#2E8B57" rx="1"/>
-            <!-- Day 3: Red -->
-            <line x1="35" y1="36" x2="35" y2="50" stroke="#CD5C5C" stroke-width="1"/>
-            <rect x="32" y="38" width="6" height="10" fill="#CD5C5C" rx="1"/>
-            <!-- Day 4: Green -->
-            <line x1="49" y1="24" x2="49" y2="40" stroke="#2E8B57" stroke-width="1"/>
-            <rect x="46" y="26" width="6" height="12" fill="#2E8B57" rx="1"/>
-            <!-- Day 5: Green -->
-            <line x1="63" y1="18" x2="63" y2="34" stroke="#2E8B57" stroke-width="1"/>
-            <rect x="60" y="20" width="6" height="12" fill="#2E8B57" rx="1"/>
-            <!-- Day 6: Green -->
-            <line x1="77" y1="12" x2="77" y2="26" stroke="#2E8B57" stroke-width="1"/>
-            <rect x="74" y="14" width="6" height="10" fill="#2E8B57" rx="1"/>
-            <!-- Day 7: Green -->
-            <line x1="91" y1="8" x2="91" y2="20" stroke="#2E8B57" stroke-width="1"/>
-            <rect x="88" y="10" width="6" height="8" fill="#2E8B57" rx="1"/>
-            
-            <!-- Volume bars -->
-            <rect x="5" y="52" width="4" height="6" fill="#CD5C5C" opacity="0.2"/>
-            <rect x="19" y="50" width="4" height="8" fill="#2E8B57" opacity="0.2"/>
-            <rect x="33" y="51" width="4" height="7" fill="#CD5C5C" opacity="0.2"/>
-            <rect x="47" y="48" width="4" height="10" fill="#2E8B57" opacity="0.2"/>
-            <rect x="61" y="46" width="4" height="12" fill="#2E8B57" opacity="0.2"/>
-            <rect x="75" y="45" width="4" height="13" fill="#2E8B57" opacity="0.2"/>
-            <rect x="89" y="44" width="4" height="14" fill="#2E8B57" opacity="0.2"/>
-            
-            <!-- Moving average line -->
-            <path d="M7,46 Q21,42 35,44 T49,32 T63,26 T77,18 T91,14" 
-                  fill="none" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="3,2.5" opacity="0.5"/>
-          </svg>
+      <div class="stats-kline">
+        <div class="chart-legend">
+          <span class="legend-item"><i class="legend-mark"></i>K线</span>
+          <span class="legend-item"><i class="legend-mark return"></i>收益率</span>
         </div>
-        <div class="chart-labels">
-          <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
-        </div>
-      </div>
-      <div class="stats-bulletin">
-        <div class="bulletin-dot"></div>
-        <span class="bulletin-text">茅台连续上涨5日，关注回调风险</span>
+        <svg class="kline-chart-svg" viewBox="0 0 120 72" preserveAspectRatio="none" aria-label="总资产K线">
+          <line class="kline-grid" x1="6" y1="18" x2="114" y2="18"/>
+          <line class="kline-grid" x1="6" y1="36" x2="114" y2="36"/>
+          <line class="kline-grid" x1="6" y1="54" x2="114" y2="54"/>
+          <g id="totalAssetKlineSeries"></g>
+        </svg>
       </div>
     </div>
 
-    <div class="sort-dropdown">
-      <span class="sort-label">持仓</span>
-      <div class="sort-control" id="sortControl">
-        <div class="sort-type" id="sortType">
-          <span id="sortLabel" onclick="toggleSortMenu()">市值</span>
-          <div class="sort-menu" id="sortMenu">
-            <div class="sort-option active" data-type="marketValue" data-label="市值" onclick="setSortType('marketValue','市值')">市值</div>
-            <div class="sort-option" data-type="gainLoss" data-label="盈亏" onclick="setSortType('gainLoss','盈亏')">盈亏</div>
-            <div class="sort-option" data-type="gainLossPercent" data-label="涨跌幅" onclick="setSortType('gainLossPercent','涨跌幅')">涨跌幅</div>
-            <div class="sort-option" data-type="name" data-label="名称" onclick="setSortType('name','名称')">名称</div>
+    <div class="holdings-toolbar">
+      <div class="holdings-toolbar-top">
+        <div class="holdings-title">
+          <span class="sort-label">持仓</span>
+          <span class="holdings-count" id="holdingsCount">4 项资产</span>
+        </div>
+        <div class="sort-control" id="sortControl">
+          <div class="sort-type" id="sortType">
+            <span id="sortLabel" onclick="toggleSortMenu()">市值</span>
+            <div class="sort-menu" id="sortMenu">
+              <div class="sort-option active" data-type="marketValue" data-label="市值" onclick="setSortType('marketValue','市值')">市值</div>
+              <div class="sort-option" data-type="gainLoss" data-label="盈亏" onclick="setSortType('gainLoss','盈亏')">盈亏</div>
+              <div class="sort-option" data-type="gainLossPercent" data-label="涨跌幅" onclick="setSortType('gainLossPercent','涨跌幅')">涨跌幅</div>
+              <div class="sort-option" data-type="name" data-label="名称" onclick="setSortType('name','名称')">名称</div>
+            </div>
+          </div>
+          <div class="sort-divider"></div>
+          <div class="sort-direction" id="sortDirection" onclick="toggleSortDirection()">
+            <svg viewBox="0 0 24 28" id="sortDirIcon">
+              <path d="M12 4l5 5H7z" class="arrow-down"/>
+              <path d="M12 24l5-5H7z" class="arrow-up"/>
+            </svg>
           </div>
         </div>
-        <div class="sort-divider"></div>
-        <div class="sort-direction" id="sortDirection" onclick="toggleSortDirection()">
-          <svg viewBox="0 0 24 28" id="sortDirIcon">
-            <path d="M12 4l5 5H7z" class="arrow-down"/>
-            <path d="M12 24l5-5H7z" class="arrow-up"/>
-          </svg>
+      </div>
+      <div class="filter-bar">
+        <div class="account-chips">
+          <div class="chip active" onclick="selectCategory(this,'all')">全部</div>
+          <div class="chip" onclick="selectCategory(this,'stock')">股票</div>
+          <div class="chip" onclick="selectCategory(this,'fund')">基金</div>
+          <div class="chip" onclick="selectCategory(this,'metal')">贵金属</div>
+          <div class="chip" onclick="selectCategory(this,'wealth')">理财</div>
+          <div class="chip" onclick="selectCategory(this,'deposit')">存款</div>
+          <div class="chip" onclick="selectCategory(this,'etf')">ETF</div>
+          <div class="chip" onclick="selectCategory(this,'other')">其他</div>
         </div>
       </div>
     </div>
 
     <div id="assetList">
-      <div class="asset-item" onclick="openAssetDetail('600519')">
+      <div class="asset-item" data-code="600519" data-type="stock" data-type-label="股票" data-price="1916.00" data-cost="1500.00" data-quantity="100" data-hold-days="186" onclick="openAssetSheet('600519')">
         <div class="asset-left">
           <span class="asset-code">600519</span>
           <span class="asset-name">贵州茅台</span>
+          <div class="asset-meta"><span class="asset-type-badge">股票</span><span class="asset-hold-days">持仓 186 天</span></div>
         </div>
         <div class="asset-right">
-          <span class="asset-price">1,916.00</span>
-          <span class="asset-pnl up">+1,560.00 · +11.36%</span>
+          <span class="asset-value-label">市值</span>
+          <span class="asset-price">191,600.00</span>
+          <span class="asset-last-price">最新价 1,916.00</span>
+          <span class="asset-pnl up">+41,600.00 · +27.73%</span>
         </div>
       </div>
-      <div class="asset-item" onclick="openAssetDetail('00700')">
+      <div class="asset-item" data-code="00700" data-type="stock" data-type-label="股票" data-price="420.30" data-cost="382.00" data-quantity="100" data-hold-days="92" onclick="openAssetSheet('00700')">
         <div class="asset-left">
           <span class="asset-code">00700</span>
           <span class="asset-name">腾讯控股</span>
+          <div class="asset-meta"><span class="asset-type-badge">股票</span><span class="asset-hold-days">持仓 92 天</span></div>
         </div>
         <div class="asset-right">
-          <span class="asset-price">420.30</span>
-          <span class="asset-pnl up">+403.00 · +10.61%</span>
+          <span class="asset-value-label">市值</span>
+          <span class="asset-price">42,030.00</span>
+          <span class="asset-last-price">最新价 420.30</span>
+          <span class="asset-pnl up">+3,830.00 · +10.03%</span>
         </div>
       </div>
-      <div class="asset-item" onclick="openAssetDetail('110022')">
+      <div class="asset-item" data-code="110022" data-type="fund" data-type-label="基金" data-price="4.20" data-cost="4.90" data-quantity="100" data-hold-days="318" onclick="openAssetSheet('110022')">
         <div class="asset-left">
           <span class="asset-code">110022</span>
           <span class="asset-name">易方达消费</span>
+          <div class="asset-meta"><span class="asset-type-badge">基金</span><span class="asset-hold-days">持仓 318 天</span></div>
         </div>
         <div class="asset-right">
-          <span class="asset-price">4.20</span>
+          <span class="asset-value-label">市值</span>
+          <span class="asset-price">420.00</span>
+          <span class="asset-last-price">最新价 4.20</span>
           <span class="asset-pnl down">-70.00 · -14.29%</span>
         </div>
       </div>
-      <div class="asset-item" onclick="openAssetDetail('AAPL')">
+      <div class="asset-item" data-code="AAPL" data-type="stock" data-type-label="股票" data-price="1568.40" data-cost="1420.00" data-quantity="12" data-hold-days="74" onclick="openAssetSheet('AAPL')">
         <div class="asset-left">
           <span class="asset-code">AAPL</span>
           <span class="asset-name">苹果公司</span>
+          <div class="asset-meta"><span class="asset-type-badge">股票</span><span class="asset-hold-days">持仓 74 天</span></div>
         </div>
         <div class="asset-right">
-          <span class="asset-price">¥1,568.40</span>
-          <span class="asset-pnl up">+342.00 · +4.56%</span>
+          <span class="asset-value-label">市值</span>
+          <span class="asset-price">¥18,820.80</span>
+          <span class="asset-last-price">最新价 ¥1,568.40</span>
+          <span class="asset-pnl up">+1,780.80 · +10.45%</span>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Record Page -->
-  <div class="page" id="page-record">
-    <div class="record-header">
-      <span class="record-title">记录</span>
-    </div>
-
-    <div class="mode-switch" id="modeSwitch">
-      <div class="mode-indicator" id="modeIndicator"></div>
-      <button class="mode-btn active" id="modeTrade" onclick="switchMode('trade')">交易</button>
-      <button class="mode-btn" id="modeAdd" onclick="switchMode('add')">新增</button>
-    </div>
-
-    <div class="upload-zone" id="uploadZone" onclick="triggerUpload()">
-      <div class="upload-placeholder">
-        <svg class="upload-icon" viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
-        <div class="upload-text">上传截图识别</div>
-        <div class="upload-hint">支持相册选取或拍照</div>
+      <div class="asset-empty-state" id="assetEmptyState">
+        <div class="asset-empty-title" id="assetEmptyTitle">暂无资产</div>
+        <div class="asset-empty-copy" id="assetEmptyCopy">添加一项持仓后，这里会同步展示市值、盈亏和持仓时间。</div>
+        <button class="asset-empty-action" onclick="openRecordSheet('add')">新增资产</button>
       </div>
-      <div class="upload-preview" id="uploadPreview">
-        <img class="preview-img" id="previewImg" alt="预览">
-        <div class="scan-results" id="scanResults"></div>
-      </div>
-      <button class="voice-btn" onclick="event.stopPropagation();showToast('语音输入（开发中）')">
-        <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-      </button>
-      <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
-    </div>
-
-    <!-- Trade Form -->
-    <div class="record-form" id="tradeForm">
-      <div class="form-group">
-        <label class="form-label">选择资产</label>
-        <select class="input-field" id="assetSelect">
-          <option>600519 贵州茅台</option>
-          <option>00700 腾讯控股</option>
-          <option>110022 易方达消费</option>
-          <option>AAPL 苹果公司</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">交易类型</label>
-        <div style="display:flex;gap:10px;">
-          <button class="btn-primary" style="flex:1;padding:12px;font-size:14px;border-radius:14px;" onclick="selectTxnType(this,'BUY')">买入</button>
-          <button class="btn-secondary" style="flex:1;padding:12px;font-size:14px;border-radius:14px;" onclick="selectTxnType(this,'SELL')">卖出</button>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">单价</label>
-        <div class="slider-group">
-          <div class="slider-display">
-            <span class="slider-unit">元 / 股</span>
-            <input type="number" class="slider-input" id="priceValue" value="1916.00" onchange="updateSliderFromInput(this, 'priceSlider')"/>
-          </div>
-          <div class="slider-track" id="priceSlider">
-            <div class="slider-fill" style="width:60%"></div>
-            <div class="slider-thumb" style="left:60%"></div>
-          </div>
-          <div class="slider-hint"><span>← → 滑动调整</span><span>↑↓ 倍率</span></div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">数量</label>
-        <div class="slider-group">
-          <div class="slider-display">
-            <span class="slider-unit">股</span>
-            <input type="number" class="slider-input" id="sharesValue" value="8" onchange="updateSliderFromInput(this, 'sharesSlider')"/>
-          </div>
-          <div class="slider-track" id="sharesSlider">
-            <div class="slider-fill" style="width:30%"></div>
-            <div class="slider-thumb" style="left:30%"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">日期</label>
-        <input type="date" class="input-field" id="tradeDate" value="">
-        <div class="date-shortcuts">
-          <button class="date-chip active" onclick="setDate('today',this)">今天</button>
-          <button class="date-chip" onclick="setDate('yesterday',this)">昨天</button>
-          <button class="date-chip" onclick="setDate('week',this)">上周</button>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">备注</label>
-        <input class="input-field" placeholder="可选，记录想法...">
-      </div>
-
-      <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;margin-top:8px;" onclick="saveRecord('trade')">
-        确认记录
-      </button>
-    </div>
-
-    <!-- Add Asset Form -->
-    <div class="record-form" id="addForm" style="display:none;">
-      <div class="form-group">
-        <label class="form-label">资产类型</label>
-        <select class="input-field">
-          <option>股票 (A)</option>
-          <option>股票 (港)</option>
-          <option>股票 (美)</option>
-          <option>基金</option>
-          <option>理财</option>
-          <option>黄金</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">名称</label>
-          <input class="input-field" placeholder="贵州茅台">
-        </div>
-        <div class="form-group">
-          <label class="form-label">代码</label>
-          <input class="input-field" placeholder="600519">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">持仓数量</label>
-          <input class="input-field" type="number" placeholder="0">
-        </div>
-        <div class="form-group">
-          <label class="form-label">成本价</label>
-          <input class="input-field" type="number" placeholder="0.00">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">当前价格</label>
-        <input class="input-field" type="number" placeholder="0.00">
-      </div>
-
-      <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;" onclick="saveRecord('add')">
-        确认新增
-      </button>
     </div>
   </div>
 
@@ -1938,12 +2709,13 @@ body {
   <div class="page" id="page-insights">
     <div class="insights-header">
       <span class="insights-title">笔记</span>
+      <span class="insights-subtitle">把文章、观点和链接提炼成可回看、可关联资产的决策信号。</span>
     </div>
 
     <div class="insight-input-card">
       <textarea class="insight-textarea" id="insightInput" placeholder="粘贴文章、输入观点或链接..."></textarea>
       <div class="insight-actions">
-        <button class="trash-btn" onclick="document.getElementById('insightInput').value=''">
+        <button class="trash-btn" onclick="clearInsightInput()">
           <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
         </button>
         <button class="analyze-btn" onclick="analyzeText()">分析</button>
@@ -1964,12 +2736,42 @@ body {
           <span class="tag">半导体</span>
           <span class="tag">成长</span>
         </div>
+        <div class="analysis-field-grid">
+          <div class="analysis-field">
+            <span>发文时间</span>
+            <strong>2026-06-18</strong>
+          </div>
+          <div class="analysis-field">
+            <span>作者</span>
+            <strong>鸡</strong>
+          </div>
+          <div class="analysis-field">
+            <span>行业/公司</span>
+            <strong>半导体 / 中芯国际</strong>
+          </div>
+          <div class="analysis-field">
+            <span>方向</span>
+            <strong>看多</strong>
+          </div>
+          <div class="analysis-field">
+            <span>预期幅度</span>
+            <strong>+12%</strong>
+          </div>
+          <div class="analysis-field">
+            <span>兑现时间</span>
+            <strong>3-6个月</strong>
+          </div>
+        </div>
         <div class="analysis-linked" id="analysisLinked">
           <div class="analysis-linked-title">关联资产</div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;">
-            <span style="font-size:14px;font-weight:500;">中芯国际</span>
-            <span style="font-size:14px;font-weight:600;color:var(--positive);">↑ 看多</span>
+            <span style="font-size:14px;font-weight:500;">中芯国际 · 未持仓</span>
+            <span style="font-size:14px;font-weight:600;color:var(--positive);">看多 +12%</span>
           </div>
+        </div>
+        <div class="analysis-next-actions">
+          <button class="analysis-action-btn primary" onclick="saveAnalysisToNote()">存入笔记</button>
+          <button class="analysis-action-btn secondary" onclick="openRecordSheet('add')">新增资产</button>
         </div>
       </div>
     </div>
@@ -1977,10 +2779,17 @@ body {
     <div class="insight-history">
       <div class="section-title" style="margin:4px 0 10px;">历史笔记</div>
 
-      <div class="history-item" onclick="toggleHistoryItem(this)">
+      <div class="history-item" data-history-id="history-ai-chip" onclick="toggleHistoryItem(this)">
         <div class="history-item-header">
-          <span class="history-item-title">半导体：AI芯片需求持续增长</span>
-          <span class="history-item-date">05-20</span>
+          <div class="history-title-row">
+            <span class="history-item-title">半导体：AI芯片需求持续增长</span>
+            <span class="history-item-date">05-20</span>
+          </div>
+          <div class="history-tags-preview">
+            <span class="history-mini-tag up">看多</span>
+            <span class="history-mini-tag">半导体</span>
+            <span class="history-asset-pill">苹果公司等 2 项</span>
+          </div>
         </div>
         <div class="history-item-expand">
           <div class="history-detail" style="padding-top:16px;">
@@ -1989,17 +2798,41 @@ body {
               <span class="tag">半导体</span>
               <span class="tag">成长</span>
             </div>
-            <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">
+            <p class="history-note-copy">
               AI芯片需求持续扩张，国产替代进程加速。
             </p>
+            <div class="history-assets-title">提及持仓资产</div>
+            <div class="history-asset-list">
+              <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
+                <div class="history-asset-main">
+                  <span class="history-asset-name">苹果公司</span>
+                  <span class="history-asset-code">AAPL · 端侧 AI 与芯片周期</span>
+                </div>
+                <span class="history-asset-trend up">看多 +7%</span>
+              </div>
+              <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
+                <div class="history-asset-main">
+                  <span class="history-asset-name">腾讯控股</span>
+                  <span class="history-asset-code">00700 · 云算力需求</span>
+                </div>
+                <span class="history-asset-trend neutral">观望 +3%</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="history-item" onclick="toggleHistoryItem(this)">
+      <div class="history-item" data-history-id="history-consumption" onclick="toggleHistoryItem(this)">
         <div class="history-item-header">
-          <span class="history-item-title">消费板块估值回归，白酒龙头稳定</span>
-          <span class="history-item-date">05-18</span>
+          <div class="history-title-row">
+            <span class="history-item-title">消费板块估值回归，白酒龙头稳定</span>
+            <span class="history-item-date">05-18</span>
+          </div>
+          <div class="history-tags-preview">
+            <span class="history-mini-tag down">观望</span>
+            <span class="history-mini-tag">消费</span>
+            <span class="history-asset-pill">贵州茅台等 2 项</span>
+          </div>
         </div>
         <div class="history-item-expand">
           <div class="history-detail" style="padding-top:16px;">
@@ -2007,17 +2840,41 @@ body {
               <span class="tag tag-down">观望</span>
               <span class="tag">消费</span>
             </div>
-            <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">
+            <p class="history-note-copy">
               短期估值偏高，白酒龙头分红现金流稳定。
             </p>
+            <div class="history-assets-title">提及持仓资产</div>
+            <div class="history-asset-list">
+              <div class="history-asset-signal" data-code="600519" onclick="openAssetDetailFromHistory(event,'600519')">
+                <div class="history-asset-main">
+                  <span class="history-asset-name">贵州茅台</span>
+                  <span class="history-asset-code">600519 · 白酒龙头</span>
+                </div>
+                <span class="history-asset-trend neutral">观望 -6%</span>
+              </div>
+              <div class="history-asset-signal" data-code="110022" onclick="openAssetDetailFromHistory(event,'110022')">
+                <div class="history-asset-main">
+                  <span class="history-asset-name">易方达消费</span>
+                  <span class="history-asset-code">110022 · 消费基金</span>
+                </div>
+                <span class="history-asset-trend down">谨慎 -5%</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="history-item" onclick="toggleHistoryItem(this)">
+      <div class="history-item" data-history-id="history-hk-tech" onclick="toggleHistoryItem(this)">
         <div class="history-item-header">
-          <span class="history-item-title">加息预期升温，港股科技承压</span>
-          <span class="history-item-date">05-15</span>
+          <div class="history-title-row">
+            <span class="history-item-title">加息预期升温，港股科技承压</span>
+            <span class="history-item-date">05-15</span>
+          </div>
+          <div class="history-tags-preview">
+            <span class="history-mini-tag down">谨慎</span>
+            <span class="history-mini-tag">港股科技</span>
+            <span class="history-asset-pill">腾讯控股等 2 项</span>
+          </div>
         </div>
         <div class="history-item-expand">
           <div class="history-detail" style="padding-top:16px;">
@@ -2025,9 +2882,26 @@ body {
               <span class="tag tag-down">谨慎</span>
               <span class="tag">金融</span>
             </div>
-            <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">
+            <p class="history-note-copy">
               加息预期下港股科技股承压。
             </p>
+            <div class="history-assets-title">提及持仓资产</div>
+            <div class="history-asset-list">
+              <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
+                <div class="history-asset-main">
+                  <span class="history-asset-name">腾讯控股</span>
+                  <span class="history-asset-code">00700 · 港股科技权重</span>
+                </div>
+                <span class="history-asset-trend down">谨慎 -5%</span>
+              </div>
+              <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
+                <div class="history-asset-main">
+                  <span class="history-asset-name">苹果公司</span>
+                  <span class="history-asset-code">AAPL · 全球科技估值</span>
+                </div>
+                <span class="history-asset-trend neutral">观望 +2%</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2039,6 +2913,7 @@ body {
     <div class="me-header">
       <div class="me-avatar">🐔</div>
       <div class="me-name">JinJI</div>
+      <div class="me-account-pill" id="meAccountName">全部账户</div>
       <div class="me-stats">
         <div class="me-stat">
           <span class="me-stat-val">4</span>
@@ -2055,6 +2930,12 @@ body {
       </div>
     </div>
 
+    <div class="me-sync-card">
+      <span class="me-sync-title">当前演示数据</span>
+      <span class="me-sync-value" id="meAccountSummary">4 项资产 · 12 笔交易 · 3 条笔记</span>
+      <span class="me-sync-meta" id="meSyncTime">最近同步 13:00 · 静态高保真 Demo</span>
+    </div>
+
     <div class="me-section">
       <div class="me-section-title">账户</div>
       <div class="me-menu">
@@ -2068,23 +2949,6 @@ body {
       </div>
     </div>
 
-    <div class="me-section">
-      <div class="me-section-title">设置</div>
-      <div class="me-menu">
-        <div class="me-menu-item" onclick="showToast('确认注销账户')">
-          <div class="me-menu-left">
-            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-            <span class="me-menu-label">注销账户</span>
-          </div>
-          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="version-info">
-      <span class="version-number">JinJI v1.3.4</span>
-      更新于 2026-05-21
-    </div>
   </div>
 
   <!-- Tab Bar -->
@@ -2092,10 +2956,6 @@ body {
     <div class="tab-item active" onclick="switchTab('portfolio')">
       <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
       <span>资产</span>
-    </div>
-    <div class="tab-item" onclick="switchTab('record')">
-      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 16H5V5h14v14zm-4-4h-4v-2h4v2zm-4-4H9v-2h4v2zm4 0h-4v-2h4v2zm-8 4H7v-2h4v2zm8 0h-4v-2h4v2z"/></svg>
-      <span>记录</span>
     </div>
     <div class="tab-item" onclick="switchTab('insights')">
       <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
@@ -2112,9 +2972,6 @@ body {
     <div class="modal-content">
       <div class="modal-header">
         <span class="modal-title">选择账户</span>
-        <button class="modal-close" onclick="closeAccountModal()">
-          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
       </div>
       <div class="modal-body account-modal-body">
         <div class="account-list">
@@ -2163,89 +3020,284 @@ body {
     </div>
   </div>
 
+  <!-- Home Add Record Sheet -->
+  <div class="modal-overlay record-sheet-overlay" id="recordSheetModal">
+    <div class="record-sheet">
+      <div class="record-sheet-header">
+        <div class="sheet-title">
+          <span class="sheet-name">新增资产</span>
+        </div>
+        <div class="sheet-header-actions">
+          <button class="sheet-save-btn" onclick="saveRecord('add')">保存</button>
+        </div>
+      </div>
+      <div class="sheet-body">
+        <div class="asset-search-box">
+          <div class="form-group">
+            <label class="form-label">搜索资产</label>
+            <input class="input-field" id="assetSearchInput" placeholder="输入名称、代码或关键词" oninput="filterAssetSearchResults()">
+          </div>
+          <div class="asset-search-results" id="assetSearchResults"></div>
+        </div>
+
+        <div class="record-form" id="recordAddForm">
+          <div class="form-group">
+            <label class="form-label">资产分类</label>
+            <select class="input-field" id="recordAddType" onchange="handleAddTypeChange()">
+              <option value="stock">股票</option>
+              <option value="fund">基金</option>
+              <option value="metal">贵金属</option>
+              <option value="wealth">理财</option>
+              <option value="deposit">存款</option>
+              <option value="etf">ETF</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">名称</label>
+              <input class="input-field" id="recordAddName" placeholder="贵州茅台">
+            </div>
+            <div class="form-group">
+              <label class="form-label">代码</label>
+              <input class="input-field" id="recordAddCode" placeholder="600519">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">持仓数量</label>
+              <input class="input-field" type="number" id="recordAddQuantity" placeholder="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">成本价</label>
+              <input class="input-field" type="number" id="recordAddCost" placeholder="0.00">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">当前价格</label>
+              <input class="input-field" type="number" id="recordAddPrice" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label class="form-label">建仓日期</label>
+              <input type="date" class="input-field" id="recordDate" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">备注</label>
+            <input class="input-field" id="recordAddNote" placeholder="可选，记录想法...">
+          </div>
+          <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;" onclick="saveRecord('add')">确认新增</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- Asset Detail Modal -->
-<div class="modal-overlay asset-detail-modal" id="assetDetailModal">
-  <div class="asset-detail-card">
-    <div class="asset-detail-header">
-      <div class="asset-detail-title">
-        <span class="asset-detail-code" id="detailAssetCode">600519</span>
-        <span class="asset-detail-name" id="detailAssetName">贵州茅台</span>
-      </div>
-      <button class="asset-detail-close" onclick="closeAssetDetail()">×</button>
-    </div>
-    
-    <div class="asset-detail-content">
-      <div class="asset-detail-info">
-        <div class="info-row">
-          <span class="info-label">当前价格</span>
-          <span class="info-value" id="detailPrice">1,916.00</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">持仓成本</span>
-          <span class="info-value" id="detailCost">1,500.00</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">持仓数量</span>
-          <span class="info-value" id="detailQuantity">100</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">盈亏金额</span>
-          <span class="info-value profit" id="detailPnL">+41,600.00</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">盈亏比例</span>
-          <span class="info-value profit" id="detailPnLPct">+27.73%</span>
-        </div>
-      </div>
-      
-      <div class="asset-detail-notes">
-        <div class="notes-header">
-          <span class="notes-title">📝 相关笔记</span>
-          <div class="notes-position-ratio" id="notesPositionRatio">
-            <span class="ratio-bull">看多 2</span>
-            <span class="ratio-vs">:</span>
-            <span class="ratio-bear">看空 1</span>
-          </div>
-          <button class="notes-add-btn" onclick="addNoteForAsset()">+ 添加</button>
-        </div>
-        <div class="notes-list" id="detailNotesList">
-          <div class="note-item note-bull">
-            <div class="note-trend-tag tag-bull">看多</div>
-            <div class="note-content">"茅台的护城河非常稳固，品牌价值持续提升，长期看好"</div>
-            <div class="note-meta">
-              <span class="note-date">2026-05-21</span>
-              <span class="note-index">第1条</span>
-            </div>
-          </div>
-          <div class="note-item note-bull">
-            <div class="note-trend-tag tag-bull">看多</div>
-            <div class="note-content">"关注产能扩张计划，年报显示增长潜力，基本面强劲"</div>
-            <div class="note-meta">
-              <span class="note-date">2026-05-20</span>
-              <span class="note-index">第2条</span>
-            </div>
-          </div>
-          <div class="note-item note-bear">
-            <div class="note-trend-tag tag-bear">看空</div>
-            <div class="note-content">"短期波动不改长期价值，但短期估值偏高需谨慎"</div>
-            <div class="note-meta">
-              <span class="note-date">2026-05-18</span>
-              <span class="note-index">第3条</span>
-            </div>
-          </div>
-        </div>
-        <div class="notes-warning" id="notesWarning" style="display:none;">
-          <span class="warning-icon">⚠️</span>
-          <span class="warning-text">当前决策与笔记观点存在冲突</span>
-        </div>
+<!-- Asset Detail And Quick Record Sheet -->
+<div class="modal-overlay asset-detail-modal record-sheet-overlay" id="assetDetailModal">
+  <div class="record-sheet">
+    <div class="record-sheet-header">
+      <div class="sheet-title">
+        <span class="sheet-eyebrow" id="detailAssetCode">600519</span>
+        <span class="sheet-name" id="detailAssetName">贵州茅台</span>
+        <span class="sheet-status profit" id="detailAssetStatus">盈利 +41,600.00 · +27.73% · 3 条笔记</span>
       </div>
     </div>
-    
-    <div class="asset-detail-actions">
-      <button class="action-btn secondary" onclick="editAsset()">✏️ 编辑</button>
-      <button class="action-btn primary" onclick="tradeAsset()">📊 交易</button>
+    <div class="sheet-body">
+      <div class="asset-sheet-nav">
+        <button id="assetNavTrade" class="active" onclick="scrollAssetSection('trade')">记一笔</button>
+        <button id="assetNavDetail" onclick="scrollAssetSection('detail')">明细</button>
+        <button id="assetNavNotes" onclick="scrollAssetSection('notes')">笔记</button>
+      </div>
+
+      <div class="asset-sheet-pane" id="assetPaneDetail">
+        <div class="panel-title-row asset-sheet-section" id="assetDetailSection">
+          <span class="panel-title">资产明细</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="panel-action" onclick="toggleFieldEditor()">编辑字段</button>
+            <span class="locked-price" onclick="showToast('实时价为付费用户功能')">实时价 Pro</span>
+          </div>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-card">
+            <span class="detail-label">持仓成本价</span>
+            <span class="detail-value" id="detailCost">1,500.00</span>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">持仓数量</span>
+            <span class="detail-value" id="detailQuantity">100</span>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">当前总市值</span>
+            <span class="detail-value" id="detailMarketValue">191,600.00</span>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">持仓时间</span>
+            <span class="detail-value" id="detailHoldTime">186 天</span>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">盈亏金额</span>
+            <span class="detail-value profit" id="detailPnL">+41,600.00</span>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">盈亏比例</span>
+            <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
+          </div>
+        </div>
+
+        <div class="field-editor" id="fieldEditor">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">成本价</label>
+              <input class="input-field" type="number" id="editCost">
+            </div>
+            <div class="form-group">
+              <label class="form-label">数量</label>
+              <input class="input-field" type="number" id="editQuantity">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">最新价</label>
+              <input class="input-field" type="number" id="editPrice">
+            </div>
+            <div class="form-group">
+              <label class="form-label">持仓天数</label>
+              <input class="input-field" type="number" id="editHoldDays">
+            </div>
+          </div>
+          <button class="btn-secondary" style="width:100%;" onclick="applyAssetFieldEdits()">应用调整</button>
+        </div>
+      </div>
+
+      <div class="asset-sheet-pane" id="assetPaneNotes">
+        <div class="prediction-panel" id="assetNotesSection">
+          <div class="panel-title-row">
+            <span class="panel-title">笔记预测价</span>
+            <span class="panel-action">来自鸡的提示</span>
+          </div>
+          <div id="predictionList"></div>
+        </div>
+
+        <div class="note-summary-panel">
+          <div class="panel-title-row">
+            <span class="panel-title">关联笔记调整总结</span>
+            <div class="notes-position-ratio" id="notesPositionRatio">
+              <span class="ratio-bull">看多 2</span>
+              <span class="ratio-vs">:</span>
+              <span class="ratio-bear">看空 1</span>
+            </div>
+          </div>
+          <div id="noteSummaryList"></div>
+          <div class="notes-warning" id="notesWarning" style="display:none;">
+            <span class="warning-icon">⚠️</span>
+            <span class="warning-text">当前决策与笔记观点存在冲突</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="asset-sheet-pane active" id="assetPaneTrade">
+        <div class="mode-switch" id="assetTradeSwitch">
+          <div class="mode-indicator" id="assetTradeIndicator"></div>
+          <button class="mode-btn active" id="assetModeBuy" onclick="switchAssetTradeMode('BUY')">买入</button>
+          <button class="mode-btn" id="assetModeSell" onclick="switchAssetTradeMode('SELL')">卖出</button>
+        </div>
+
+        <div class="form-row trade-price-row">
+          <div class="form-group stepper-field">
+            <label class="form-label">买入价</label>
+            <span class="value-float" id="assetBuyPriceHint">+0.00%</span>
+            <div class="stepper-row">
+              <button class="adjust-btn" onclick="adjustNumericField('assetBuyPrice',-1,'percent','assetBuyPriceHint','assetBasePrice')">−</button>
+              <input class="input-field" type="number" id="assetBuyPrice" onchange="showPercentHint('assetBuyPrice','assetBuyPriceHint','assetBasePrice')">
+              <button class="adjust-btn" onclick="adjustNumericField('assetBuyPrice',1,'percent','assetBuyPriceHint','assetBasePrice')">+</button>
+            </div>
+          </div>
+          <div class="form-group stepper-field">
+            <label class="form-label">卖出价</label>
+            <span class="value-float" id="assetSellPriceHint">+0.00%</span>
+            <div class="stepper-row">
+              <button class="adjust-btn" onclick="adjustNumericField('assetSellPrice',-1,'percent','assetSellPriceHint','assetBasePrice')">−</button>
+              <input class="input-field" type="number" id="assetSellPrice" onchange="showPercentHint('assetSellPrice','assetSellPriceHint','assetBasePrice')">
+              <button class="adjust-btn" onclick="adjustNumericField('assetSellPrice',1,'percent','assetSellPriceHint','assetBasePrice')">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group stepper-field">
+          <label class="form-label">份数</label>
+          <span class="value-float" id="assetSharesHint">¥191,600</span>
+          <div class="stepper-row">
+            <button class="adjust-btn" onclick="adjustNumericField('assetShares',-1,'total','assetSharesHint','assetBuyPrice')">−</button>
+            <input class="input-field" type="number" id="assetShares" onchange="updateSharesHint('asset')">
+            <button class="adjust-btn" onclick="adjustNumericField('assetShares',1,'total','assetSharesHint','assetBuyPrice')">+</button>
+          </div>
+          <div class="share-quick-row">
+            <button class="share-quick-chip" onclick="setAssetShareRatio(0.25)">1/4</button>
+            <button class="share-quick-chip" onclick="setAssetShareRatio(0.5)">1/2</button>
+            <button class="share-quick-chip" onclick="setAssetShareRatio(1)">全部</button>
+          </div>
+        </div>
+        <div class="trade-preview">
+          <div class="trade-preview-item">
+            <span class="trade-preview-label">交易额</span>
+            <span class="trade-preview-value" id="assetTradeAmount">¥191,600</span>
+          </div>
+          <div class="trade-preview-item">
+            <span class="trade-preview-label">交易后份数</span>
+            <span class="trade-preview-value" id="assetAfterQty">200</span>
+          </div>
+          <div class="trade-preview-item">
+            <span class="trade-preview-label">预估成本</span>
+            <span class="trade-preview-value" id="assetTradeImpact">1,708.00</span>
+          </div>
+        </div>
+        <input type="hidden" id="assetBasePrice" value="1916.00">
+        <input type="hidden" id="activeAssetCode" value="600519">
+
+        <div class="form-group">
+          <label class="form-label">记录日期</label>
+          <input type="date" class="input-field" id="assetTradeDate">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">发文时间</label>
+            <input class="input-field" id="notePublishTime" placeholder="2026-05-21">
+          </div>
+          <div class="form-group">
+            <label class="form-label">作者</label>
+            <input class="input-field" id="noteAuthor" placeholder="鸡">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">行业/公司</label>
+            <input class="input-field" id="noteIndustry" placeholder="白酒/贵州茅台">
+          </div>
+          <div class="form-group">
+            <label class="form-label">方向</label>
+            <select class="input-field" id="noteDirection">
+              <option>看多</option>
+              <option>看空</option>
+              <option>观望</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">预期幅度</label>
+            <input class="input-field" id="noteExpectedMove" placeholder="+12%">
+          </div>
+          <div class="form-group">
+            <label class="form-label">预期兑现时间</label>
+            <input class="input-field" id="noteExpectedTime" placeholder="3-6个月">
+          </div>
+        </div>
+
+        <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;" onclick="saveAssetQuickRecord()">确认记录</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2253,9 +3305,11 @@ body {
 <script>
 let currentTab = 'portfolio';
 let sortMenuOpen = false;
+let scopeTipOpen = false;
 let currentSortType = 'marketValue';
 let currentSortDirection = 0; // 0=默认, 1=降序, 2=升序
 let isPrivacyOn = false;
+let selectedCategory = 'all';
 let selectedAccount = 'all';
 let currentMultiplier = 1;
 const multipliers = [1, 10, 100, 1000];
@@ -2266,24 +3320,23 @@ document.addEventListener('DOMContentLoaded', function() {
   sortOptions.forEach(option => {
     option.addEventListener('click', function(e) {
       e.stopPropagation();
-      const sortType = this.getAttribute('data-type');
-      const label = this.getAttribute('data-label');
-      setSortType(sortType, label);
     });
   });
 });
 
 function switchTab(tabName) {
   if (currentTab === tabName) return;
-  
+
   const pages = document.querySelectorAll('.page');
   const tabs = document.querySelectorAll('.tab-item');
-  
+
   pages.forEach(page => page.classList.remove('active'));
   tabs.forEach(tab => tab.classList.remove('active'));
-  
+
   document.getElementById('page-' + tabName).classList.add('active');
-  event.currentTarget.classList.add('active');
+  const eventTarget = typeof event !== 'undefined' ? event.currentTarget : null;
+  const currentTabEl = eventTarget || Array.from(tabs).find(tab => tab.getAttribute('onclick')?.includes(`'${tabName}'`));
+  currentTabEl?.classList.add('active');
   currentTab = tabName;
 }
 
@@ -2291,6 +3344,12 @@ function toggleSortMenu() {
   sortMenuOpen = !sortMenuOpen;
   document.getElementById('sortMenu').classList.toggle('show', sortMenuOpen);
   document.getElementById('sortType').classList.toggle('open', sortMenuOpen);
+}
+
+function toggleScopeTip(event) {
+  event?.stopPropagation();
+  scopeTipOpen = !scopeTipOpen;
+  document.getElementById('scopeTip')?.classList.toggle('show', scopeTipOpen);
 }
 
 function setSortType(sortType, label) {
@@ -2310,25 +3369,23 @@ function setSortType(sortType, label) {
 function sortAssets() {
   const assetList = document.getElementById('assetList');
   if (!assetList) return;
-  
+
   const assets = Array.from(assetList.getElementsByClassName('asset-item'));
   if (assets.length === 0) return;
-  
+
   // 提取排序值
   const getSortValue = (asset) => {
     const rightDiv = asset.querySelector('.asset-right');
     if (!rightDiv) return 0;
-    
-    const priceEl = rightDiv.querySelector('.asset-price');
+
     const pnlEl = rightDiv.querySelector('.asset-pnl');
     const nameEl = asset.querySelector('.asset-name');
-    
+
     let value = 0;
-    
+
     switch (currentSortType) {
       case 'marketValue':
-        // 使用价格作为市值（简化处理）
-        value = parseFloat(priceEl?.textContent.replace(/,/g, '')) || 0;
+        value = numberFromText(asset.dataset.price) * numberFromText(asset.dataset.quantity);
         break;
       case 'gainLoss':
         // 从盈亏文本中提取数值
@@ -2338,7 +3395,8 @@ function sortAssets() {
         break;
       case 'gainLossPercent':
         // 从盈亏文本中提取百分比
-        const pctMatch = pnlText.match(/([+-]?[\d.]+)%/);
+        const pctText = pnlEl?.textContent || '';
+        const pctMatch = pctText.match(/([+-]?[\d.]+)%/);
         value = pctMatch ? parseFloat(pctMatch[1]) : 0;
         break;
       case 'name':
@@ -2346,22 +3404,21 @@ function sortAssets() {
     }
     return value;
   };
-  
+
   // 根据方向排序
   assets.sort((a, b) => {
     const valA = getSortValue(a);
     const valB = getSortValue(b);
-    
+
     if (typeof valA === 'string') {
       // 名称排序
-      return currentSortDirection === 1 
+      return currentSortDirection === 1
         ? valB.localeCompare(valA)  // 降序
         : valA.localeCompare(valB); // 升序或默认
     }
-    
+
     if (currentSortDirection === 0) {
-      // 默认排序（按DOM顺序，保持原样）
-      return 0;
+      return numberFromText(a.dataset.order) - numberFromText(b.dataset.order);
     } else if (currentSortDirection === 1) {
       // 降序
       return valB - valA;
@@ -2370,20 +3427,22 @@ function sortAssets() {
       return valA - valB;
     }
   });
-  
+
   // 重新插入元素
   assets.forEach(asset => assetList.appendChild(asset));
+  const emptyState = document.getElementById('assetEmptyState');
+  if (emptyState) assetList.appendChild(emptyState);
 }
 
 function toggleSortDirection() {
   const dirBtn = document.getElementById('sortDirection');
-  
+
   // 循环切换: 默认 -> 降序 -> 升序 -> 默认
   currentSortDirection = (currentSortDirection + 1) % 3;
-  
+
   // 更新按钮样式
   dirBtn.classList.remove('active-asc', 'active-desc');
-  
+
   if (currentSortDirection === 1) {
     // 降序
     dirBtn.classList.add('active-desc');
@@ -2391,16 +3450,15 @@ function toggleSortDirection() {
     // 升序
     dirBtn.classList.add('active-asc');
   }
-  
+
   // 执行排序
   sortAssets();
 }
 
 function selectAccount(element, accountId) {
-  const chips = document.querySelectorAll('.filter-bar .chip');
-  chips.forEach(chip => chip.classList.remove('active'));
-  element.classList.add('active');
   selectedAccount = accountId;
+  updateAccountState();
+  if (element) element.classList.add('selected');
   showToast('已切换账户');
 }
 
@@ -2411,6 +3469,7 @@ function goToAccountManagement() {
 
 function openAccountModal() {
   document.getElementById('accountModal').classList.add('show');
+  syncAccountModalSelection();
 }
 
 function closeAccountModal() {
@@ -2421,20 +3480,32 @@ function selectAccountFromModal(element, accountId) {
   const items = document.querySelectorAll('.account-item');
   items.forEach(item => item.classList.remove('selected'));
   element.classList.add('selected');
+  selectedAccount = accountId;
+  updateAccountState();
   setTimeout(() => {
     closeAccountModal();
-    if (accountId !== 'all') {
-      const chips = document.querySelectorAll('.filter-bar .chip');
-      chips.forEach(chip => {
-        if (chip.getAttribute('onclick')?.includes(accountId)) {
-          chip.classList.add('active');
-        } else {
-          chip.classList.remove('active');
-        }
-      });
-    }
-    showToast('已选择账户');
+    showToast(`已选择${accountDemoMap[accountId]?.name || '账户'}`);
   }, 200);
+}
+
+function syncAccountModalSelection() {
+  document.querySelectorAll('.account-item').forEach(item => {
+    const call = item.getAttribute('onclick') || '';
+    const isSelected = call.includes(`'${selectedAccount}'`);
+    item.classList.toggle('selected', isSelected);
+  });
+}
+
+function updateAccountState() {
+  const account = accountDemoMap[selectedAccount] || accountDemoMap.all;
+  const summaryAccountName = document.getElementById('summaryAccountName');
+  const meAccountName = document.getElementById('meAccountName');
+  const meAccountSummary = document.getElementById('meAccountSummary');
+  const meSyncTime = document.getElementById('meSyncTime');
+  if (summaryAccountName) summaryAccountName.textContent = account.name;
+  if (meAccountName) meAccountName.textContent = account.name;
+  if (meAccountSummary) meAccountSummary.textContent = account.summary;
+  if (meSyncTime) meSyncTime.textContent = account.sync;
 }
 
 function togglePrivacy() {
@@ -2444,7 +3515,7 @@ function togglePrivacy() {
   const todayPnLPct = document.getElementById('todayPnLPct');
   const privacyBtn = document.getElementById('privacyBtn');
   const privacyIcon = document.getElementById('privacyIcon');
-  
+
   if (isPrivacyOn) {
     totalAsset.classList.add('privacy-hide');
     todayPnL.classList.add('privacy-hide');
@@ -2467,9 +3538,11 @@ function togglePrivacy() {
     todayPnLPct.classList.add('privacy-hide');
     privacyBtn.classList.remove('active');
     setTimeout(() => {
-      totalAsset.textContent = '128,456.30';
-      todayPnL.textContent = '+2,340.50';
-      todayPnLPct.textContent = '+1.85%';
+      const diff = totalAssetSnapshots.todayOne - totalAssetSnapshots.previousOne;
+      const yieldPct = totalAssetSnapshots.previousOne ? diff / totalAssetSnapshots.previousOne * 100 : 0;
+      totalAsset.textContent = formatNumber(totalAssetSnapshots.todayOne);
+      todayPnL.textContent = signedNumber(diff);
+      todayPnLPct.textContent = signedPercent(yieldPct);
       totalAsset.classList.remove('privacy-hide');
       todayPnL.classList.remove('privacy-hide');
       todayPnLPct.classList.remove('privacy-hide');
@@ -2484,7 +3557,7 @@ function switchMode(mode) {
   const modeAdd = document.getElementById('modeAdd');
   const tradeForm = document.getElementById('tradeForm');
   const addForm = document.getElementById('addForm');
-  
+
   if (mode === 'trade') {
     modeIndicator.classList.remove('right');
     modeTrade.classList.add('active');
@@ -2501,6 +3574,7 @@ function switchMode(mode) {
 }
 
 function selectTxnType(element, type) {
+  activeRecordTxnType = type;
   const buttons = element.parentElement.children;
   for (let btn of buttons) {
     btn.classList.remove('btn-primary');
@@ -2508,6 +3582,13 @@ function selectTxnType(element, type) {
   }
   element.classList.remove('btn-secondary');
   element.classList.add('btn-primary');
+  updateSharesHint('record');
+  updateTradePreview('record');
+}
+
+function resetRecordTxnType(type = 'BUY') {
+  const target = document.getElementById(type === 'SELL' ? 'recordTxnSell' : 'recordTxnBuy');
+  if (target) selectTxnType(target, type);
 }
 
 function updateSliderFromInput(input, sliderId) {
@@ -2515,7 +3596,7 @@ function updateSliderFromInput(input, sliderId) {
   const fill = slider.querySelector('.slider-fill');
   const thumb = slider.querySelector('.slider-thumb');
   let value = parseFloat(input.value);
-  
+
   if (sliderId === 'priceSlider') {
     value = Math.max(0, Math.min(3000, value));
     const percentage = (value / 3000) * 100;
@@ -2547,45 +3628,45 @@ function handleSliderStart(e) {
   const track = e.currentTarget;
   const rect = track.getBoundingClientRect();
   activeSlider = track;
-  
+
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-  
+
   startX = clientX;
   startY = clientY;
   lastY = clientY;
-  
+
   document.addEventListener('touchmove', handleSliderMove, { passive: false });
   document.addEventListener('mousemove', handleSliderMove);
   document.addEventListener('touchend', handleSliderEnd);
   document.addEventListener('mouseup', handleSliderEnd);
-  
+
   updateSliderFromPosition(clientX, track, rect);
   if (e.preventDefault) e.preventDefault();
 }
 
 function handleSliderMove(e) {
   if (!activeSlider) return;
-  
+
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
   const rect = activeSlider.getBoundingClientRect();
-  
+
   const deltaY = lastY - clientY;
   if (Math.abs(deltaY) > 15) {
     currentMultiplierIndex += deltaY > 0 ? 1 : -1;
     currentMultiplierIndex = Math.max(0, Math.min(multipliers.length - 1, currentMultiplierIndex));
     currentMultiplier = multipliers[currentMultiplierIndex];
     showMultiplierBadge();
-    
+
     // 立即更新所有滑块的显示数值
     updateSliderFromPosition(clientX, activeSlider, rect);
-    
+
     lastY = clientY;
   } else {
     updateSliderFromPosition(clientX, activeSlider, rect);
   }
-  
+
   if (e.preventDefault) e.preventDefault();
 }
 
@@ -2600,13 +3681,13 @@ function handleSliderEnd() {
 function updateSliderFromPosition(clientX, track, rect) {
   const fill = track.querySelector('.slider-fill');
   const thumb = track.querySelector('.slider-thumb');
-  
+
   let percentage = ((clientX - rect.left) / rect.width) * 100;
   percentage = Math.max(0, Math.min(100, percentage));
-  
+
   fill.style.width = percentage + '%';
   thumb.style.left = percentage + '%';
-  
+
   const sliderId = track.id;
   if (sliderId === 'priceSlider') {
     const value = (percentage / 100) * 3000 * currentMultiplier;
@@ -2632,259 +3713,6 @@ function showMultiplierBadge() {
   }, 1000);
 }
 
-// 上传功能
-function triggerUpload() {
-  document.getElementById('fileInput').click();
-}
-
-function handleFileSelect(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    document.getElementById('previewImg').src = event.target.result;
-    document.getElementById('uploadZone').classList.add('has-image');
-    document.getElementById('scanResults').innerHTML = '';
-    
-    showToast('正在识别中...');
-    
-    // 模拟识别
-    setTimeout(() => {
-      showScanResults();
-    }, 800);
-  };
-  reader.readAsDataURL(file);
-}
-
-function showScanResults() {
-  const resultsDiv = document.getElementById('scanResults');
-  const stocks = [
-    { name: '贵州茅台', code: '600519', new: true },
-    { name: '腾讯控股', code: '00700', new: false }
-  ];
-  
-  stocks.forEach((stock, index) => {
-    setTimeout(() => {
-      const item = document.createElement('div');
-      item.className = 'scan-item';
-      item.innerHTML = `
-        <div class="scan-item-info">
-          <span class="scan-item-name">${stock.name}</span>
-          <span class="scan-item-code">${stock.code}</span>
-        </div>
-        <span class="scan-badge ${stock.new ? 'new' : 'exist'}">${stock.new ? '新发现' : '已持有'}</span>
-      `;
-      item.onclick = () => selectScannedStock(stock);
-      resultsDiv.appendChild(item);
-    }, index * 200);
-  });
-  
-  showToast('识别完成！');
-}
-
-function selectScannedStock(stock) {
-  document.getElementById('assetSelect').value = stock.code + ' ' + stock.name;
-  showToast('已选择 ' + stock.name);
-}
-
-function setDate(dateType, element) {
-  const chips = document.querySelectorAll('.date-chip');
-  chips.forEach(chip => chip.classList.remove('active'));
-  element.classList.add('active');
-  
-  const today = new Date();
-  let targetDate = new Date();
-  
-  switch (dateType) {
-    case 'today':
-      break;
-    case 'yesterday':
-      targetDate.setDate(today.getDate() - 1);
-      break;
-    case 'week':
-      targetDate.setDate(today.getDate() - 7);
-      break;
-  }
-  
-  const dateStr = targetDate.toISOString().split('T')[0];
-  document.getElementById('tradeDate').value = dateStr;
-}
-
-function saveRecord(type) {
-  showToast(type === 'trade' ? '交易记录已保存' : '资产已添加');
-}
-
-function openAssetDetail(code) {
-  const modal = document.getElementById('assetDetailModal');
-  const codeEl = document.getElementById('detailAssetCode');
-  const nameEl = document.getElementById('detailAssetName');
-  const priceEl = document.getElementById('detailPrice');
-  const costEl = document.getElementById('detailCost');
-  const qtyEl = document.getElementById('detailQuantity');
-  const pnlEl = document.getElementById('detailPnL');
-  const pnlPctEl = document.getElementById('detailPnLPct');
-  
-  // 根据代码查找资产信息
-  const assetItems = document.querySelectorAll('.asset-item');
-  let assetData = {
-    code: code,
-    name: '未知资产',
-    price: '0.00',
-    pnl: '+0.00',
-    pnlPct: '+0.00%'
-  };
-  
-  assetItems.forEach(item => {
-    if (item.getAttribute('onclick')?.includes(code)) {
-      const codeSpan = item.querySelector('.asset-code');
-      const nameSpan = item.querySelector('.asset-name');
-      const priceSpan = item.querySelector('.asset-price');
-      const pnlSpan = item.querySelector('.asset-pnl');
-      
-      if (codeSpan) assetData.code = codeSpan.textContent;
-      if (nameSpan) assetData.name = nameSpan.textContent;
-      if (priceSpan) assetData.price = priceSpan.textContent;
-      if (pnlSpan) {
-        const pnlText = pnlSpan.textContent;
-        const parts = pnlText.split('·');
-        assetData.pnl = parts[0]?.trim() || '+0.00';
-        assetData.pnlPct = parts[1]?.trim() || '+0.00%';
-      }
-    }
-  });
-  
-  // 填充数据
-  codeEl.textContent = assetData.code;
-  nameEl.textContent = assetData.name;
-  priceEl.textContent = assetData.price;
-  costEl.textContent = '1,500.00'; // 模拟数据
-  qtyEl.textContent = '100'; // 模拟数据
-  pnlEl.textContent = assetData.pnl;
-  pnlPctEl.textContent = assetData.pnlPct;
-  
-  // 判断盈亏颜色
-  const isProfit = !assetData.pnl.startsWith('-');
-  pnlEl.className = isProfit ? 'info-value profit' : 'info-value loss';
-  pnlPctEl.className = isProfit ? 'info-value profit' : 'info-value loss';
-  
-  // 检测笔记冲突并更新阵营比例
-  checkNoteConflicts(code);
-  
-  // 显示模态框
-  modal.classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function checkNoteConflicts(assetCode) {
-  const notesList = document.getElementById('detailNotesList');
-  const notesWarning = document.getElementById('notesWarning');
-  const positionRatio = document.getElementById('notesPositionRatio');
-  
-  // 获取所有笔记项
-  const noteItems = notesList.querySelectorAll('.note-item');
-  let bullCount = 0;
-  let bearCount = 0;
-  
-  noteItems.forEach(item => {
-    if (item.classList.contains('note-bull')) {
-      bullCount++;
-    } else if (item.classList.contains('note-bear')) {
-      bearCount++;
-    }
-  });
-  
-  // 更新阵营比例显示
-  const bullSpan = positionRatio.querySelector('.ratio-bull');
-  const bearSpan = positionRatio.querySelector('.ratio-bear');
-  bullSpan.textContent = `看多 ${bullCount}`;
-  bearSpan.textContent = `看空 ${bearCount}`;
-  
-  // 添加多数/少数标识
-  bullSpan.classList.remove('majority', 'minority');
-  bearSpan.classList.remove('majority', 'minority');
-  
-  if (bullCount > 0 && bearCount > 0) {
-    // 存在冲突阵营
-    if (bullCount > bearCount) {
-      bullSpan.classList.add('majority');
-      bearSpan.classList.add('minority');
-    } else if (bearCount > bullCount) {
-      bearSpan.classList.add('majority');
-      bullSpan.classList.add('minority');
-    }
-  } else if (bullCount > 0) {
-    bullSpan.classList.add('majority');
-  } else if (bearCount > 0) {
-    bearSpan.classList.add('majority');
-  }
-  
-  // 检测是否存在阵营冲突（同时存在看多和看空）
-  const hasConflict = bullCount > 0 && bearCount > 0;
-  notesWarning.style.display = hasConflict ? 'flex' : 'none';
-  
-  if (hasConflict) {
-    notesWarning.querySelector('.warning-text').textContent = 
-      `⚠️ 笔记观点存在冲突：${bullCount}条看多 vs ${bearCount}条看空`;
-  }
-}
-
-function closeAssetDetail() {
-  const modal = document.getElementById('assetDetailModal');
-  modal.classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-function addNoteForAsset() {
-  showToast('跳转到添加笔记页面');
-  closeAssetDetail();
-}
-
-function editAsset() {
-  showToast('打开编辑资产页面');
-}
-
-function tradeAsset() {
-  const notesList = document.getElementById('detailNotesList');
-  const noteItems = notesList.querySelectorAll('.note-item');
-  let bullNotes = [];
-  let bearNotes = [];
-  
-  noteItems.forEach(item => {
-    if (item.classList.contains('note-bull')) {
-      const content = item.querySelector('.note-content')?.textContent || '';
-      bullNotes.push(content.substring(0, 20) + '...');
-    } else if (item.classList.contains('note-bear')) {
-      const content = item.querySelector('.note-content')?.textContent || '';
-      bearNotes.push(content.substring(0, 20) + '...');
-    }
-  });
-  
-  const hasConflict = bullNotes.length > 0 && bearNotes.length > 0;
-  
-  if (hasConflict) {
-    // 显示冲突确认对话框
-    const confirmMsg = `检测到笔记观点冲突：\n\n🟢 看多 ${bullNotes.length}条\n"${bullNotes[0]}"\n\n🔴 看空 ${bearNotes.length}条\n"${bearNotes[0]}"\n\n是否继续交易？`;
-    
-    if (confirm(confirmMsg)) {
-      showToast('打开交易页面');
-      closeAssetDetail();
-    } else {
-      showToast('已取消交易');
-    }
-  } else {
-    showToast('打开交易页面');
-    closeAssetDetail();
-  }
-}
-
-function simulateUpload() {
-  const uploadZone = document.getElementById('uploadZone');
-  uploadZone.classList.add('has-image');
-  showToast('正在识别...');
-  setTimeout(() => showToast('识别成功'), 1000);
-}
-
 function analyzeText() {
   const input = document.getElementById('insightInput');
   if (!input.value.trim()) {
@@ -2895,8 +3723,105 @@ function analyzeText() {
   showToast('分析完成');
 }
 
+function clearInsightInput() {
+  const input = document.getElementById('insightInput');
+  if (input) input.value = '';
+  document.getElementById('analysisResult')?.classList.remove('show');
+}
+
+function saveAnalysisToNote() {
+  const existing = document.getElementById('analysisSavedNote');
+  if (existing) {
+    existing.classList.add('open');
+    showToast('已在历史笔记中');
+    return;
+  }
+
+  const sectionTitle = document.querySelector('.insight-history .section-title');
+  if (!sectionTitle) return;
+  const item = document.createElement('div');
+  item.className = 'history-item open';
+  item.id = 'analysisSavedNote';
+  item.dataset.historyId = 'history-analysis';
+  item.setAttribute('onclick', 'toggleHistoryItem(this)');
+  item.innerHTML = `
+    <div class="history-item-header">
+      <div class="history-title-row">
+        <span class="history-item-title">半导体：AI算力扩张与国产替代</span>
+        <span class="history-item-date">刚刚</span>
+      </div>
+      <div class="history-tags-preview">
+        <span class="history-mini-tag up">看多</span>
+        <span class="history-mini-tag">半导体</span>
+        <span class="history-asset-pill">苹果公司等 2 项</span>
+      </div>
+    </div>
+    <div class="history-item-expand">
+      <div class="history-detail" style="padding-top:16px;">
+        <div style="margin-bottom:12px;">
+          <span class="tag tag-up">看多</span>
+          <span class="tag">+12%</span>
+          <span class="tag">3-6个月</span>
+        </div>
+        <p class="history-note-copy">
+          已提取发文时间、作者、行业/公司、方向、预期幅度与兑现时间，可在资产明细中作为决策笔记引用。
+        </p>
+        <div class="history-assets-title">提及持仓资产</div>
+        <div class="history-asset-list">
+          <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
+            <div class="history-asset-main">
+              <span class="history-asset-name">苹果公司</span>
+              <span class="history-asset-code">AAPL · 端侧 AI</span>
+            </div>
+            <span class="history-asset-trend up">看多 +7%</span>
+          </div>
+          <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
+            <div class="history-asset-main">
+              <span class="history-asset-name">腾讯控股</span>
+              <span class="history-asset-code">00700 · 云算力需求</span>
+            </div>
+            <span class="history-asset-trend neutral">观望 +3%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  sectionTitle.insertAdjacentElement('afterend', item);
+  showToast('已存入历史笔记');
+}
+
 function toggleHistoryItem(element) {
   element.classList.toggle('open');
+}
+
+function openHistoryNoteFromAsset(historyId) {
+  if (!historyId) {
+    showToast('该笔记暂无历史详情');
+    return;
+  }
+  closeAssetSheet();
+  switchTab('insights');
+  setTimeout(() => {
+    const target = document.querySelector(`[data-history-id="${historyId}"], #${historyId}`);
+    if (!target) {
+      showToast('未找到对应历史笔记');
+      return;
+    }
+    document.querySelectorAll('.history-item.open').forEach(item => {
+      if (item !== target) item.classList.remove('open');
+    });
+    target.classList.add('open');
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 120);
+}
+
+function openAssetDetailFromHistory(event, code) {
+  event?.stopPropagation();
+  switchTab('portfolio');
+  setTimeout(() => {
+    openAssetSheet(code);
+    scrollAssetSection('detail', true);
+  }, 120);
 }
 
 let toastTimeout;
@@ -2915,22 +3840,867 @@ function showToast(message) {
   }, 2000);
 }
 
+const totalAssetKlineDays = [
+  { label: '06/10', previousOne: 123680.20, todayOne: 124210.70 },
+  { label: '06/11', previousOne: 124210.70, todayOne: 123540.10 },
+  { label: '06/12', previousOne: 123540.10, todayOne: 125030.60 },
+  { label: '06/13', previousOne: 125030.60, todayOne: 124760.30 },
+  { label: '06/14', previousOne: 124760.30, todayOne: 125880.90 },
+  { label: '06/15', previousOne: 125880.90, todayOne: 126115.80 },
+  { label: '06/16', previousOne: 126115.80, todayOne: 128456.30 }
+];
+const totalAssetSnapshots = totalAssetKlineDays[totalAssetKlineDays.length - 1];
+const categoryLabelMap = {
+  all: '资产',
+  stock: '股票',
+  fund: '基金',
+  metal: '贵金属',
+  wealth: '理财',
+  deposit: '存款',
+  etf: 'ETF',
+  other: '其他'
+};
+const accountDemoMap = {
+  all: { name: '全部账户', summary: '4 项资产 · 12 笔交易 · 3 条笔记', sync: '最近同步 13:00 · 静态高保真 Demo' },
+  'acc-1': { name: '养老金账户', summary: '2 项资产 · 5 笔交易 · 1 条笔记', sync: '偏稳健账户 · 最近同步 13:00' },
+  'acc-2': { name: '激进账户', summary: '2 项资产 · 6 笔交易 · 2 条笔记', sync: '高波动账户 · 最近同步 13:00' },
+  'acc-3': { name: '活期账户', summary: '1 项资产 · 1 笔交易 · 0 条笔记', sync: '日常理财账户 · 最近同步 13:00' }
+};
+
+const assetSearchOptions = [
+  { code: '000001', name: '平安银行', type: 'stock', typeLabel: '股票', price: 12.68, keywords: 'pingan bank yinhang 金融 银行 深市' },
+  { code: '600036', name: '招商银行', type: 'stock', typeLabel: '股票', price: 38.42, keywords: 'zhaoshang bank cmb 银行 金融 沪市' },
+  { code: '601318', name: '中国平安', type: 'stock', typeLabel: '股票', price: 46.85, keywords: 'pingan insurance baoxian 金融 保险' },
+  { code: '510300', name: '沪深300ETF', type: 'etf', typeLabel: 'ETF', price: 4.08, keywords: 'hushen 300 hs300 etf 指数 宽基' },
+  { code: '159915', name: '创业板ETF', type: 'etf', typeLabel: 'ETF', price: 1.92, keywords: 'chuangyeban cyb etf 成长 指数' },
+  { code: '000300', name: '易方达沪深300增强', type: 'fund', typeLabel: '基金', price: 1.61, keywords: 'yifangda hushen 300 zengqiang 基金 指数' },
+  { code: '003095', name: '中欧医疗健康混合', type: 'fund', typeLabel: '基金', price: 1.84, keywords: 'zhongou yiliao health 医疗 基金' },
+  { code: 'ZYLCCX01', name: '招银理财稳享', type: 'wealth', typeLabel: '理财', price: 1.03, keywords: 'zhaoyin licai wenxiang 理财 稳健 现金' }
+];
+
+const assetInsightMap = {
+  '600519': [
+    { publishTime: '2026-05-21', author: '鸡', industry: '白酒 / 贵州茅台', direction: '看多', expectedMove: '+12%', expectedTime: '3-6个月', targetPrice: 2145, historyId: 'history-consumption' },
+    { publishTime: '2026-05-20', author: '长坡研究员', industry: '消费 / 白酒', direction: '看多', expectedMove: '+8%', expectedTime: '年报前', targetPrice: 2070, historyId: 'history-consumption' },
+    { publishTime: '2026-05-18', author: '估值观察', industry: '白酒 / 贵州茅台', direction: '看空', expectedMove: '-6%', expectedTime: '1个月', targetPrice: 1800, historyId: 'history-consumption' }
+  ],
+  '00700': [
+    { publishTime: '2026-05-19', author: '南向笔记', industry: '互联网 / 腾讯控股', direction: '看多', expectedMove: '+10%', expectedTime: '季度财报', targetPrice: 462, historyId: 'history-hk-tech' },
+    { publishTime: '2026-05-12', author: '港股温度计', industry: '科技 / 腾讯控股', direction: '观望', expectedMove: '+3%', expectedTime: '2个月', targetPrice: 433, historyId: 'history-ai-chip' }
+  ],
+  '110022': [
+    { publishTime: '2026-05-16', author: '基金鸡', industry: '消费基金', direction: '观望', expectedMove: '+4%', expectedTime: '6个月', targetPrice: 4.37, historyId: 'history-consumption' },
+    { publishTime: '2026-05-06', author: '回撤手册', industry: '消费基金', direction: '看空', expectedMove: '-5%', expectedTime: '1个月', targetPrice: 3.99, historyId: 'history-consumption' }
+  ],
+  'AAPL': [
+    { publishTime: '2026-05-22', author: '美股小报', industry: '科技 / Apple', direction: '看多', expectedMove: '+7%', expectedTime: 'WWDC后', targetPrice: 1680, historyId: 'history-ai-chip' },
+    { publishTime: '2026-05-11', author: '硬件周期', industry: '消费电子 / Apple', direction: '观望', expectedMove: '+2%', expectedTime: '3个月', targetPrice: 1600, historyId: 'history-hk-tech' }
+  ]
+};
+
+let activeAssetData = null;
+let activeAssetTradeType = 'BUY';
+let activeRecordMode = 'add';
+let activeRecordTxnType = 'BUY';
+let activeAddAssetCode = '';
+
+function numberFromText(value) {
+  return parseFloat(String(value || '').replace(/[^\d.-]/g, '')) || 0;
+}
+
+function formatNumber(value, digits = 2) {
+  return Number(value || 0).toLocaleString('zh-CN', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits
+  });
+}
+
+function signedNumber(value, digits = 2) {
+  const sign = value >= 0 ? '+' : '';
+  return sign + formatNumber(value, digits);
+}
+
+function signedPercent(value) {
+  const sign = value >= 0 ? '+' : '';
+  return sign + formatNumber(value, 2) + '%';
+}
+
+function getAssetData(code) {
+  const item = document.querySelector(`.asset-item[data-code="${code}"]`);
+  if (!item) return null;
+  const price = numberFromText(item.dataset.price || item.querySelector('.asset-price')?.textContent);
+  const cost = numberFromText(item.dataset.cost);
+  const quantity = numberFromText(item.dataset.quantity);
+  return {
+    code,
+    name: item.querySelector('.asset-name')?.textContent || code,
+    type: item.dataset.type || 'other',
+    typeLabel: item.dataset.typeLabel || '其他',
+    price,
+    cost,
+    quantity,
+    holdDays: numberFromText(item.dataset.holdDays),
+    notes: assetInsightMap[code] || []
+  };
+}
+
+function calculateAssetMetrics(asset) {
+  const marketValue = asset.price * asset.quantity;
+  const costValue = asset.cost * asset.quantity;
+  const pnl = marketValue - costValue;
+  const pnlPct = asset.cost ? ((asset.price - asset.cost) / asset.cost) * 100 : 0;
+  return { marketValue, pnl, pnlPct };
+}
+
+function formatAssetMoney(asset, value, digits = 2) {
+  const prefix = asset.code === 'AAPL' ? '¥' : '';
+  return prefix + formatNumber(value, digits);
+}
+
+function updateAssetListRow(item, asset) {
+  const metrics = calculateAssetMetrics(asset);
+  const isProfit = metrics.pnl >= 0;
+  item.querySelector('.asset-price').textContent = formatAssetMoney(asset, metrics.marketValue);
+  item.querySelector('.asset-last-price').textContent = `最新价 ${formatAssetMoney(asset, asset.price)}`;
+  item.querySelector('.asset-hold-days').textContent = `持仓 ${asset.holdDays} 天`;
+  const pnlEl = item.querySelector('.asset-pnl');
+  pnlEl.textContent = `${signedNumber(metrics.pnl)} · ${signedPercent(metrics.pnlPct)}`;
+  pnlEl.className = isProfit ? 'asset-pnl up' : 'asset-pnl down';
+}
+
+function updateTotalAssetSummary() {
+  const diff = totalAssetSnapshots.todayOne - totalAssetSnapshots.previousOne;
+  const yieldPct = totalAssetSnapshots.previousOne ? diff / totalAssetSnapshots.previousOne * 100 : 0;
+  document.getElementById('totalAsset').textContent = formatNumber(totalAssetSnapshots.todayOne);
+  document.getElementById('todayPnL').textContent = signedNumber(diff);
+  document.getElementById('todayPnLPct').textContent = signedPercent(yieldPct);
+  document.getElementById('dailyAssetDiff').textContent = signedNumber(diff);
+  document.getElementById('dailyAssetYield').textContent = signedPercent(yieldPct);
+  document.getElementById('prevOneValue').textContent = formatNumber(totalAssetSnapshots.previousOne, 0);
+  document.getElementById('todayOneValue').textContent = formatNumber(totalAssetSnapshots.todayOne, 0);
+  updateTotalAssetKline(totalAssetKlineDays);
+  updatePortfolioScope();
+}
+
+function updateTotalAssetKline(days) {
+  const series = document.getElementById('totalAssetKlineSeries');
+  if (!series || !Array.isArray(days) || days.length === 0) return;
+
+  const upColor = '#A44A3F';
+  const downColor = '#2E8B57';
+  const flatColor = '#999999';
+  const top = 12;
+  const bottom = 54;
+  const values = days.flatMap(day => [Number(day.previousOne || 0), Number(day.todayOne || 0)]);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const padding = Math.max((maxValue - minValue) * 0.18, maxValue * 0.002);
+  const range = Math.max(maxValue - minValue + padding * 2, 1);
+  const yForValue = (value) => bottom - ((value - minValue + padding) / range) * (bottom - top);
+  const ns = 'http://www.w3.org/2000/svg';
+  const chartLeft = 14;
+  const chartRight = 106;
+  const slot = (chartRight - chartLeft) / days.length;
+  const bodyWidth = Math.min(8, slot * 0.45);
+  const makeSvg = (tag, attrs) => {
+    const el = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+    return el;
+  };
+
+  series.innerHTML = '';
+
+  const returns = days.map(day => {
+    const previous = Number(day.previousOne || 0);
+    const current = Number(day.todayOne || 0);
+    return previous ? ((current - previous) / previous) * 100 : 0;
+  });
+  const minReturn = Math.min(...returns);
+  const maxReturn = Math.max(...returns);
+  const returnPadding = Math.max((maxReturn - minReturn) * 0.2, 0.25);
+  const returnRange = Math.max(maxReturn - minReturn + returnPadding * 2, 1);
+  const yForReturn = (value) => bottom - ((value - minReturn + returnPadding) / returnRange) * (bottom - top);
+  const returnPoints = [];
+
+  days.forEach((day, index) => {
+    const openValue = Number(day.previousOne || 0);
+    const closeValue = Number(day.todayOne || 0);
+    const diff = closeValue - openValue;
+    const candleColor = diff > 0 ? upColor : diff < 0 ? downColor : flatColor;
+    const x = chartLeft + slot * index + slot / 2;
+    returnPoints.push([x, yForReturn(returns[index])]);
+    const openY = yForValue(openValue);
+    const closeY = yForValue(closeValue);
+    const bodyTop = Math.min(openY, closeY);
+    const naturalHeight = Math.abs(closeY - openY);
+    const bodyHeight = Math.max(naturalHeight, 3);
+    const bodyY = naturalHeight < 3 ? bodyTop - 1.5 : bodyTop;
+    const wickTop = Math.max(top - 1, bodyY - 3.5);
+    const wickBottom = Math.min(bottom + 1, bodyY + bodyHeight + 3.5);
+
+    series.appendChild(makeSvg('line', {
+      x1: x.toFixed(2),
+      y1: wickTop.toFixed(2),
+      x2: x.toFixed(2),
+      y2: wickBottom.toFixed(2),
+      stroke: candleColor,
+      'stroke-width': '1.1',
+      'stroke-linecap': 'round'
+    }));
+    series.appendChild(makeSvg('rect', {
+      x: (x - bodyWidth / 2).toFixed(2),
+      y: bodyY.toFixed(2),
+      width: bodyWidth.toFixed(2),
+      height: bodyHeight.toFixed(2),
+      rx: '1.2',
+      fill: candleColor,
+      opacity: diff === 0 ? '0.38' : '0.9'
+    }));
+
+    if (index === 0 || index === days.length - 1) {
+      series.appendChild(makeSvg('text', {
+        class: 'kline-axis-label',
+        x: (x - 8).toFixed(2),
+        y: '65'
+      })).textContent = day.label;
+    }
+
+    if (index === days.length - 1) {
+      series.appendChild(makeSvg('text', {
+        class: 'kline-value-label',
+        x: '108',
+        y: Math.min(51, Math.max(23, closeY + 12)).toFixed(2),
+        fill: candleColor,
+        'text-anchor': 'end'
+      })).textContent = formatNumber(closeValue, 0);
+    }
+  });
+
+  if (returnPoints.length > 1) {
+    const pathData = returnPoints
+      .map(([x, y], index) => `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`)
+      .join(' ');
+    series.appendChild(makeSvg('path', {
+      class: 'return-line',
+      d: pathData
+    }));
+    returnPoints.forEach(([x, y]) => {
+      series.appendChild(makeSvg('circle', {
+        class: 'return-dot',
+        cx: x.toFixed(2),
+        cy: y.toFixed(2),
+        r: '1.55'
+      }));
+    });
+    const [lastX, lastY] = returnPoints[returnPoints.length - 1];
+    series.appendChild(makeSvg('text', {
+      class: 'return-label',
+      x: '112',
+      y: '11',
+      'text-anchor': 'end'
+    })).textContent = signedPercent(returns[returns.length - 1]);
+  }
+}
+
+function initializeAssetOrder() {
+  document.querySelectorAll('.asset-item').forEach((item, index) => {
+    item.dataset.order = String(index);
+  });
+}
+
+function selectCategory(element, category) {
+  const chips = document.querySelectorAll('.filter-bar .chip');
+  chips.forEach(chip => chip.classList.remove('active'));
+  element.classList.add('active');
+  selectedCategory = category;
+
+  let visibleCount = 0;
+  document.querySelectorAll('.asset-item').forEach(item => {
+    const visible = category === 'all' || item.dataset.type === category;
+    item.style.display = visible ? 'flex' : 'none';
+    if (visible) visibleCount++;
+  });
+
+  document.getElementById('holdingsCount').textContent = `${visibleCount} 项资产`;
+  updateCategoryEmptyState(category, visibleCount);
+  updatePortfolioScope();
+  showToast(visibleCount ? '已切换分类' : '该分类暂无资产');
+}
+
+function updateCategoryEmptyState(category, visibleCount) {
+  const emptyState = document.getElementById('assetEmptyState');
+  if (!emptyState) return;
+  const label = categoryLabelMap[category] || '资产';
+  emptyState.classList.toggle('show', visibleCount === 0);
+  document.getElementById('assetEmptyTitle').textContent = `暂无${label}持仓`;
+  document.getElementById('assetEmptyCopy').textContent = `添加一项${label}资产后，这里会同步展示市值、盈亏和持仓时间。`;
+}
+
+function updatePortfolioScope() {
+  const visibleAssets = Array.from(document.querySelectorAll('.asset-item'))
+    .filter(item => item.style.display !== 'none');
+  const categorySet = new Set(visibleAssets.map(item => item.dataset.type).filter(Boolean));
+  const countEl = document.getElementById('summaryAssetCount');
+  const metaEl = document.getElementById('summaryScopeMeta');
+  if (!countEl || !metaEl) return;
+
+  countEl.textContent = visibleAssets.length;
+  if (selectedCategory === 'all') {
+    metaEl.textContent = ` 项资产 · ${categorySet.size} 类持仓`;
+  } else {
+    metaEl.textContent = ` 项${categoryLabelMap[selectedCategory] || '资产'}`;
+  }
+}
+
+function setDateInputToday(id) {
+  const input = document.getElementById(id);
+  if (input) input.value = new Date().toISOString().split('T')[0];
+}
+
+function openRecordSheet() {
+  activeRecordMode = 'add';
+  document.getElementById('recordSheetModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  setDateInputToday('recordDate');
+  const searchInput = document.getElementById('assetSearchInput');
+  if (searchInput) searchInput.value = '';
+  activeAddAssetCode = '';
+  ['recordAddName', 'recordAddCode', 'recordAddCost', 'recordAddPrice'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.value = '';
+  });
+  const typeSelect = document.getElementById('recordAddType');
+  if (typeSelect) typeSelect.value = 'stock';
+  const quantityInput = document.getElementById('recordAddQuantity');
+  const noteInput = document.getElementById('recordAddNote');
+  if (quantityInput) quantityInput.value = '';
+  if (noteInput) noteInput.value = '';
+  handleAddTypeChange();
+  filterAssetSearchResults();
+}
+
+function closeRecordSheet() {
+  document.getElementById('recordSheetModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function filterAssetSearchResults() {
+  const list = document.getElementById('assetSearchResults');
+  if (!list) return;
+  if (isManualAddType()) {
+    list.innerHTML = '';
+    return;
+  }
+  const query = (document.getElementById('assetSearchInput')?.value || '').trim().toLowerCase();
+  if (!query) {
+    list.innerHTML = '';
+    return;
+  }
+  const matched = assetSearchOptions
+    .filter(asset => {
+      const haystack = `${asset.code} ${asset.name} ${asset.typeLabel} ${asset.keywords}`.toLowerCase();
+      return haystack.includes(query);
+    })
+    .slice(0, 5);
+
+  if (matched.length === 0) {
+    list.innerHTML = '<div class="asset-search-empty">没有匹配资产，可直接在下方手动填写。</div>';
+    return;
+  }
+
+  list.innerHTML = matched.map(asset => `
+    <div class="asset-search-result${asset.code === activeAddAssetCode ? ' selected' : ''}" onclick="selectAssetSearchResult('${asset.code}')">
+      <div class="asset-search-main">
+        <span class="asset-search-name">${asset.name}</span>
+        <span class="asset-search-code">${asset.code} · ${asset.keywords.split(' ').slice(0, 2).join(' ')}</span>
+      </div>
+      <span class="asset-search-type">${asset.typeLabel}</span>
+    </div>
+  `).join('');
+}
+
+function selectAssetSearchResult(code) {
+  const asset = assetSearchOptions.find(item => item.code === code) || assetSearchOptions[0];
+  if (!asset) return;
+  activeAddAssetCode = asset.code;
+  document.getElementById('recordAddName').value = asset.name;
+  document.getElementById('recordAddCode').value = asset.code;
+  document.getElementById('recordAddType').value = asset.type;
+  document.getElementById('recordAddPrice').value = Number(asset.price).toFixed(2);
+  const costInput = document.getElementById('recordAddCost');
+  if (costInput) costInput.value = Number(asset.price).toFixed(2);
+  filterAssetSearchResults();
+}
+
+function isManualAddType() {
+  const type = document.getElementById('recordAddType')?.value;
+  return ['metal', 'deposit', 'other'].includes(type);
+}
+
+function handleAddTypeChange() {
+  const manual = isManualAddType();
+  const searchInput = document.getElementById('assetSearchInput');
+  const hadSelectedAsset = Boolean(activeAddAssetCode);
+  if (searchInput) {
+    searchInput.disabled = manual;
+    searchInput.value = manual ? '' : searchInput.value;
+    searchInput.placeholder = manual ? '该分类无需搜索，可直接填写' : '输入名称、代码或关键词';
+  }
+  if (manual) {
+    activeAddAssetCode = '';
+    if (hadSelectedAsset) {
+      ['recordAddName', 'recordAddCode', 'recordAddCost', 'recordAddPrice'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = '';
+      });
+    }
+  }
+  filterAssetSearchResults();
+}
+
+function switchRecordMode(mode) {
+  activeRecordMode = mode;
+  const isAdd = mode === 'add';
+  const indicator = document.getElementById('recordModeIndicator');
+  const tradeBtn = document.getElementById('recordModeTrade');
+  const addBtn = document.getElementById('recordModeAdd');
+  const tradeForm = document.getElementById('recordTradeForm');
+  const addForm = document.getElementById('recordAddForm');
+  if (!indicator || !tradeBtn || !addBtn || !tradeForm || !addForm) return;
+  indicator.classList.toggle('right', isAdd);
+  tradeBtn.classList.toggle('active', !isAdd);
+  addBtn.classList.toggle('active', isAdd);
+  tradeForm.style.display = isAdd ? 'none' : 'block';
+  addForm.style.display = isAdd ? 'block' : 'none';
+}
+
+function syncRecordAssetFromSelect() {
+  const select = document.getElementById('recordAssetSelect');
+  if (!select) return;
+  const code = select.value || '600519';
+  const asset = getAssetData(code);
+  if (!asset) return;
+  document.getElementById('recordBasePrice').value = asset.price.toFixed(2);
+  document.getElementById('recordBuyPrice').value = asset.price.toFixed(2);
+  document.getElementById('recordSellPrice').value = asset.price.toFixed(2);
+  document.getElementById('recordShares').value = Math.max(1, Math.round(asset.quantity));
+  updateSharesHint('record');
+  updateTradePreview('record');
+}
+
+function openAssetSheet(code) {
+  const asset = getAssetData(code);
+  if (!asset) return;
+  activeAssetData = asset;
+  activeAssetTradeType = 'BUY';
+  fillAssetDetail(asset);
+  fillAssetQuickForm(asset);
+  renderPredictions(asset.notes);
+  renderNoteSummaries(asset.notes);
+  checkNoteConflicts(asset.notes);
+  document.getElementById('assetDetailModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  scrollAssetSection('trade', true);
+}
+
+function closeAssetSheet() {
+  document.getElementById('assetDetailModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function closeAssetDetail() {
+  closeAssetSheet();
+}
+
+function fillAssetDetail(asset) {
+  const metrics = calculateAssetMetrics(asset);
+  const isProfit = metrics.pnl >= 0;
+  document.getElementById('detailAssetCode').textContent = asset.code;
+  document.getElementById('detailAssetName').textContent = asset.name;
+  document.getElementById('detailCost').textContent = formatNumber(asset.cost);
+  document.getElementById('detailQuantity').textContent = formatNumber(asset.quantity, 0);
+  document.getElementById('detailMarketValue').textContent = formatNumber(metrics.marketValue);
+  document.getElementById('detailHoldTime').textContent = `${asset.holdDays} 天`;
+  document.getElementById('detailPnL').textContent = signedNumber(metrics.pnl);
+  document.getElementById('detailPnLPct').textContent = signedPercent(metrics.pnlPct);
+  document.getElementById('detailPnL').className = isProfit ? 'detail-value profit' : 'detail-value loss';
+  document.getElementById('detailPnLPct').className = isProfit ? 'detail-value profit' : 'detail-value loss';
+  const noteCount = asset.notes.length;
+  const hasConflict = asset.notes.some(note => note.direction === '看多') && asset.notes.some(note => note.direction === '看空');
+  const statusEl = document.getElementById('detailAssetStatus');
+  statusEl.textContent = `${isProfit ? '盈利' : '亏损'} ${signedNumber(metrics.pnl)} · ${signedPercent(metrics.pnlPct)} · ${noteCount} 条笔记${hasConflict ? ' · 观点分歧' : ''}`;
+  statusEl.className = isProfit ? 'sheet-status profit' : 'sheet-status loss';
+
+  document.getElementById('editCost').value = asset.cost.toFixed(2);
+  document.getElementById('editQuantity').value = Math.round(asset.quantity);
+  document.getElementById('editPrice').value = asset.price.toFixed(2);
+  document.getElementById('editHoldDays').value = asset.holdDays;
+}
+
+function fillAssetQuickForm(asset) {
+  document.getElementById('activeAssetCode').value = asset.code;
+  document.getElementById('assetBasePrice').value = asset.price.toFixed(2);
+  document.getElementById('assetBuyPrice').value = asset.price.toFixed(2);
+  document.getElementById('assetSellPrice').value = asset.price.toFixed(2);
+  document.getElementById('assetShares').value = Math.max(1, Math.round(asset.quantity));
+  setDateInputToday('assetTradeDate');
+  switchAssetTradeMode('BUY');
+  updateSharesHint('asset');
+  updateTradePreview('asset');
+
+  const firstNote = asset.notes[0] || {};
+  document.getElementById('notePublishTime').value = firstNote.publishTime || '';
+  document.getElementById('noteAuthor').value = firstNote.author || '';
+  document.getElementById('noteIndustry').value = firstNote.industry || '';
+  document.getElementById('noteDirection').value = firstNote.direction || '看多';
+  document.getElementById('noteExpectedMove').value = firstNote.expectedMove || '';
+  document.getElementById('noteExpectedTime').value = firstNote.expectedTime || '';
+}
+
+function switchAssetTradeMode(type) {
+  activeAssetTradeType = type;
+  const isSell = type === 'SELL';
+  document.getElementById('assetTradeIndicator').classList.toggle('right', isSell);
+  document.getElementById('assetModeBuy').classList.toggle('active', !isSell);
+  document.getElementById('assetModeSell').classList.toggle('active', isSell);
+  updateSharesHint('asset');
+  updateTradePreview('asset');
+}
+
+function setAssetShareRatio(ratio) {
+  if (!activeAssetData) return;
+  const sharesInput = document.getElementById('assetShares');
+  if (!sharesInput) return;
+  const baseQuantity = Math.max(0, numberFromText(activeAssetData.quantity));
+  const nextShares = ratio >= 1
+    ? baseQuantity
+    : Math.max(1, Math.round(baseQuantity * ratio));
+  sharesInput.value = Math.round(nextShares);
+  updateSharesHint('asset');
+  updateTradePreview('asset');
+}
+
+function updateTradePreview(scope) {
+  const isAssetScope = scope === 'asset';
+  const asset = isAssetScope
+    ? activeAssetData
+    : getAssetData(document.getElementById('recordAssetSelect')?.value || '600519');
+  if (!asset) return;
+
+  const tradeType = isAssetScope ? activeAssetTradeType : activeRecordTxnType;
+  const prefix = isAssetScope ? 'asset' : 'record';
+  const priceId = tradeType === 'SELL' ? `${prefix}SellPrice` : `${prefix}BuyPrice`;
+  const sharesId = `${prefix}Shares`;
+  const amountEl = document.getElementById(`${prefix}TradeAmount`);
+  const qtyEl = document.getElementById(`${prefix}AfterQty`);
+  const impactEl = document.getElementById(`${prefix}TradeImpact`);
+  if (!amountEl || !qtyEl || !impactEl) return;
+
+  const price = numberFromText(document.getElementById(priceId)?.value);
+  const shares = numberFromText(document.getElementById(sharesId)?.value);
+  const amount = price * shares;
+  const afterQty = tradeType === 'SELL'
+    ? Math.max(0, asset.quantity - shares)
+    : asset.quantity + shares;
+  const projectedCost = tradeType === 'SELL' || afterQty === 0
+    ? asset.cost
+    : ((asset.cost * asset.quantity) + amount) / afterQty;
+
+  amountEl.textContent = '¥' + formatNumber(amount, 0);
+  qtyEl.textContent = formatNumber(afterQty, 0);
+  impactEl.textContent = tradeType === 'SELL' ? '成本不变' : formatNumber(projectedCost);
+}
+
+function scrollToAssetQuickTrade(instant = false) {
+  scrollAssetSection('trade', instant);
+}
+
+function scrollAssetSection(section, instant = false) {
+  const paneMap = {
+    detail: 'assetPaneDetail',
+    notes: 'assetPaneNotes',
+    trade: 'assetPaneTrade'
+  };
+  const navMap = {
+    detail: 'assetNavDetail',
+    notes: 'assetNavNotes',
+    trade: 'assetNavTrade'
+  };
+  if (!paneMap[section]) return;
+  Object.values(navMap).forEach(id => document.getElementById(id)?.classList.remove('active'));
+  document.getElementById(navMap[section])?.classList.add('active');
+  Object.values(paneMap).forEach(id => document.getElementById(id)?.classList.remove('active'));
+  document.getElementById(paneMap[section])?.classList.add('active');
+  document.querySelector('#assetDetailModal .sheet-body')?.scrollTo({
+    top: 0,
+    behavior: 'auto'
+  });
+}
+
+function renderPredictions(notes) {
+  const list = document.getElementById('predictionList');
+  list.innerHTML = '';
+  notes.forEach(note => {
+    const item = document.createElement('div');
+    item.className = 'prediction-item clickable';
+    item.onclick = () => openHistoryNoteFromAsset(note.historyId);
+    item.innerHTML = `
+      <div>
+        <div class="prediction-author">${note.author}</div>
+        <div class="prediction-meta">${note.direction} · ${note.expectedMove} · ${note.expectedTime}</div>
+      </div>
+      <div class="prediction-price">${formatNumber(note.targetPrice)}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function renderNoteSummaries(notes) {
+  const list = document.getElementById('noteSummaryList');
+  list.innerHTML = '';
+  notes.forEach(note => {
+    const item = document.createElement('div');
+    item.className = 'note-summary-item clickable';
+    item.onclick = () => openHistoryNoteFromAsset(note.historyId);
+    item.innerHTML = `
+      <div class="note-summary-grid">
+        <span>发文时间</span><strong>${note.publishTime}</strong>
+        <span>作者</span><strong>${note.author}</strong>
+        <span>行业/公司</span><strong>${note.industry}</strong>
+        <span>方向</span><strong>${note.direction}</strong>
+        <span>预期幅度</span><strong>${note.expectedMove}</strong>
+        <span>兑现时间</span><strong>${note.expectedTime}</strong>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function checkNoteConflicts(notes) {
+  const bullCount = notes.filter(note => note.direction === '看多').length;
+  const bearCount = notes.filter(note => note.direction === '看空').length;
+  const positionRatio = document.getElementById('notesPositionRatio');
+  const notesWarning = document.getElementById('notesWarning');
+  if (!positionRatio || !notesWarning) return;
+
+  const bullSpan = positionRatio.querySelector('.ratio-bull');
+  const bearSpan = positionRatio.querySelector('.ratio-bear');
+  bullSpan.textContent = `看多 ${bullCount}`;
+  bearSpan.textContent = `看空 ${bearCount}`;
+  bullSpan.classList.remove('majority', 'minority');
+  bearSpan.classList.remove('majority', 'minority');
+  if (bullCount > bearCount) bullSpan.classList.add('majority');
+  if (bearCount > bullCount) bearSpan.classList.add('majority');
+
+  const hasConflict = bullCount > 0 && bearCount > 0;
+  notesWarning.style.display = hasConflict ? 'flex' : 'none';
+  if (hasConflict) {
+    notesWarning.querySelector('.warning-text').textContent = `笔记观点存在冲突：${bullCount}条看多 vs ${bearCount}条看空`;
+  }
+}
+
+function toggleFieldEditor() {
+  document.getElementById('fieldEditor').classList.toggle('show');
+}
+
+function applyAssetFieldEdits() {
+  if (!activeAssetData) return;
+  const item = document.querySelector(`.asset-item[data-code="${activeAssetData.code}"]`);
+  activeAssetData.cost = numberFromText(document.getElementById('editCost').value);
+  activeAssetData.quantity = numberFromText(document.getElementById('editQuantity').value);
+  activeAssetData.price = numberFromText(document.getElementById('editPrice').value);
+  activeAssetData.holdDays = numberFromText(document.getElementById('editHoldDays').value);
+
+  if (item) {
+    item.dataset.cost = activeAssetData.cost;
+    item.dataset.quantity = activeAssetData.quantity;
+    item.dataset.price = activeAssetData.price;
+    item.dataset.holdDays = activeAssetData.holdDays;
+    updateAssetListRow(item, activeAssetData);
+  }
+
+  fillAssetDetail(activeAssetData);
+  fillAssetQuickForm(activeAssetData);
+  showToast('字段已调整');
+}
+
+function getAdjustmentStep(value, inputId) {
+  const rawStep = Math.abs(value) / 100;
+  if (inputId.toLowerCase().includes('shares')) {
+    return Math.max(1, Math.round(rawStep));
+  }
+  return Math.max(0.01, rawStep);
+}
+
+function adjustNumericField(inputId, direction, hintType, hintId, baseId) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const currentValue = numberFromText(input.value);
+  const nextValue = Math.max(0, currentValue + direction * getAdjustmentStep(currentValue || 1, inputId));
+  input.value = inputId.toLowerCase().includes('shares') ? Math.round(nextValue) : nextValue.toFixed(2);
+  const scope = inputId.startsWith('asset') ? 'asset' : 'record';
+  if (hintType === 'percent') {
+    showPercentHint(inputId, hintId, baseId);
+    updateSharesHint(scope);
+  } else {
+    updateSharesHint(scope);
+  }
+  if (scope === 'asset') {
+    updateTradePreview('asset');
+  } else {
+    updateTradePreview('record');
+  }
+}
+
+function showFloatingHint(hintId, text) {
+  const hint = document.getElementById(hintId);
+  if (!hint) return;
+  hint.textContent = text;
+  hint.classList.add('show');
+  clearTimeout(hint.hideTimer);
+  hint.hideTimer = setTimeout(() => hint.classList.remove('show'), 1100);
+}
+
+function showPercentHint(inputId, hintId, baseId) {
+  const price = numberFromText(document.getElementById(inputId)?.value);
+  const base = numberFromText(document.getElementById(baseId)?.value);
+  const pct = base ? (price - base) / base * 100 : 0;
+  showFloatingHint(hintId, signedPercent(pct));
+}
+
+function showTotalHint(sharesId, hintId, priceId) {
+  const shares = numberFromText(document.getElementById(sharesId)?.value);
+  const price = numberFromText(document.getElementById(priceId)?.value);
+  showFloatingHint(hintId, '¥' + formatNumber(shares * price, 0));
+}
+
+function getActiveTradePriceId(scope) {
+  if (scope === 'asset') {
+    return activeAssetTradeType === 'SELL' ? 'assetSellPrice' : 'assetBuyPrice';
+  }
+  return activeRecordTxnType === 'SELL' ? 'recordSellPrice' : 'recordBuyPrice';
+}
+
+function updateSharesHint(scope) {
+  const prefix = scope === 'asset' ? 'asset' : 'record';
+  showTotalHint(`${prefix}Shares`, `${prefix}SharesHint`, getActiveTradePriceId(scope));
+}
+
+function handleTradeInput(scope, inputId) {
+  const prefix = scope === 'asset' ? 'asset' : 'record';
+  if (inputId.endsWith('BuyPrice')) {
+    showPercentHint(inputId, `${prefix}BuyPriceHint`, `${prefix}BasePrice`);
+  } else if (inputId.endsWith('SellPrice')) {
+    showPercentHint(inputId, `${prefix}SellPriceHint`, `${prefix}BasePrice`);
+  }
+  if (inputId.endsWith('Shares') || inputId === getActiveTradePriceId(scope)) {
+    updateSharesHint(scope);
+  }
+  updateTradePreview(scope);
+}
+
+function saveAssetQuickRecord() {
+  if (!activeAssetData) return;
+  const notes = activeAssetData.notes || [];
+  const hasConflict = notes.some(note => note.direction === '看多') && notes.some(note => note.direction === '看空');
+  if (hasConflict) {
+    const ok = confirm('检测到关联笔记同时存在看多与看空观点，是否继续记录这笔交易？');
+    if (!ok) {
+      showToast('已取消记录');
+      return;
+    }
+  }
+  showToast(activeAssetTradeType === 'SELL' ? '卖出记录已保存' : '买入记录已保存');
+  closeAssetSheet();
+}
+
+function saveRecord(type) {
+  if (type === 'add' && !isManualAddType() && !activeAddAssetCode) {
+    showToast('请先搜索并选择资产');
+    return;
+  }
+  showToast(type === 'trade' ? '交易记录已保存' : '资产已添加');
+  closeRecordSheet();
+}
+
+function applyPrototypeStateFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const tab = params.get('tab');
+  const modal = params.get('modal');
+  const state = params.get('state');
+  const asset = params.get('asset') || '600519';
+  const category = params.get('category');
+
+  if (state === 'analysis') {
+    switchTab('insights');
+  } else if (tab && document.getElementById('page-' + tab)) {
+    switchTab(tab);
+  }
+
+  if (category) {
+    const chip = Array.from(document.querySelectorAll('.filter-bar .chip'))
+      .find(item => item.getAttribute('onclick')?.includes(`'${category}'`));
+    if (chip) selectCategory(chip, category);
+  }
+
+  if (modal === 'record') {
+    openRecordSheet(params.get('mode') || 'trade');
+  } else if (modal === 'asset') {
+    openAssetSheet(asset);
+    const section = params.get('section');
+    if (['trade', 'detail', 'notes'].includes(section)) {
+      scrollAssetSection(section, true);
+    }
+  } else if (modal === 'account') {
+    openAccountModal();
+  }
+
+  if (params.get('analyze') === '1' || state === 'analysis') {
+    const input = document.getElementById('insightInput');
+    if (input) {
+      input.value = 'AI算力扩张带动半导体需求，国产替代加速，关注中芯国际与设备材料链。';
+      analyzeText();
+      document.getElementById('analysisResult')?.classList.add('show');
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('tradeDate').value = today;
+  setDateInputToday('recordDate');
+  setDateInputToday('assetTradeDate');
+  initializeAssetOrder();
+  updateTotalAssetSummary();
+  updateAccountState();
   initSliders();
+  ['recordBuyPrice', 'recordSellPrice', 'recordShares'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', () => handleTradeInput('record', id));
+  });
+  ['assetBuyPrice', 'assetSellPrice', 'assetShares'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', () => handleTradeInput('asset', id));
+  });
+  applyPrototypeStateFromUrl();
 });
 
 document.addEventListener('click', (e) => {
   if (sortMenuOpen && !e.target.closest('.sort-control')) {
     toggleSortMenu();
   }
+  if (scopeTipOpen && !e.target.closest('.scope-info-wrap')) {
+    scopeTipOpen = false;
+    document.getElementById('scopeTip')?.classList.remove('show');
+  }
+  if (e.target.classList.contains('modal-overlay')) {
+    closeAccountModal();
+    closeAssetSheet();
+    closeRecordSheet();
+  }
 });
 
 document.addEventListener('touchstart', (e) => {
   if (e.target.closest('.modal-overlay') && e.target.classList.contains('modal-overlay')) {
     closeAccountModal();
-    closeAssetDetail();
+    closeAssetSheet();
+    closeRecordSheet();
   }
 });
 </script>
