@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>金汲</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="金汲">
 <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/oooohcan/jinji@main/icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -34,6 +34,7 @@
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --tab-height: 72px;
+  --page-top: max(0px, var(--safe-top));
 }
 
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -57,12 +58,11 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--bg);
-  padding-top: var(--safe-top);
 }
 
 .page {
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: var(--page-top); left: 0; right: 0;
   bottom: calc(var(--tab-height) + var(--safe-bottom));
   overflow-y: auto;
   overflow-x: hidden;
