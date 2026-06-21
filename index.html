@@ -31,6 +31,9 @@
   --radius-xs: 8px;
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --tab-height: 72px;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -48,17 +51,19 @@ body {
 .app-container {
   width: 100%;
   max-width: 430px;
-  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
   background: var(--bg);
+  padding-top: var(--safe-top);
 }
 
 .page {
   position: absolute;
   top: 0; left: 0; right: 0;
-  bottom: calc(72px + env(safe-area-inset-bottom));
+  bottom: calc(var(--tab-height) + var(--safe-bottom));
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -82,8 +87,8 @@ body {
 .tab-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  height: calc(72px + env(safe-area-inset-bottom));
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  height: calc(var(--tab-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
   background: rgba(255,255,255,0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -1166,6 +1171,10 @@ body {
   background:var(--card);
   z-index:12;
 }
+#assetDetailModal .record-sheet-header {
+  border-bottom:none;
+  padding-bottom:8px;
+}
 .sheet-title {
   display:flex;
   flex-direction:column;
@@ -1236,6 +1245,9 @@ body {
   border-color:rgba(164,74,63,0.34);
   background:rgba(164,74,63,0.07);
 }
+.asset-search-result.held {
+  border-color:rgba(46,139,87,0.15);
+}
 .asset-search-main {
   min-width:0;
 }
@@ -1260,6 +1272,10 @@ body {
   font-size:12px;
   font-weight:700;
 }
+.asset-search-type.held {
+  background:rgba(46,139,87,0.1);
+  color:var(--positive);
+}
 .asset-search-empty {
   padding:12px;
   border-radius:14px;
@@ -1267,6 +1283,18 @@ body {
   color:var(--text-muted);
   font-size:13px;
   text-align:center;
+}
+.record-flow-panel {
+  display:none;
+}
+.record-flow-panel.show {
+  display:block;
+}
+#recordFlowHint {
+  display:none;
+}
+#recordFlowHint.show {
+  display:block;
 }
 .sheet-save-btn {
   border:none;
@@ -1295,51 +1323,30 @@ body {
   scrollbar-width:none;
   -ms-overflow-style:none;
 }
-.asset-sheet-nav {
-  position:sticky;
-  top:0;
-  z-index:11;
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:4px;
-  padding:6px;
-  margin:-4px -2px 16px;
-  background:rgba(245,244,242,0.94);
-  border-radius:16px;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
+#assetDetailContent {
+  padding-top:0;
 }
-.asset-sheet-nav button {
-  border:none;
-  border-radius:12px;
-  padding:9px 0;
-  background:transparent;
-  color:var(--text-secondary);
-  font-size:13px;
-  font-weight:700;
-  cursor:pointer;
-  font-family:var(--font-body);
+.asset-detail-actions,
+.asset-edit-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:118px;
+  justify-content:flex-end;
+  transition:opacity 0.18s ease, transform 0.18s ease;
 }
-.asset-sheet-nav button.active {
-  background:var(--card);
-  color:var(--brand);
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-}
-.asset-sheet-pane {
+.asset-edit-actions {
   display:none;
-  animation:fadeIn 0.22s ease;
-  min-height:calc(88vh - 170px);
 }
-.asset-sheet-pane.active {
-  display:block;
+.asset-editing .asset-detail-actions {
+  display:none;
+}
+.asset-editing .asset-edit-actions {
+  display:flex;
 }
 .asset-sheet-section,
-.prediction-panel,
-#assetTradeSwitch {
+.prediction-panel {
   scroll-margin-top:126px;
-}
-#assetTradeSwitch {
-  scroll-margin-top:156px;
 }
 .record-sheet .record-form,
 .record-sheet .mode-switch {
@@ -1455,6 +1462,18 @@ body {
 }
 .detail-value.profit { color:var(--positive); }
 .detail-value.loss { color:var(--negative); }
+.detail-edit-input {
+  display:none;
+  padding:10px 12px;
+  font-size:15px;
+  border-radius:10px;
+}
+.asset-editing .detail-card.editable .detail-value {
+  display:none;
+}
+.asset-editing .detail-card.editable .detail-edit-input {
+  display:block;
+}
 .formula-strip {
   background:rgba(164,74,63,0.06);
   border-radius:var(--radius-sm);
@@ -1534,6 +1553,8 @@ body {
   font-size:12px;
   font-weight:700;
   cursor:pointer;
+  min-width:32px;
+  text-align:center;
 }
 .note-summary-item,
 .prediction-item {
@@ -2214,6 +2235,9 @@ body {
   color:var(--text-muted);
   font-weight:400;
 }
+.ratio-watch {
+  color:var(--text-secondary);
+}
 .ratio-bear {
   color:var(--negative);
 }
@@ -2304,15 +2328,6 @@ body {
 .note-meta {
   font-size:12px;
   color:var(--text-muted);
-}
-.asset-detail-actions {
-  display:flex;
-  gap:12px;
-  padding:16px 24px 24px;
-  border-top:1px solid var(--border);
-  position:sticky;
-  bottom:0;
-  background:var(--card);
 }
 .action-btn {
   flex:1;
@@ -2556,7 +2571,7 @@ body {
               <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
             </svg>
           </button>
-          <button class="summary-add-btn" onclick="openRecordSheet('new')">新增</button>
+          <button class="summary-add-btn" onclick="openRecordSheet()">记一笔</button>
         </div>
       </div>
     </div>
@@ -3025,10 +3040,10 @@ body {
     <div class="record-sheet">
       <div class="record-sheet-header">
         <div class="sheet-title">
-          <span class="sheet-name">新增资产</span>
+          <span class="sheet-name">记一笔</span>
         </div>
         <div class="sheet-header-actions">
-          <button class="sheet-save-btn" onclick="saveRecord('add')">保存</button>
+          <button class="sheet-save-btn" id="recordSaveBtn" onclick="saveRecord()">保存</button>
         </div>
       </div>
       <div class="sheet-body">
@@ -3040,7 +3055,85 @@ body {
           <div class="asset-search-results" id="assetSearchResults"></div>
         </div>
 
-        <div class="record-form" id="recordAddForm">
+        <div class="asset-search-empty" id="recordFlowHint">可直接选择已有持仓，或搜索新资产进行新增。</div>
+
+        <div class="record-form record-flow-panel" id="recordTradeForm">
+          <div class="sheet-context" id="recordSelectedAsset">
+            <div class="context-item">
+              <span class="context-label">已选资产</span>
+              <span class="context-value" id="recordSelectedName">-</span>
+            </div>
+            <div class="context-item">
+              <span class="context-label">当前持仓</span>
+              <span class="context-value" id="recordSelectedPosition">-</span>
+            </div>
+          </div>
+          <div class="mode-switch" id="recordTradeSwitch">
+            <div class="mode-indicator" id="recordTradeIndicator"></div>
+            <button class="mode-btn active" id="recordModeBuy" onclick="switchRecordTradeMode('BUY')">买入</button>
+            <button class="mode-btn" id="recordModeSell" onclick="switchRecordTradeMode('SELL')">卖出</button>
+          </div>
+          <div class="form-row trade-price-row">
+            <div class="form-group stepper-field">
+              <label class="form-label">买入价</label>
+              <span class="value-float" id="recordBuyPriceHint">+0.00%</span>
+              <div class="stepper-row">
+                <button class="adjust-btn" onclick="adjustNumericField('recordBuyPrice',-1,'percent','recordBuyPriceHint','recordBasePrice')">−</button>
+                <input class="input-field" type="number" id="recordBuyPrice" onchange="handleTradeInput('record','recordBuyPrice')">
+                <button class="adjust-btn" onclick="adjustNumericField('recordBuyPrice',1,'percent','recordBuyPriceHint','recordBasePrice')">+</button>
+              </div>
+            </div>
+            <div class="form-group stepper-field">
+              <label class="form-label">卖出价</label>
+              <span class="value-float" id="recordSellPriceHint">+0.00%</span>
+              <div class="stepper-row">
+                <button class="adjust-btn" onclick="adjustNumericField('recordSellPrice',-1,'percent','recordSellPriceHint','recordBasePrice')">−</button>
+                <input class="input-field" type="number" id="recordSellPrice" onchange="handleTradeInput('record','recordSellPrice')">
+                <button class="adjust-btn" onclick="adjustNumericField('recordSellPrice',1,'percent','recordSellPriceHint','recordBasePrice')">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group stepper-field">
+            <label class="form-label">份数</label>
+            <span class="value-float" id="recordSharesHint">¥0</span>
+            <div class="stepper-row">
+              <button class="adjust-btn" onclick="adjustNumericField('recordShares',-1,'total','recordSharesHint','recordBuyPrice')">−</button>
+              <input class="input-field" type="number" id="recordShares" onchange="handleTradeInput('record','recordShares')">
+              <button class="adjust-btn" onclick="adjustNumericField('recordShares',1,'total','recordSharesHint','recordBuyPrice')">+</button>
+            </div>
+            <div class="share-quick-row">
+              <button class="share-quick-chip" onclick="setRecordShareRatio(0.25)">1/4</button>
+              <button class="share-quick-chip" onclick="setRecordShareRatio(0.5)">1/2</button>
+              <button class="share-quick-chip" onclick="setRecordShareRatio(1)">全部</button>
+            </div>
+          </div>
+          <div class="trade-preview">
+            <div class="trade-preview-item">
+              <span class="trade-preview-label">交易额</span>
+              <span class="trade-preview-value" id="recordTradeAmount">¥0</span>
+            </div>
+            <div class="trade-preview-item">
+              <span class="trade-preview-label">交易后份数</span>
+              <span class="trade-preview-value" id="recordAfterQty">0</span>
+            </div>
+            <div class="trade-preview-item">
+              <span class="trade-preview-label">预估成本</span>
+              <span class="trade-preview-value" id="recordTradeImpact">0.00</span>
+            </div>
+          </div>
+          <input type="hidden" id="recordBasePrice" value="0">
+          <div class="form-group">
+            <label class="form-label">记录日期</label>
+            <input type="date" class="input-field" id="recordTradeDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">备注</label>
+            <input class="input-field" id="recordTradeNote" placeholder="可选，记录这笔买卖原因...">
+          </div>
+          <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;" onclick="saveRecord()">确认记录</button>
+        </div>
+
+        <div class="record-form record-flow-panel" id="recordAddForm">
           <div class="form-group">
             <label class="form-label">资产分类</label>
             <select class="input-field" id="recordAddType" onchange="handleAddTypeChange()">
@@ -3105,198 +3198,65 @@ body {
         <span class="sheet-status profit" id="detailAssetStatus">盈利 +41,600.00 · +27.73% · 3 条笔记</span>
       </div>
     </div>
-    <div class="sheet-body">
-      <div class="asset-sheet-nav">
-        <button id="assetNavTrade" class="active" onclick="scrollAssetSection('trade')">记一笔</button>
-        <button id="assetNavDetail" onclick="scrollAssetSection('detail')">明细</button>
-        <button id="assetNavNotes" onclick="scrollAssetSection('notes')">笔记</button>
-      </div>
-
-      <div class="asset-sheet-pane" id="assetPaneDetail">
-        <div class="panel-title-row asset-sheet-section" id="assetDetailSection">
-          <span class="panel-title">资产明细</span>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <button class="panel-action" onclick="toggleFieldEditor()">编辑字段</button>
-            <span class="locked-price" onclick="showToast('实时价为付费用户功能')">实时价 Pro</span>
-          </div>
+    <div class="sheet-body" id="assetDetailContent">
+      <div class="panel-title-row asset-sheet-section" id="assetDetailSection">
+        <span class="panel-title">资产明细</span>
+        <div class="asset-detail-actions">
+          <span class="locked-price" onclick="showToast('实时价为付费用户功能')">实时价 Pro</span>
+          <button class="panel-action" onclick="enterAssetEditMode()">编辑</button>
         </div>
-        <div class="detail-grid">
-          <div class="detail-card">
-            <span class="detail-label">持仓成本价</span>
-            <span class="detail-value" id="detailCost">1,500.00</span>
-          </div>
-          <div class="detail-card">
-            <span class="detail-label">持仓数量</span>
-            <span class="detail-value" id="detailQuantity">100</span>
-          </div>
-          <div class="detail-card">
-            <span class="detail-label">当前总市值</span>
-            <span class="detail-value" id="detailMarketValue">191,600.00</span>
-          </div>
-          <div class="detail-card">
-            <span class="detail-label">持仓时间</span>
-            <span class="detail-value" id="detailHoldTime">186 天</span>
-          </div>
-          <div class="detail-card">
-            <span class="detail-label">盈亏金额</span>
-            <span class="detail-value profit" id="detailPnL">+41,600.00</span>
-          </div>
-          <div class="detail-card">
-            <span class="detail-label">盈亏比例</span>
-            <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
-          </div>
-        </div>
-
-        <div class="field-editor" id="fieldEditor">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">成本价</label>
-              <input class="input-field" type="number" id="editCost">
-            </div>
-            <div class="form-group">
-              <label class="form-label">数量</label>
-              <input class="input-field" type="number" id="editQuantity">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">最新价</label>
-              <input class="input-field" type="number" id="editPrice">
-            </div>
-            <div class="form-group">
-              <label class="form-label">持仓天数</label>
-              <input class="input-field" type="number" id="editHoldDays">
-            </div>
-          </div>
-          <button class="btn-secondary" style="width:100%;" onclick="applyAssetFieldEdits()">应用调整</button>
+        <div class="asset-edit-actions">
+          <button class="panel-action" onclick="saveAssetInlineEdit()">保存</button>
+          <button class="panel-action" onclick="cancelAssetInlineEdit()">取消</button>
         </div>
       </div>
-
-      <div class="asset-sheet-pane" id="assetPaneNotes">
-        <div class="prediction-panel" id="assetNotesSection">
-          <div class="panel-title-row">
-            <span class="panel-title">笔记预测价</span>
-            <span class="panel-action">来自鸡的提示</span>
-          </div>
-          <div id="predictionList"></div>
+      <div class="detail-grid">
+        <div class="detail-card editable">
+          <span class="detail-label">持仓成本价</span>
+          <span class="detail-value" id="detailCost">1,500.00</span>
+          <input class="input-field detail-edit-input" type="number" id="editCost">
         </div>
-
-        <div class="note-summary-panel">
-          <div class="panel-title-row">
-            <span class="panel-title">关联笔记调整总结</span>
-            <div class="notes-position-ratio" id="notesPositionRatio">
-              <span class="ratio-bull">看多 2</span>
-              <span class="ratio-vs">:</span>
-              <span class="ratio-bear">看空 1</span>
-            </div>
-          </div>
-          <div id="noteSummaryList"></div>
-          <div class="notes-warning" id="notesWarning" style="display:none;">
-            <span class="warning-icon">⚠️</span>
-            <span class="warning-text">当前决策与笔记观点存在冲突</span>
-          </div>
+        <div class="detail-card editable">
+          <span class="detail-label">持仓数量</span>
+          <span class="detail-value" id="detailQuantity">100</span>
+          <input class="input-field detail-edit-input" type="number" id="editQuantity">
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">当前总市值</span>
+          <span class="detail-value" id="detailMarketValue">191,600.00</span>
+        </div>
+        <div class="detail-card editable">
+          <span class="detail-label">持仓时间</span>
+          <span class="detail-value" id="detailHoldTime">186 天</span>
+          <input class="input-field detail-edit-input" type="number" id="editHoldDays">
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">盈亏金额</span>
+          <span class="detail-value profit" id="detailPnL">+41,600.00</span>
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">盈亏比例</span>
+          <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
         </div>
       </div>
+      <input type="hidden" id="editPrice">
 
-      <div class="asset-sheet-pane active" id="assetPaneTrade">
-        <div class="mode-switch" id="assetTradeSwitch">
-          <div class="mode-indicator" id="assetTradeIndicator"></div>
-          <button class="mode-btn active" id="assetModeBuy" onclick="switchAssetTradeMode('BUY')">买入</button>
-          <button class="mode-btn" id="assetModeSell" onclick="switchAssetTradeMode('SELL')">卖出</button>
-        </div>
-
-        <div class="form-row trade-price-row">
-          <div class="form-group stepper-field">
-            <label class="form-label">买入价</label>
-            <span class="value-float" id="assetBuyPriceHint">+0.00%</span>
-            <div class="stepper-row">
-              <button class="adjust-btn" onclick="adjustNumericField('assetBuyPrice',-1,'percent','assetBuyPriceHint','assetBasePrice')">−</button>
-              <input class="input-field" type="number" id="assetBuyPrice" onchange="showPercentHint('assetBuyPrice','assetBuyPriceHint','assetBasePrice')">
-              <button class="adjust-btn" onclick="adjustNumericField('assetBuyPrice',1,'percent','assetBuyPriceHint','assetBasePrice')">+</button>
-            </div>
-          </div>
-          <div class="form-group stepper-field">
-            <label class="form-label">卖出价</label>
-            <span class="value-float" id="assetSellPriceHint">+0.00%</span>
-            <div class="stepper-row">
-              <button class="adjust-btn" onclick="adjustNumericField('assetSellPrice',-1,'percent','assetSellPriceHint','assetBasePrice')">−</button>
-              <input class="input-field" type="number" id="assetSellPrice" onchange="showPercentHint('assetSellPrice','assetSellPriceHint','assetBasePrice')">
-              <button class="adjust-btn" onclick="adjustNumericField('assetSellPrice',1,'percent','assetSellPriceHint','assetBasePrice')">+</button>
-            </div>
+      <div class="prediction-panel" id="assetNotesSection">
+        <div class="panel-title-row">
+          <span class="panel-title">笔记预测价</span>
+          <div class="notes-position-ratio" id="notesPositionRatio">
+            <span class="ratio-bull">看多 0</span>
+            <span class="ratio-vs">:</span>
+            <span class="ratio-watch">观望 0</span>
+            <span class="ratio-vs">:</span>
+            <span class="ratio-bear">看空 0</span>
           </div>
         </div>
-        <div class="form-group stepper-field">
-          <label class="form-label">份数</label>
-          <span class="value-float" id="assetSharesHint">¥191,600</span>
-          <div class="stepper-row">
-            <button class="adjust-btn" onclick="adjustNumericField('assetShares',-1,'total','assetSharesHint','assetBuyPrice')">−</button>
-            <input class="input-field" type="number" id="assetShares" onchange="updateSharesHint('asset')">
-            <button class="adjust-btn" onclick="adjustNumericField('assetShares',1,'total','assetSharesHint','assetBuyPrice')">+</button>
-          </div>
-          <div class="share-quick-row">
-            <button class="share-quick-chip" onclick="setAssetShareRatio(0.25)">1/4</button>
-            <button class="share-quick-chip" onclick="setAssetShareRatio(0.5)">1/2</button>
-            <button class="share-quick-chip" onclick="setAssetShareRatio(1)">全部</button>
-          </div>
+        <div id="predictionList"></div>
+        <div class="notes-warning" id="notesWarning" style="display:none;">
+          <span class="warning-icon">⚠️</span>
+          <span class="warning-text">当前决策与笔记观点存在冲突</span>
         </div>
-        <div class="trade-preview">
-          <div class="trade-preview-item">
-            <span class="trade-preview-label">交易额</span>
-            <span class="trade-preview-value" id="assetTradeAmount">¥191,600</span>
-          </div>
-          <div class="trade-preview-item">
-            <span class="trade-preview-label">交易后份数</span>
-            <span class="trade-preview-value" id="assetAfterQty">200</span>
-          </div>
-          <div class="trade-preview-item">
-            <span class="trade-preview-label">预估成本</span>
-            <span class="trade-preview-value" id="assetTradeImpact">1,708.00</span>
-          </div>
-        </div>
-        <input type="hidden" id="assetBasePrice" value="1916.00">
-        <input type="hidden" id="activeAssetCode" value="600519">
-
-        <div class="form-group">
-          <label class="form-label">记录日期</label>
-          <input type="date" class="input-field" id="assetTradeDate">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">发文时间</label>
-            <input class="input-field" id="notePublishTime" placeholder="2026-05-21">
-          </div>
-          <div class="form-group">
-            <label class="form-label">作者</label>
-            <input class="input-field" id="noteAuthor" placeholder="鸡">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">行业/公司</label>
-            <input class="input-field" id="noteIndustry" placeholder="白酒/贵州茅台">
-          </div>
-          <div class="form-group">
-            <label class="form-label">方向</label>
-            <select class="input-field" id="noteDirection">
-              <option>看多</option>
-              <option>看空</option>
-              <option>观望</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">预期幅度</label>
-            <input class="input-field" id="noteExpectedMove" placeholder="+12%">
-          </div>
-          <div class="form-group">
-            <label class="form-label">预期兑现时间</label>
-            <input class="input-field" id="noteExpectedTime" placeholder="3-6个月">
-          </div>
-        </div>
-
-        <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;" onclick="saveAssetQuickRecord()">确认记录</button>
       </div>
     </div>
   </div>
@@ -3903,6 +3863,9 @@ let activeAssetTradeType = 'BUY';
 let activeRecordMode = 'add';
 let activeRecordTxnType = 'BUY';
 let activeAddAssetCode = '';
+let activeRecordAssetData = null;
+let recordFlowState = 'idle';
+let isAssetEditing = false;
 
 function numberFromText(value) {
   return parseFloat(String(value || '').replace(/[^\d.-]/g, '')) || 0;
@@ -4158,25 +4121,9 @@ function setDateInputToday(id) {
 }
 
 function openRecordSheet() {
-  activeRecordMode = 'add';
   document.getElementById('recordSheetModal').classList.add('show');
   document.body.style.overflow = 'hidden';
-  setDateInputToday('recordDate');
-  const searchInput = document.getElementById('assetSearchInput');
-  if (searchInput) searchInput.value = '';
-  activeAddAssetCode = '';
-  ['recordAddName', 'recordAddCode', 'recordAddCost', 'recordAddPrice'].forEach(id => {
-    const input = document.getElementById(id);
-    if (input) input.value = '';
-  });
-  const typeSelect = document.getElementById('recordAddType');
-  if (typeSelect) typeSelect.value = 'stock';
-  const quantityInput = document.getElementById('recordAddQuantity');
-  const noteInput = document.getElementById('recordAddNote');
-  if (quantityInput) quantityInput.value = '';
-  if (noteInput) noteInput.value = '';
-  handleAddTypeChange();
-  filterAssetSearchResults();
+  resetRecordSheet();
 }
 
 function closeRecordSheet() {
@@ -4184,52 +4131,167 @@ function closeRecordSheet() {
   document.body.style.overflow = '';
 }
 
+function resetRecordSheet() {
+  activeRecordMode = 'add';
+  activeRecordTxnType = 'BUY';
+  activeRecordAssetData = null;
+  activeAddAssetCode = '';
+  setDateInputToday('recordDate');
+  setDateInputToday('recordTradeDate');
+  const searchInput = document.getElementById('assetSearchInput');
+  if (searchInput) {
+    searchInput.disabled = false;
+    searchInput.value = '';
+    searchInput.placeholder = '输入名称、代码或关键词';
+  }
+  ['recordAddName', 'recordAddCode', 'recordAddCost', 'recordAddPrice', 'recordAddQuantity', 'recordAddNote', 'recordTradeNote'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.value = '';
+  });
+  const typeSelect = document.getElementById('recordAddType');
+  if (typeSelect) typeSelect.value = 'stock';
+  setRecordFlow('idle');
+  filterAssetSearchResults();
+}
+
+function setRecordFlow(state) {
+  recordFlowState = state;
+  document.getElementById('recordFlowHint')?.classList.toggle('show', state === 'idle');
+  document.getElementById('recordTradeForm')?.classList.toggle('show', state === 'trade');
+  document.getElementById('recordAddForm')?.classList.toggle('show', state === 'add');
+  const saveBtn = document.getElementById('recordSaveBtn');
+  if (saveBtn) saveBtn.textContent = state === 'trade' ? '记录' : '保存';
+}
+
+function getHoldingSearchOptions() {
+  return Array.from(document.querySelectorAll('.asset-item')).map(item => {
+    const asset = getAssetData(item.dataset.code);
+    return asset ? {
+      source: 'held',
+      code: asset.code,
+      name: asset.name,
+      type: asset.type,
+      typeLabel: asset.typeLabel,
+      price: asset.price,
+      keywords: `${asset.code} ${asset.name} ${asset.typeLabel}`
+    } : null;
+  }).filter(Boolean);
+}
+
 function filterAssetSearchResults() {
   const list = document.getElementById('assetSearchResults');
   if (!list) return;
-  if (isManualAddType()) {
-    list.innerHTML = '';
-    return;
-  }
   const query = (document.getElementById('assetSearchInput')?.value || '').trim().toLowerCase();
   if (!query) {
-    list.innerHTML = '';
+    if (activeRecordAssetData) {
+      list.innerHTML = renderRecordSearchResults([{
+        source: 'held',
+        code: activeRecordAssetData.code,
+        name: activeRecordAssetData.name,
+        type: activeRecordAssetData.type,
+        typeLabel: activeRecordAssetData.typeLabel,
+        price: activeRecordAssetData.price,
+        keywords: `${activeRecordAssetData.code} ${activeRecordAssetData.name} ${activeRecordAssetData.typeLabel}`
+      }]);
+      return;
+    }
+    if (activeAddAssetCode) {
+      const asset = assetSearchOptions.find(item => item.code === activeAddAssetCode);
+      list.innerHTML = asset ? renderRecordSearchResults([asset]) : '';
+      return;
+    }
+    list.innerHTML = renderRecordSearchResults(getHoldingSearchOptions());
+    if (!activeRecordAssetData && !activeAddAssetCode && recordFlowState !== 'idle') setRecordFlow('idle');
     return;
   }
-  const matched = assetSearchOptions
-    .filter(asset => {
-      const haystack = `${asset.code} ${asset.name} ${asset.typeLabel} ${asset.keywords}`.toLowerCase();
-      return haystack.includes(query);
-    })
-    .slice(0, 5);
+
+  const holdingMatches = getHoldingSearchOptions()
+    .filter(asset => `${asset.code} ${asset.name} ${asset.typeLabel} ${asset.keywords}`.toLowerCase().includes(query));
+  const newMatches = assetSearchOptions
+    .filter(asset => `${asset.code} ${asset.name} ${asset.typeLabel} ${asset.keywords}`.toLowerCase().includes(query));
+  const matched = [...holdingMatches, ...newMatches].slice(0, 6);
 
   if (matched.length === 0) {
-    list.innerHTML = '<div class="asset-search-empty">没有匹配资产，可直接在下方手动填写。</div>';
+    activeRecordAssetData = null;
+    activeAddAssetCode = '';
+    fillAddAssetForm({ name: document.getElementById('assetSearchInput')?.value || '', code: '', type: 'stock', price: 0 });
+    setRecordFlow('add');
+    list.innerHTML = '<div class="asset-search-empty">未找到持仓或模拟资产，可直接在下方新增。</div>';
     return;
   }
 
-  list.innerHTML = matched.map(asset => `
-    <div class="asset-search-result${asset.code === activeAddAssetCode ? ' selected' : ''}" onclick="selectAssetSearchResult('${asset.code}')">
-      <div class="asset-search-main">
-        <span class="asset-search-name">${asset.name}</span>
-        <span class="asset-search-code">${asset.code} · ${asset.keywords.split(' ').slice(0, 2).join(' ')}</span>
+  list.innerHTML = renderRecordSearchResults(matched);
+}
+
+function renderRecordSearchResults(assets) {
+  if (!assets.length) return '';
+  return assets.map(asset => {
+    const isHeld = asset.source === 'held';
+    const selected = isHeld
+      ? activeRecordAssetData?.code === asset.code
+      : activeAddAssetCode === asset.code;
+    return `
+      <div class="asset-search-result${isHeld ? ' held' : ''}${selected ? ' selected' : ''}" onclick="selectRecordSearchResult('${isHeld ? 'held' : 'new'}','${asset.code}')">
+        <div class="asset-search-main">
+          <span class="asset-search-name">${asset.name}</span>
+          <span class="asset-search-code">${asset.code} · ${asset.typeLabel}</span>
+        </div>
+        <span class="asset-search-type${isHeld ? ' held' : ''}">${isHeld ? '已持仓' : '新资产'}</span>
       </div>
-      <span class="asset-search-type">${asset.typeLabel}</span>
-    </div>
-  `).join('');
+    `;
+  }).join('');
+}
+
+function selectRecordSearchResult(kind, code) {
+  if (kind === 'held') {
+    const asset = getAssetData(code);
+    if (!asset) return;
+    activeRecordAssetData = asset;
+    activeAddAssetCode = '';
+    const searchInput = document.getElementById('assetSearchInput');
+    if (searchInput) searchInput.value = asset.name;
+    fillRecordTradeForm(asset);
+    setRecordFlow('trade');
+  } else {
+    const asset = assetSearchOptions.find(item => item.code === code) || assetSearchOptions[0];
+    if (!asset) return;
+    activeRecordAssetData = null;
+    activeAddAssetCode = asset.code;
+    const searchInput = document.getElementById('assetSearchInput');
+    if (searchInput) searchInput.value = asset.name;
+    fillAddAssetForm(asset);
+    setRecordFlow('add');
+  }
+  filterAssetSearchResults();
+  document.querySelector('#recordSheetModal .sheet-body')?.scrollTo({
+    top: document.getElementById(recordFlowState === 'trade' ? 'recordTradeForm' : 'recordAddForm')?.offsetTop || 0,
+    behavior: 'smooth'
+  });
 }
 
 function selectAssetSearchResult(code) {
-  const asset = assetSearchOptions.find(item => item.code === code) || assetSearchOptions[0];
-  if (!asset) return;
-  activeAddAssetCode = asset.code;
-  document.getElementById('recordAddName').value = asset.name;
-  document.getElementById('recordAddCode').value = asset.code;
-  document.getElementById('recordAddType').value = asset.type;
-  document.getElementById('recordAddPrice').value = Number(asset.price).toFixed(2);
+  selectRecordSearchResult('new', code);
+}
+
+function fillAddAssetForm(asset) {
+  document.getElementById('recordAddName').value = asset.name || '';
+  document.getElementById('recordAddCode').value = asset.code || '';
+  document.getElementById('recordAddType').value = asset.type || 'stock';
+  document.getElementById('recordAddPrice').value = Number(asset.price || 0).toFixed(2);
   const costInput = document.getElementById('recordAddCost');
-  if (costInput) costInput.value = Number(asset.price).toFixed(2);
-  filterAssetSearchResults();
+  if (costInput) costInput.value = Number(asset.price || 0).toFixed(2);
+}
+
+function fillRecordTradeForm(asset) {
+  document.getElementById('recordSelectedName').textContent = `${asset.name} · ${asset.code}`;
+  document.getElementById('recordSelectedPosition').textContent = `${formatNumber(asset.quantity, 0)} 份 · 最新价 ${formatNumber(asset.price)}`;
+  document.getElementById('recordBasePrice').value = asset.price.toFixed(2);
+  document.getElementById('recordBuyPrice').value = asset.price.toFixed(2);
+  document.getElementById('recordSellPrice').value = asset.price.toFixed(2);
+  document.getElementById('recordShares').value = Math.max(1, Math.round(asset.quantity));
+  switchRecordTradeMode('BUY');
+  updateSharesHint('record');
+  updateTradePreview('record');
 }
 
 function isManualAddType() {
@@ -4242,9 +4304,7 @@ function handleAddTypeChange() {
   const searchInput = document.getElementById('assetSearchInput');
   const hadSelectedAsset = Boolean(activeAddAssetCode);
   if (searchInput) {
-    searchInput.disabled = manual;
-    searchInput.value = manual ? '' : searchInput.value;
-    searchInput.placeholder = manual ? '该分类无需搜索，可直接填写' : '输入名称、代码或关键词';
+    searchInput.placeholder = manual ? '该分类可直接填写，也可继续搜索' : '输入名称、代码或关键词';
   }
   if (manual) {
     activeAddAssetCode = '';
@@ -4259,53 +4319,53 @@ function handleAddTypeChange() {
 }
 
 function switchRecordMode(mode) {
-  activeRecordMode = mode;
-  const isAdd = mode === 'add';
-  const indicator = document.getElementById('recordModeIndicator');
-  const tradeBtn = document.getElementById('recordModeTrade');
-  const addBtn = document.getElementById('recordModeAdd');
-  const tradeForm = document.getElementById('recordTradeForm');
-  const addForm = document.getElementById('recordAddForm');
-  if (!indicator || !tradeBtn || !addBtn || !tradeForm || !addForm) return;
-  indicator.classList.toggle('right', isAdd);
-  tradeBtn.classList.toggle('active', !isAdd);
-  addBtn.classList.toggle('active', isAdd);
-  tradeForm.style.display = isAdd ? 'none' : 'block';
-  addForm.style.display = isAdd ? 'block' : 'none';
+  setRecordFlow(mode === 'trade' ? 'trade' : 'add');
 }
 
-function syncRecordAssetFromSelect() {
-  const select = document.getElementById('recordAssetSelect');
-  if (!select) return;
-  const code = select.value || '600519';
-  const asset = getAssetData(code);
-  if (!asset) return;
-  document.getElementById('recordBasePrice').value = asset.price.toFixed(2);
-  document.getElementById('recordBuyPrice').value = asset.price.toFixed(2);
-  document.getElementById('recordSellPrice').value = asset.price.toFixed(2);
-  document.getElementById('recordShares').value = Math.max(1, Math.round(asset.quantity));
+function switchRecordTradeMode(type) {
+  activeRecordTxnType = type;
+  const isSell = type === 'SELL';
+  document.getElementById('recordTradeIndicator')?.classList.toggle('right', isSell);
+  document.getElementById('recordModeBuy')?.classList.toggle('active', !isSell);
+  document.getElementById('recordModeSell')?.classList.toggle('active', isSell);
   updateSharesHint('record');
   updateTradePreview('record');
 }
+
+function setRecordShareRatio(ratio) {
+  if (!activeRecordAssetData) return;
+  const sharesInput = document.getElementById('recordShares');
+  if (!sharesInput) return;
+  const baseQuantity = Math.max(0, numberFromText(activeRecordAssetData.quantity));
+  const nextShares = ratio >= 1
+    ? baseQuantity
+    : Math.max(1, Math.round(baseQuantity * ratio));
+  sharesInput.value = Math.round(nextShares);
+  updateSharesHint('record');
+  updateTradePreview('record');
+}
+
+function syncRecordAssetFromSelect() {}
 
 function openAssetSheet(code) {
   const asset = getAssetData(code);
   if (!asset) return;
   activeAssetData = asset;
-  activeAssetTradeType = 'BUY';
+  isAssetEditing = false;
+  document.getElementById('assetDetailContent')?.classList.remove('asset-editing');
   fillAssetDetail(asset);
-  fillAssetQuickForm(asset);
   renderPredictions(asset.notes);
-  renderNoteSummaries(asset.notes);
   checkNoteConflicts(asset.notes);
   document.getElementById('assetDetailModal').classList.add('show');
   document.body.style.overflow = 'hidden';
-  scrollAssetSection('trade', true);
+  document.querySelector('#assetDetailModal .sheet-body')?.scrollTo({ top: 0, behavior: 'auto' });
 }
 
 function closeAssetSheet() {
   document.getElementById('assetDetailModal').classList.remove('show');
   document.body.style.overflow = '';
+  isAssetEditing = false;
+  document.getElementById('assetDetailContent')?.classList.remove('asset-editing');
 }
 
 function closeAssetDetail() {
@@ -4338,31 +4398,15 @@ function fillAssetDetail(asset) {
 }
 
 function fillAssetQuickForm(asset) {
-  document.getElementById('activeAssetCode').value = asset.code;
-  document.getElementById('assetBasePrice').value = asset.price.toFixed(2);
-  document.getElementById('assetBuyPrice').value = asset.price.toFixed(2);
-  document.getElementById('assetSellPrice').value = asset.price.toFixed(2);
-  document.getElementById('assetShares').value = Math.max(1, Math.round(asset.quantity));
-  setDateInputToday('assetTradeDate');
-  switchAssetTradeMode('BUY');
-  updateSharesHint('asset');
-  updateTradePreview('asset');
-
-  const firstNote = asset.notes[0] || {};
-  document.getElementById('notePublishTime').value = firstNote.publishTime || '';
-  document.getElementById('noteAuthor').value = firstNote.author || '';
-  document.getElementById('noteIndustry').value = firstNote.industry || '';
-  document.getElementById('noteDirection').value = firstNote.direction || '看多';
-  document.getElementById('noteExpectedMove').value = firstNote.expectedMove || '';
-  document.getElementById('noteExpectedTime').value = firstNote.expectedTime || '';
+  if (!asset) return;
 }
 
 function switchAssetTradeMode(type) {
   activeAssetTradeType = type;
   const isSell = type === 'SELL';
-  document.getElementById('assetTradeIndicator').classList.toggle('right', isSell);
-  document.getElementById('assetModeBuy').classList.toggle('active', !isSell);
-  document.getElementById('assetModeSell').classList.toggle('active', isSell);
+  document.getElementById('assetTradeIndicator')?.classList.toggle('right', isSell);
+  document.getElementById('assetModeBuy')?.classList.toggle('active', !isSell);
+  document.getElementById('assetModeSell')?.classList.toggle('active', isSell);
   updateSharesHint('asset');
   updateTradePreview('asset');
 }
@@ -4384,7 +4428,7 @@ function updateTradePreview(scope) {
   const isAssetScope = scope === 'asset';
   const asset = isAssetScope
     ? activeAssetData
-    : getAssetData(document.getElementById('recordAssetSelect')?.value || '600519');
+    : activeRecordAssetData;
   if (!asset) return;
 
   const tradeType = isAssetScope ? activeAssetTradeType : activeRecordTxnType;
@@ -4412,25 +4456,10 @@ function updateTradePreview(scope) {
 }
 
 function scrollToAssetQuickTrade(instant = false) {
-  scrollAssetSection('trade', instant);
+  scrollAssetSection('detail', instant);
 }
 
 function scrollAssetSection(section, instant = false) {
-  const paneMap = {
-    detail: 'assetPaneDetail',
-    notes: 'assetPaneNotes',
-    trade: 'assetPaneTrade'
-  };
-  const navMap = {
-    detail: 'assetNavDetail',
-    notes: 'assetNavNotes',
-    trade: 'assetNavTrade'
-  };
-  if (!paneMap[section]) return;
-  Object.values(navMap).forEach(id => document.getElementById(id)?.classList.remove('active'));
-  document.getElementById(navMap[section])?.classList.add('active');
-  Object.values(paneMap).forEach(id => document.getElementById(id)?.classList.remove('active'));
-  document.getElementById(paneMap[section])?.classList.add('active');
   document.querySelector('#assetDetailModal .sheet-body')?.scrollTo({
     top: 0,
     behavior: 'auto'
@@ -4457,6 +4486,7 @@ function renderPredictions(notes) {
 
 function renderNoteSummaries(notes) {
   const list = document.getElementById('noteSummaryList');
+  if (!list) return;
   list.innerHTML = '';
   notes.forEach(note => {
     const item = document.createElement('div');
@@ -4479,14 +4509,17 @@ function renderNoteSummaries(notes) {
 function checkNoteConflicts(notes) {
   const bullCount = notes.filter(note => note.direction === '看多').length;
   const bearCount = notes.filter(note => note.direction === '看空').length;
+  const watchCount = notes.filter(note => note.direction === '观望').length;
   const positionRatio = document.getElementById('notesPositionRatio');
   const notesWarning = document.getElementById('notesWarning');
   if (!positionRatio || !notesWarning) return;
 
   const bullSpan = positionRatio.querySelector('.ratio-bull');
   const bearSpan = positionRatio.querySelector('.ratio-bear');
+  const watchSpan = positionRatio.querySelector('.ratio-watch');
   bullSpan.textContent = `看多 ${bullCount}`;
   bearSpan.textContent = `看空 ${bearCount}`;
+  if (watchSpan) watchSpan.textContent = `观望 ${watchCount}`;
   bullSpan.classList.remove('majority', 'minority');
   bearSpan.classList.remove('majority', 'minority');
   if (bullCount > bearCount) bullSpan.classList.add('majority');
@@ -4500,7 +4533,27 @@ function checkNoteConflicts(notes) {
 }
 
 function toggleFieldEditor() {
-  document.getElementById('fieldEditor').classList.toggle('show');
+  enterAssetEditMode();
+}
+
+function enterAssetEditMode() {
+  if (!activeAssetData) return;
+  isAssetEditing = true;
+  document.getElementById('assetDetailContent')?.classList.add('asset-editing');
+  document.getElementById('editCost').value = activeAssetData.cost.toFixed(2);
+  document.getElementById('editQuantity').value = Math.round(activeAssetData.quantity);
+  document.getElementById('editPrice').value = activeAssetData.price.toFixed(2);
+  document.getElementById('editHoldDays').value = activeAssetData.holdDays;
+}
+
+function saveAssetInlineEdit() {
+  applyAssetFieldEdits();
+}
+
+function cancelAssetInlineEdit() {
+  isAssetEditing = false;
+  document.getElementById('assetDetailContent')?.classList.remove('asset-editing');
+  if (activeAssetData) fillAssetDetail(activeAssetData);
 }
 
 function applyAssetFieldEdits() {
@@ -4520,7 +4573,8 @@ function applyAssetFieldEdits() {
   }
 
   fillAssetDetail(activeAssetData);
-  fillAssetQuickForm(activeAssetData);
+  isAssetEditing = false;
+  document.getElementById('assetDetailContent')?.classList.remove('asset-editing');
   showToast('字段已调整');
 }
 
@@ -4615,12 +4669,29 @@ function saveAssetQuickRecord() {
 }
 
 function saveRecord(type) {
-  if (type === 'add' && !isManualAddType() && !activeAddAssetCode) {
-    showToast('请先搜索并选择资产');
+  const flow = type === 'add' ? 'add' : recordFlowState;
+  if (flow === 'trade') {
+    if (!activeRecordAssetData) {
+      showToast('请先选择已持仓资产');
+      return;
+    }
+    showToast(activeRecordTxnType === 'SELL' ? '卖出记录已保存' : '买入记录已保存');
+    closeRecordSheet();
     return;
   }
-  showToast(type === 'trade' ? '交易记录已保存' : '资产已添加');
-  closeRecordSheet();
+
+  if (flow === 'add') {
+    const name = document.getElementById('recordAddName')?.value.trim();
+    if (!name) {
+      showToast('请填写资产名称');
+      return;
+    }
+    showToast('资产已添加');
+    closeRecordSheet();
+    return;
+  }
+
+  showToast('请先搜索或填写资产');
 }
 
 function applyPrototypeStateFromUrl() {
