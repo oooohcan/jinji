@@ -1112,6 +1112,44 @@ body {
   font-size:13px;
   color:var(--text-muted);
 }
+/* 笔记观点冲突警示条：上下左右居中，黄底警示卡 */
+.notes-warning {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:8px 0 4px;
+  padding:12px 14px;
+  background:linear-gradient(180deg, #fff7e6 0%, #fff1d6 100%);
+  border:1px solid #f5d790;
+  border-radius:10px;
+  color:#8a5a00;
+  font-size:13px;
+  font-weight:500;
+  line-height:1.4;
+  text-align:center;
+}
+.notes-warning .warning-icon {
+  font-size:15px;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.notes-warning .warning-text {
+  flex:0 1 auto;
+}
+/* 交易记录：左侧文字加深，避免看起来发灰 */
+.asset-txn-row-date {
+  color:#4a4a4a;
+  font-weight:500;
+  font-variant-numeric:lining-nums;
+}
+.asset-txn-row-info {
+  color:#222;
+  font-weight:500;
+  font-variant-numeric:lining-nums;
+}
 .prediction-action-left {
   display:flex;
   align-items:center;
