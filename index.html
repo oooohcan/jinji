@@ -943,22 +943,23 @@ body {
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  padding:16px 14px;
+  gap:10px;
+  padding:22px 16px;
   background:var(--card);
   border:1px solid rgba(164,74,63,0.06);
-  border-radius:14px;
+  border-radius:16px;
   color:var(--text);
-  font-size:15px;
-  font-weight:600;
+  font-size:17px;
+  font-weight:700;
   font-family:var(--font-body);
   cursor:pointer;
   transition:all 0.2s;
   font-variant-numeric:lining-nums;
+  box-shadow:0 2px 6px rgba(164,74,63,0.04);
 }
 .home-quick-btn svg {
-  width:20px;
-  height:20px;
+  width:24px;
+  height:24px;
   fill:var(--brand);
 }
 .home-quick-btn:active {
@@ -982,6 +983,153 @@ body {
 .prediction-action-btn:active {
   transform:scale(0.98);
   background:rgba(164,74,63,0.04);
+}
+.asset-txn-card {
+  margin:12px 16px 24px;
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:14px;
+  overflow:hidden;
+}
+.asset-txn-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  cursor:pointer;
+  user-select:none;
+}
+.asset-txn-header:active {
+  background:var(--input-bg);
+}
+.asset-txn-header-left {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text);
+  font-size:15px;
+  font-weight:600;
+}
+.asset-txn-header-left svg {
+  width:20px;
+  height:20px;
+  fill:var(--brand);
+}
+.asset-txn-header-right {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:var(--text-muted);
+  font-size:13px;
+}
+.asset-txn-chevron {
+  width:18px;
+  height:18px;
+  fill:var(--text-muted);
+  transition:transform 0.2s;
+}
+.asset-txn-card.open .asset-txn-chevron {
+  transform:rotate(180deg);
+}
+.asset-txn-body {
+  display:none;
+  border-top:1px solid var(--input-bg);
+}
+.asset-txn-card.open .asset-txn-body {
+  display:block;
+}
+.asset-txn-list {
+  padding:6px 16px 4px;
+  display:flex;
+  flex-direction:column;
+}
+.asset-txn-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px dashed var(--input-bg);
+  gap:10px;
+}
+.asset-txn-row:last-child {
+  border-bottom:none;
+}
+.asset-txn-row-left {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+  flex:1;
+}
+.asset-txn-row-date {
+  font-size:12px;
+  color:var(--text-muted);
+  font-variant-numeric:lining-nums;
+}
+.asset-txn-row-info {
+  font-size:13px;
+  color:var(--text-secondary);
+  font-variant-numeric:lining-nums;
+}
+.asset-txn-row-right {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:2px;
+  flex-shrink:0;
+}
+.asset-txn-row-amount {
+  font-size:14px;
+  font-weight:700;
+  font-variant-numeric:lining-nums;
+}
+.asset-txn-row-amount.buy { color:var(--positive); }
+.asset-txn-row-amount.sell { color:var(--negative); }
+.asset-txn-row-tag {
+  font-size:10px;
+  padding:1px 6px;
+  border-radius:4px;
+  font-weight:600;
+}
+.asset-txn-row-tag.buy {
+  background:rgba(46,139,87,0.12);
+  color:var(--positive);
+}
+.asset-txn-row-tag.sell {
+  background:rgba(205,92,92,0.12);
+  color:var(--negative);
+}
+.asset-txn-more {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  width:calc(100% - 32px);
+  margin:8px 16px 14px;
+  padding:10px 0;
+  background:var(--input-bg);
+  border:none;
+  border-radius:10px;
+  font-size:13px;
+  color:var(--brand);
+  font-weight:600;
+  cursor:pointer;
+  font-family:var(--font-body);
+  transition:all 0.2s;
+}
+.asset-txn-more:active {
+  background:rgba(164,74,63,0.08);
+}
+.asset-txn-more svg {
+  width:14px;
+  height:14px;
+  fill:var(--brand);
+}
+.asset-txn-empty {
+  padding:20px 16px;
+  text-align:center;
+  font-size:13px;
+  color:var(--text-muted);
 }
 .prediction-action-left {
   display:flex;
@@ -2510,30 +2658,137 @@ body {
 }
 
 .me-section { margin:12px 16px; }
-.me-sync-card {
-  margin:12px 16px;
-  padding:16px 18px;
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  border:1px solid rgba(164,74,63,0.05);
+.vip-ad-card {
+  position:relative;
+  margin:14px 16px 4px;
+  padding:18px 18px 16px;
+  background:linear-gradient(135deg,#a44a3f 0%,#c2694a 50%,#d4a26a 100%);
+  border-radius:18px;
+  color:#fff;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(164,74,63,0.25);
+  transition:transform 0.2s;
 }
-.me-sync-title {
-  font-size:13px;
-  color:var(--text-muted);
-  margin-bottom:6px;
+.vip-ad-card:active {
+  transform:scale(0.98);
 }
-.me-sync-value {
-  display:block;
-  color:var(--text);
-  font-weight:700;
-  font-size:15px;
+.vip-ad-glow {
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  width:160px;
+  height:160px;
+  background:radial-gradient(circle,rgba(255,220,180,0.4) 0%,rgba(255,220,180,0) 70%);
+  border-radius:50%;
+  pointer-events:none;
 }
-.me-sync-meta {
-  display:block;
-  margin-top:5px;
-  color:var(--text-muted);
+.vip-ad-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  position:relative;
+  z-index:1;
+}
+.vip-ad-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:rgba(255,255,255,0.22);
+  padding:4px 10px;
+  border-radius:100px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.05em;
+  backdrop-filter:blur(4px);
+}
+.vip-ad-badge svg {
+  width:13px;
+  height:13px;
+  fill:#fff;
+}
+.vip-ad-cta {
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
   font-size:12px;
+  font-weight:600;
+  background:#fff;
+  color:#a44a3f;
+  padding:5px 12px;
+  border-radius:100px;
+  font-variant-numeric:lining-nums;
+}
+.vip-ad-cta svg {
+  width:14px;
+  height:14px;
+  fill:#a44a3f;
+}
+.vip-ad-title {
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  margin-bottom:4px;
+  position:relative;
+  z-index:1;
+  font-family:var(--font-body);
+}
+.vip-ad-subtitle {
+  font-size:12px;
+  opacity:0.85;
+  margin-bottom:14px;
+  position:relative;
+  z-index:1;
+  font-variant-numeric:lining-nums;
+}
+.vip-ad-perks {
+  display:flex;
+  gap:8px;
+  position:relative;
+  z-index:1;
+}
+.vip-ad-perk {
+  flex:1;
+  background:rgba(255,255,255,0.15);
+  border-radius:10px;
+  padding:10px 8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  text-align:center;
+  backdrop-filter:blur(4px);
+}
+.vip-ad-perk-icon {
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.25);
+}
+.vip-ad-perk-icon svg {
+  width:16px;
+  height:16px;
+  fill:#fff;
+}
+.vip-ad-perk-text {
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+.vip-ad-perk-title {
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+.vip-ad-perk-desc {
+  font-size:10px;
+  opacity:0.85;
+  font-variant-numeric:lining-nums;
+  line-height:1.3;
 }
 .me-section-title {
   font-size:12px;
@@ -3474,7 +3729,10 @@ body {
     </div>
 
     <div class="insight-history">
-      <div class="section-title" style="margin:4px 0 10px;">历史笔记</div>
+      <div class="section-title" style="margin:4px 0 10px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="openNoteHistoryFromInsights()">
+        <span>历史笔记</span>
+        <span class="history-mini-tag" style="background:var(--input-bg); color:var(--text-muted);">查看全部 ›</span>
+      </div>
 
       <div class="history-item" data-history-id="history-ai-chip" onclick="toggleHistoryItem(this)">
         <div class="history-item-header">
@@ -3627,10 +3885,50 @@ body {
       </div>
     </div>
 
-    <div class="me-sync-card">
-      <span class="me-sync-title">当前演示数据</span>
-      <span class="me-sync-value" id="meAccountSummary">4 项资产 · 12 笔交易 · 3 条笔记</span>
-      <span class="me-sync-meta" id="meSyncTime">最近同步 13:00 · 静态高保真 Demo</span>
+    <!-- 会员广告卡（AI 权益、实时价、专项报告） -->
+    <div class="vip-ad-card" onclick="openVipCard()">
+      <div class="vip-ad-glow"></div>
+      <div class="vip-ad-row">
+        <div class="vip-ad-badge">
+          <svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm0 2h14v2H5z"/></svg>
+          <span>会员</span>
+        </div>
+        <div class="vip-ad-cta">
+          <span>立即开通</span>
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </div>
+      </div>
+      <div class="vip-ad-title">解锁金汲 Pro 会员</div>
+      <div class="vip-ad-subtitle">让决策更聪明，让收益更可追踪</div>
+      <div class="vip-ad-perks">
+        <div class="vip-ad-perk">
+          <div class="vip-ad-perk-icon ai">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3-1.5 5-3 6.5L14 19h-4l-2-3.5C6.5 14 5 12 5 9a7 7 0 017-7zm-2 19h4v2h-4z"/></svg>
+          </div>
+          <div class="vip-ad-perk-text">
+            <div class="vip-ad-perk-title">AI 智能分析</div>
+            <div class="vip-ad-perk-desc">AI 工作台无限次调用</div>
+          </div>
+        </div>
+        <div class="vip-ad-perk">
+          <div class="vip-ad-perk-icon realtime">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          </div>
+          <div class="vip-ad-perk-text">
+            <div class="vip-ad-perk-title">实时报价</div>
+            <div class="vip-ad-perk-desc">1 秒级行情推送</div>
+          </div>
+        </div>
+        <div class="vip-ad-perk">
+          <div class="vip-ad-perk-icon report">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          </div>
+          <div class="vip-ad-perk-text">
+            <div class="vip-ad-perk-title">专项研报</div>
+            <div class="vip-ad-perk-desc">每日持仓诊断报告</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="me-section">
@@ -3643,7 +3941,7 @@ body {
           </div>
           <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
-        <div class="me-menu-item" onclick="openTransactionHistory()">
+        <div class="me-menu-item" onclick="openTransactionHistoryFromMe()">
           <div class="me-menu-left">
             <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
             <span class="me-menu-label">交易记录</span>
@@ -3687,7 +3985,7 @@ body {
   <!-- 交易记录页 -->
   <div class="page" id="page-transactions">
     <div class="sub-page-header">
-      <button class="sub-page-back" onclick="switchTab('me')">
+      <button class="sub-page-back" onclick="openTransactionBack()">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       </button>
       <h1 class="sub-page-title">交易记录</h1>
@@ -3709,10 +4007,10 @@ body {
     <div class="txn-page-list" id="txnPageList"></div>
   </div>
 
-  <!-- 历史笔记页 -->
+  <!-- 历史笔记页（与记笔记页的历史笔记区域复用同一组数据 + 跳转交互） -->
   <div class="page" id="page-notes-history">
     <div class="sub-page-header">
-      <button class="sub-page-back" onclick="switchTab('me')">
+      <button class="sub-page-back" onclick="openNoteHistoryBack()">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       </button>
       <h1 class="sub-page-title">历史笔记</h1>
@@ -3721,10 +4019,10 @@ body {
     <div class="notes-history-toolbar">
       <div class="notes-history-search">
         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input id="noteHistorySearch" type="text" placeholder="搜索笔记内容、标签" oninput="filterNotesHistory()">
+        <input id="noteHistorySearch" type="text" placeholder="搜索笔记标题、内容、标签" oninput="filterNotesHistory()">
       </div>
     </div>
-    <div class="notes-history-list" id="notesHistoryList"></div>
+    <div class="insight-history notes-history-list" id="notesHistoryList"></div>
   </div>
 
   <!-- Tab Bar -->
@@ -4010,16 +4308,30 @@ body {
           </div>
         </div>
         <div id="predictionList"></div>
-        <button class="prediction-action-btn" onclick="openAssetTransactions()">
-          <div class="prediction-action-left">
-            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-            <span>交易记录</span>
-          </div>
-          <span class="prediction-action-count" id="assetTxnCount">8 笔 ›</span>
-        </button>
         <div class="notes-warning" id="notesWarning" style="display:none;">
           <span class="warning-icon">⚠️</span>
           <span class="warning-text">当前决策与笔记观点存在冲突</span>
+        </div>
+      </div>
+
+      <!-- 资产交易记录卡片（可展开） -->
+      <div class="asset-txn-card" id="assetTxnCard">
+        <div class="asset-txn-header" onclick="toggleAssetTxnCard()">
+          <div class="asset-txn-header-left">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            <span class="asset-txn-title">交易记录</span>
+          </div>
+          <div class="asset-txn-header-right">
+            <span class="asset-txn-count" id="assetTxnCount">8 笔</span>
+            <svg class="asset-txn-chevron" id="assetTxnChevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </div>
+        </div>
+        <div class="asset-txn-body" id="assetTxnBody">
+          <div class="asset-txn-list" id="assetTxnList"></div>
+          <button class="asset-txn-more" onclick="openTransactionFromAsset()">
+            <span>查看全部交易记录</span>
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </div>
     </div>
@@ -4070,17 +4382,95 @@ function setKlineRange(range) {
 }
 
 function openAssetTransactions() {
-  // 简单方案：toast 提示 + 后续可展开全屏交易记录视图
-  const code = (typeof activeAssetData !== 'undefined' && activeAssetData?.code) || document.getElementById('assetDetailCode')?.textContent || '该资产';
-  if (typeof showToast === 'function') showToast(`查看 ${code} 的交易记录（共 8 笔）`);
+  // 兼容旧调用：跳到独立交易记录页
+  openTransactionHistory();
 }
 
-function openTransactionHistory() {
+function openTransactionFromAsset() {
+  txnReturnTo = 'asset-detail';
   switchTab('transactions');
 }
 
+function openTransactionHistory() {
+  // 兼容旧调用：从 me 页面进入
+  txnReturnTo = 'me';
+  switchTab('transactions');
+}
+
+function openTransactionHistoryFromMe() {
+  txnReturnTo = 'me';
+  switchTab('transactions');
+}
+
+function openTransactionBack() {
+  if (txnReturnTo === 'asset-detail') {
+    // 从资产明细页返回时回到 portfolio（资产明细是 portfolio 的子页）
+    currentTab = 'me';
+    switchTab('portfolio');
+  } else {
+    switchTab('me');
+  }
+  txnReturnTo = 'me';
+}
+
+let txnReturnTo = 'me';
+
 function openNoteHistory() {
+  // 从「我的」进入历史笔记：直接打开独立页
+  noteHistoryReturnTo = 'me';
   switchTab('notes-history');
+}
+
+function openNoteHistoryFromInsights() {
+  // 从「记笔记」(insights) 进入历史笔记：复用同一组数据，并记住返回到 insights
+  noteHistoryReturnTo = 'insights';
+  switchTab('notes-history');
+}
+
+function openNoteHistoryBack() {
+  // 根据进入来源决定返回路径
+  if (noteHistoryReturnTo === 'insights') {
+    switchTab('insights');
+  } else {
+    switchTab('me');
+  }
+  noteHistoryReturnTo = 'me';
+}
+
+// 资产交易记录卡片：展开/收起
+function toggleAssetTxnCard() {
+  const card = document.getElementById('assetTxnCard');
+  if (!card) return;
+  card.classList.toggle('open');
+  if (card.classList.contains('open')) {
+    renderAssetTxnCard();
+  }
+}
+
+function renderAssetTxnCard() {
+  const listEl = document.getElementById('assetTxnList');
+  const countEl = document.getElementById('assetTxnCount');
+  if (!listEl) return;
+  const code = (typeof activeAssetData !== 'undefined' && activeAssetData?.code) || document.getElementById('assetDetailCode')?.textContent || '';
+  const all = (typeof TXN_DEMO_DATA !== 'undefined') ? TXN_DEMO_DATA.filter(t => !code || t.code === code) : [];
+  if (countEl) countEl.textContent = `${all.length} 笔`;
+  if (all.length === 0) {
+    listEl.innerHTML = '<div class="asset-txn-empty">该资产暂无交易记录</div>';
+    return;
+  }
+  const show = all.slice(0, 3);
+  listEl.innerHTML = show.map(t => `
+    <div class="asset-txn-row">
+      <div class="asset-txn-row-left">
+        <div class="asset-txn-row-date">${formatDate(t.date)}</div>
+        <div class="asset-txn-row-info">${t.typeLabel} ${t.qty} @ ¥${t.price.toFixed(2)}</div>
+      </div>
+      <div class="asset-txn-row-right">
+        <div class="asset-txn-row-amount ${t.type === 'BUY' ? 'buy' : 'sell'}">${t.type === 'BUY' ? '-' : '+'}¥${t.amount.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+        <div class="asset-txn-row-tag ${t.type === 'BUY' ? 'buy' : 'sell'}">${t.typeLabel}</div>
+      </div>
+    </div>
+  `).join('');
 }
 
 // 交易记录页：示例数据 + 渲染 + 筛选
@@ -4156,19 +4546,45 @@ function renderTransactionPage() {
   listEl.innerHTML = html;
 }
 
-// 历史笔记页：示例数据 + 渲染
+// 历史笔记页：与记笔记页 (insights) 的历史笔记区域复用同一组数据 + 相同 UI
 const NOTES_DEMO_DATA = [
-  { date:'2026-06-18', title:'茅台观察：高位震荡', trend:'bull', content:'白酒板块整体反弹，茅台放量突破前高，成交量配合良好，继续持有观察。若站稳1930可考虑加仓。', tags:['#白酒','#持仓观察','#突破'] },
-  { date:'2026-06-14', title:'新能源拐点将至？', trend:'watch', content:'宁德时代连续缩量调整，产业链反馈电池排产环比改善，关注Q3业绩指引。', tags:['#新能源','#观察'] },
-  { date:'2026-06-10', title:'消费复苏不及预期', trend:'bear', content:'5月社零数据低于预期，消费板块短期承压，建议降低消费ETF仓位。', tags:['#宏观','#消费','#减仓'] },
-  { date:'2026-06-05', title:'定投策略复盘', trend:'watch', content:'本周继续执行双周定投，重点加仓沪深300和中证红利。注意止盈线设为+25%。', tags:['#定投','#策略'] },
-  { date:'2026-05-29', title:'保险板块配置机会', trend:'bull', content:'中国平安PEV回到0.7倍以下，估值进入历史低位区间，具备中长期配置价值。', tags:['#保险','#价值投资','#低估值'] },
+  { id:'history-ai-chip', date:'2026-05-20', title:'半导体：AI芯片需求持续增长', trend:'看多', tags:['半导体','成长'], assets:[
+    { code:'AAPL', name:'苹果公司', desc:'AAPL · 端侧 AI 与芯片周期', trend:'up', txt:'看多 +7%' },
+    { code:'00700', name:'腾讯控股', desc:'00700 · 云算力需求', trend:'neutral', txt:'观望 +3%' }
+  ], content:'AI芯片需求持续扩张，国产替代进程加速。' },
+  { id:'history-consumption', date:'2026-05-18', title:'消费板块估值回归，白酒龙头稳定', trend:'观望', tags:['消费'], assets:[
+    { code:'600519', name:'贵州茅台', desc:'600519 · 白酒龙头', trend:'neutral', txt:'观望 -6%' },
+    { code:'110022', name:'易方达消费', desc:'110022 · 消费基金', trend:'down', txt:'谨慎 -5%' }
+  ], content:'短期估值偏高，白酒龙头分红现金流稳定。' },
+  { id:'history-hk-tech', date:'2026-05-15', title:'加息预期升温，港股科技承压', trend:'谨慎', tags:['港股科技','金融'], assets:[
+    { code:'00700', name:'腾讯控股', desc:'00700 · 港股科技权重', trend:'down', txt:'谨慎 -5%' },
+    { code:'AAPL', name:'苹果公司', desc:'AAPL · 全球科技估值', trend:'neutral', txt:'观望 +2%' }
+  ], content:'加息预期下港股科技股承压。' }
 ];
+let noteHistoryReturnTo = 'me';
 let notesSearchKeyword = '';
+
 function filterNotesHistory() {
   notesSearchKeyword = document.getElementById('noteHistorySearch').value.trim().toLowerCase();
   renderNotesHistoryPage();
 }
+
+function trendClass(trend) {
+  if (trend === '看多' || trend === 'up') return 'up';
+  if (trend === '看空' || trend === 'down') return 'down';
+  return 'neutral';
+}
+function trendTagClass(trend) {
+  if (trend === '看多' || trend === 'up') return 'tag-up';
+  if (trend === '看空' || trend === 'down') return 'tag-down';
+  return 'tag-down';
+}
+function trendMiniClass(trend) {
+  if (trend === '看多') return 'history-mini-tag up';
+  if (trend === '看空') return 'history-mini-tag down';
+  return 'history-mini-tag down';
+}
+
 function renderNotesHistoryPage() {
   const listEl = document.getElementById('notesHistoryList');
   if (!listEl) return;
@@ -4185,22 +4601,45 @@ function renderNotesHistoryPage() {
     listEl.innerHTML = '<div class="txn-empty">暂无符合条件的笔记</div>';
     return;
   }
+  // 复用 insights 页的 history-item 结构与样式（与记笔记页保持一致）
   listEl.innerHTML = items.map(n => {
-    const tagHtml = n.tags.map(t => {
-      let cls = 'notes-history-tag';
-      if (t.includes('bull') || n.trend === 'bull' && (t === '#持仓观察' || t === '#低估值' || t === '#价值投资' || t === '#突破')) cls += ' trend-bull';
-      else if (n.trend === 'bear' && (t === '#减仓' || t === '#宏观')) cls += ' trend-bear';
-      else if (n.trend === 'watch' && (t === '#观察' || t === '#策略' || t === '#定投')) cls += ' trend-watch';
-      return `<span class="${cls}">${t}</span>`;
-    }).join('');
-    return `
-      <div class="notes-history-item ${n.trend}">
-        <div class="notes-history-head">
-          <div class="notes-history-title">${n.title}</div>
-          <div class="notes-history-date">${formatDate(n.date)}</div>
+    const tagsHtml = n.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    const assetsHtml = n.assets.map(a => `
+      <div class="history-asset-signal" data-code="${a.code}" onclick="openAssetDetailFromHistory(event,'${a.code}')">
+        <div class="history-asset-main">
+          <span class="history-asset-name">${a.name}</span>
+          <span class="history-asset-code">${a.desc}</span>
         </div>
-        <div class="notes-history-content">${n.content}</div>
-        <div class="notes-history-tags">${tagHtml}</div>
+        <span class="history-asset-trend ${trendClass(a.trend)}">${a.txt}</span>
+      </div>
+    `).join('');
+    const assetPill = n.assets.length > 0 ? `<span class="history-asset-pill">${n.assets[0].name}${n.assets.length > 1 ? '等 ' + n.assets.length + ' 项' : ''}</span>` : '';
+    return `
+      <div class="history-item" data-history-id="${n.id}" onclick="toggleHistoryItem(this)">
+        <div class="history-item-header">
+          <div class="history-title-row">
+            <span class="history-item-title">${n.title}</span>
+            <span class="history-item-date">${n.date.slice(5)}</span>
+          </div>
+          <div class="history-tags-preview">
+            <span class="${trendMiniClass(n.trend)}">${n.trend}</span>
+            <span class="history-mini-tag">${n.tags[0] || ''}</span>
+            ${assetPill}
+          </div>
+        </div>
+        <div class="history-item-expand">
+          <div class="history-detail" style="padding-top:16px;">
+            <div style="margin-bottom:12px;">
+              <span class="tag ${trendTagClass(n.trend)}">${n.trend}</span>
+              ${tagsHtml}
+            </div>
+            <p class="history-note-copy">${n.content}</p>
+            ${assetsHtml ? `
+              <div class="history-assets-title">提及持仓资产</div>
+              <div class="history-asset-list">${assetsHtml}</div>
+            ` : ''}
+          </div>
+        </div>
       </div>
     `;
   }).join('');
@@ -4212,6 +4651,10 @@ function openPersonalInfo() {
 
 function openPrivacyPolicy() {
   if (typeof showToast === 'function') showToast('隐私政策（演示）');
+}
+
+function openVipCard() {
+  if (typeof showToast === 'function') showToast('金汲 Pro 会员（演示）');
 }
 
 function switchTab(tabName) {
