@@ -2002,7 +2002,6 @@ body {
 }
 .record-sheet-header {
   display:flex;
-  justify-content:space-between;
   align-items:center;
   padding:24px 20px 12px;
   border-bottom:1px solid var(--border);
@@ -2010,6 +2009,25 @@ body {
   flex-shrink:0;
   background:var(--card);
   z-index:12;
+  gap:4px;
+}
+.sheet-back-btn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  margin-right:6px;
+  border:none;
+  background:transparent;
+  color:var(--text);
+  border-radius:50%;
+  cursor:pointer;
+  transition:background 0.15s;
+  flex-shrink:0;
+}
+.sheet-back-btn:active {
+  background:var(--input-bg);
 }
 #assetDetailModal .record-sheet-header {
   border-bottom:none;
