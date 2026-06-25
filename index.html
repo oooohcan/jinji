@@ -592,17 +592,27 @@ body {
   flex:0 0 auto;
   min-width:0;
 }
-/* ========== 新版持仓卡片：三行布局 ========== */
+/* ========== 持仓卡片：清爽金融风格两行布局 ========== */
 .asset-item {
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:0;
+  padding:14px 18px;
+  position:relative;
+}
+.asset-item + .asset-item::before {
+  content:'';
+  position:absolute;
+  top:0; left:18px; right:18px;
+  height:1px;
+  background:rgba(164,74,63,0.06);
 }
 .asset-row-head {
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:space-between;
   gap:12px;
+  margin-bottom:8px;
 }
 .asset-title {
   display:flex;
@@ -610,6 +620,7 @@ body {
   gap:8px;
   flex:1;
   min-width:0;
+  padding-top:2px;
 }
 .asset-name {
   font-size:16px;
@@ -621,105 +632,45 @@ body {
   text-overflow:ellipsis;
 }
 .asset-code {
-  font-family:var(--font-display);
-  font-size:12px;
+  font-size:11px;
   color:var(--text-muted);
-  background:var(--input-bg);
-  padding:2px 7px;
-  border-radius:6px;
-  font-variant-numeric:lining-nums;
-  letter-spacing:0.02em;
+  background:transparent;
+  padding:0;
+  border-radius:0;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0.03em;
   flex-shrink:0;
+}
+.asset-code::before {
+  content:'·';
+  margin-right:6px;
+  color:var(--text-muted);
 }
 .asset-mv {
   text-align:right;
   flex-shrink:0;
 }
 .asset-mv-label {
-  display:block;
-  font-size:10px;
-  color:var(--text-muted);
-  margin-bottom:1px;
+  display:none;
 }
 .asset-mv-value {
-  font-size:18px;
+  font-size:19px;
   font-weight:700;
   color:var(--text);
   font-family:var(--font-display);
   letter-spacing:-0.02em;
-  font-variant-numeric:lining-nums;
+  font-variant-numeric:tabular-nums;
+  line-height:1.1;
 }
-.asset-row-meta {
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:6px;
-}
-.asset-meta-item {
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  padding:8px 6px;
-  background:var(--input-bg);
-  border-radius:8px;
-  text-align:center;
-}
-.asset-meta-item i {
-  font-size:10px;
-  font-style:normal;
-  color:var(--text-muted);
-  letter-spacing:0.02em;
-}
-.asset-meta-item b {
-  font-size:12px;
-  font-weight:600;
-  color:var(--text);
-  font-style:normal;
-  font-variant-numeric:lining-nums;
-}
-.asset-meta-item b.up { color:var(--positive); }
-.asset-meta-item b.down { color:var(--negative); }
-.asset-meta-item b.maturity { color:#8a5a00; }
-.asset-row-price {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.asset-last-price {
-  font-size:11px;
-  color:var(--text-muted);
-}
-.asset-last-price b {
-  font-weight:600;
-  color:var(--text);
-  font-size:13px;
-  margin-left:2px;
-  font-variant-numeric:lining-nums;
-}
-.asset-pnl-group {
-  display:flex;
-  gap:8px;
-  align-items:center;
-  font-variant-numeric:lining-nums;
-}
-.asset-pnl-today,
-.asset-pnl-hold {
-  font-size:12px;
-  font-weight:500;
-  padding:3px 8px;
-  border-radius:6px;
-}
-.asset-pnl-today.up, .asset-pnl-hold.up { color:var(--positive); background:rgba(220,53,69,0.06); }
-.asset-pnl-today.down, .asset-pnl-hold.down { color:var(--negative); background:rgba(0,150,100,0.06); }
-
-/* 类别徽章按分类着色 */
+/* 类别徽章：小而精致 */
 .asset-type-badge {
   font-size:10px;
   font-weight:600;
-  padding:2px 7px;
-  border-radius:6px;
+  padding:2px 6px;
+  border-radius:4px;
   letter-spacing:0.02em;
   flex-shrink:0;
+  line-height:1.4;
 }
 .asset-type-badge.stock { background:rgba(220,53,69,0.08); color:#a44a3f; }
 .asset-type-badge.fund { background:rgba(52,152,219,0.08); color:#2980b9; }
@@ -728,6 +679,81 @@ body {
 .asset-type-badge.deposit { background:rgba(52,73,94,0.08); color:#2c3e50; }
 .asset-type-badge.wealth { background:rgba(155,89,182,0.08); color:#7d3c98; }
 .asset-type-badge.other { background:var(--input-bg); color:var(--text-secondary); }
+
+/* 关键指标行：横向文字串联（不再是灰色小方块） */
+.asset-row-meta {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 14px;
+  margin-bottom:8px;
+  font-size:12px;
+  color:var(--text-muted);
+  line-height:1.5;
+}
+.asset-meta-item {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:0;
+  background:transparent;
+  border-radius:0;
+  text-align:left;
+}
+.asset-meta-item i {
+  font-size:12px;
+  font-style:normal;
+  color:var(--text-muted);
+  letter-spacing:0;
+}
+.asset-meta-item b {
+  font-size:12px;
+  font-weight:600;
+  color:var(--text);
+  font-style:normal;
+  font-variant-numeric:tabular-nums;
+}
+.asset-meta-item b.up { color:#d14b4b; }
+.asset-meta-item b.down { color:#2e8b57; }
+.asset-meta-item b.maturity { color:#8a5a00; }
+
+/* 第三行：最新价+盈亏（去掉胶囊背景，直接文字+左侧竖线分隔） */
+.asset-row-price {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.asset-last-price {
+  font-size:12px;
+  color:var(--text-muted);
+}
+.asset-last-price b {
+  font-weight:600;
+  color:var(--text);
+  font-size:13px;
+  margin-left:4px;
+  font-variant-numeric:tabular-nums;
+}
+.asset-pnl-group {
+  display:flex;
+  gap:14px;
+  align-items:center;
+  font-variant-numeric:tabular-nums;
+}
+.asset-pnl-today,
+.asset-pnl-hold {
+  font-size:12px;
+  font-weight:600;
+  padding:0;
+  border-radius:0;
+  background:transparent !important;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+}
+.asset-pnl-today.up, .asset-pnl-hold.up { color:#d14b4b; }
+.asset-pnl-today.down, .asset-pnl-hold.down { color:#2e8b57; }
 
 /* 旧样式：兼容遗留 class（如 getAssetData 或其他地方可能使用） */
 .asset-meta { display:none; }
@@ -1618,7 +1644,7 @@ body {
 
 /* 历史笔记半弹框 */
 .history-sheet-body {
-  padding:0 10px 24px;
+  padding:0;
 }
 .history-sheet-search {
   display:flex;
@@ -1627,7 +1653,7 @@ body {
   background:var(--input-bg);
   border-radius:12px;
   padding:10px 14px;
-  margin:0 0 12px;
+  margin:12px 12px;
 }
 .history-sheet-search svg {
   width:18px;
@@ -1652,8 +1678,23 @@ body {
   max-height:calc(88vh - 130px);
   overflow-y:auto;
   scrollbar-width:none;
+  padding:0 4px 24px;
 }
 .history-sheet-list::-webkit-scrollbar { display:none; }
+/* sheet 内历史笔记卡片：拉满宽度、去阴影、更紧凑 */
+.history-sheet-list .insight-history { margin:0; }
+.history-sheet-list .history-item {
+  margin:0 8px 10px;
+  border-radius:12px;
+  box-shadow:none;
+  border:1px solid var(--border);
+}
+.history-sheet-list .history-item-header {
+  padding:13px 14px;
+}
+.history-sheet-list .history-item.expand-open .history-detail {
+  padding:0 14px 14px;
+}
 /* 交易记录半弹框：内部筛选 + 列表 */
 .txn-sheet-filters {
   display:flex;
@@ -2091,53 +2132,134 @@ body {
 .asset-search-results {
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:2px;
 }
-.asset-search-result {
+/* 紧凑列表行（记资产中选择持仓） */
+.asset-search-row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:background 0.15s;
+  border:1px solid transparent;
+}
+.asset-search-row:active { background:rgba(164,74,63,0.05); }
+.asset-search-row.selected {
+  background:rgba(164,74,63,0.08);
+  border-color:rgba(164,74,63,0.25);
+}
+.sr-type-dot {
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  flex-shrink:0;
+  letter-spacing:-0.5px;
+}
+.sr-info { flex:1; min-width:0; }
+.sr-name-line {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+  line-height:1.2;
+}
+.sr-name { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sr-held-badge {
+  font-size:10px;
+  font-weight:600;
+  padding:1px 6px;
+  border-radius:4px;
+  background:rgba(46,139,87,0.12);
+  color:#2e8b57;
+  flex-shrink:0;
+}
+.sr-right-top {
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  font-variant-numeric:tabular-nums;
+  flex-shrink:0;
+}
+.sr-sub-line {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
-  padding:10px 12px;
-  border:1px solid rgba(164,74,63,0.08);
-  border-radius:14px;
-  background:#fbfaf8;
-  cursor:pointer;
-}
-.asset-search-result.selected {
-  border-color:rgba(164,74,63,0.34);
-  background:rgba(164,74,63,0.07);
-}
-.asset-search-result.held {
-  border-color:rgba(46,139,87,0.15);
-}
-.asset-search-main {
-  min-width:0;
-}
-.asset-search-name {
-  display:block;
-  font-size:14px;
-  font-weight:700;
-  color:var(--text);
-}
-.asset-search-code {
-  display:block;
-  margin-top:2px;
+  gap:8px;
+  margin-top:4px;
   font-size:12px;
+  line-height:1.3;
+}
+.sr-sub-text {
   color:var(--text-muted);
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
-.asset-search-type {
+.sr-right-bottom {
   flex-shrink:0;
-  padding:5px 9px;
-  border-radius:999px;
-  background:rgba(164,74,63,0.08);
-  color:var(--brand);
-  font-size:12px;
-  font-weight:700;
+  color:var(--text-secondary);
+  font-variant-numeric:tabular-nums;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
 }
-.asset-search-type.held {
-  background:rgba(46,139,87,0.1);
-  color:var(--positive);
+.sr-right-bottom > span + span::before {
+  content:'';
+  display:inline-block;
+  width:1px;
+  height:10px;
+  background:rgba(0,0,0,0.08);
+  margin-right:8px;
+}
+.sr-pct.up { color:#d14b4b; font-weight:600; }
+.sr-pct.dn { color:#2e8b57; font-weight:600; }
+.sr-tag-new {
+  font-size:11px;
+  padding:1px 7px;
+  border-radius:4px;
+  background:rgba(164,74,63,0.1);
+  color:var(--brand);
+  font-weight:600;
+}
+/* 记资产列表下方"新增一项xxx"入口 */
+.record-add-new-btn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  background:transparent;
+  border:1px dashed rgba(164,74,63,0.3);
+  border-radius:10px;
+  color:var(--brand);
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  font-family:var(--font-body);
+}
+.record-add-new-btn:active {
+  background:rgba(164,74,63,0.05);
+  border-style:solid;
+}
+.record-add-new-plus {
+  font-size:18px;
+  font-weight:400;
+  line-height:1;
 }
 .asset-search-empty {
   padding:12px;
@@ -4450,6 +4572,11 @@ body {
 
         <div class="asset-search-empty" id="recordFlowHint">可直接选择已有持仓，或搜索新资产进行新增。</div>
 
+        <button type="button" class="record-add-new-btn" id="recordAddNewBtn" onclick="handleRecordAddNew()" style="display:none;">
+          <span class="record-add-new-plus">+</span>
+          <span id="recordAddNewLabel">新增一项资产</span>
+        </button>
+
         <!-- 步骤 2B：无代码资产 → 直接买卖表单 -->
         <div class="record-form record-flow-panel" id="recordSimpleForm">
           <div class="form-group">
@@ -6131,8 +6258,10 @@ function resetRecordSheet() {
   updateSimpleAmount();
 }
 
-// 有代码/API 的分类：股票 / 基金 / ETF
+// 有完整行情/代码的分类：股票 / 基金 / ETF（新增走详细表单 add）
 const CATEGORY_WITH_CODE = new Set(['stock', 'fund', 'etf']);
+// 无代码/简表分类：贵金属、存款、理财、其他（新增走简化表单 simple）
+const CATEGORY_SIMPLE = new Set(['metal', 'deposit', 'wealth', 'other']);
 let activeRecordCategory = '';
 
 function selectRecordCategory(type) {
@@ -6141,22 +6270,44 @@ function selectRecordCategory(type) {
   document.querySelectorAll('#recordCategoryGrid .record-category-card').forEach(card => {
     card.classList.toggle('active', card.dataset.cat === type);
   });
-  if (CATEGORY_WITH_CODE.has(type)) {
-    // 有代码：进入搜索 + 列表环节
-    // 预填 recordAddType 以便后续新增时携带正确分类
-    const typeSelect = document.getElementById('recordAddType');
-    if (typeSelect) typeSelect.value = type;
-    setRecordFlow('idle'); // 复用 idle = 显示搜索
-    filterAssetSearchResults();
-  } else {
-    // 无代码：直接进入简化买卖表单
-    fillSimpleFormByCategory(type);
-    setRecordFlow('simple');
-  }
+  // 所有类别统一进入搜索 + 列表页（可选择已有持仓或在下方新增）
+  const typeSelect = document.getElementById('recordAddType');
+  if (typeSelect) typeSelect.value = type;
+  // 更新"新增xxx"按钮文案
+  const labelMap = {
+    stock: '新增一只股票 / 港美股',
+    fund:  '新增一只基金',
+    etf:   '新增一只ETF',
+    metal: '新增贵金属持仓',
+    deposit: '新增一笔存款',
+    wealth: '新增一笔理财',
+    other: '新增一项其他资产'
+  };
+  const label = document.getElementById('recordAddNewLabel');
+  if (label) label.textContent = labelMap[type] || '新增一项资产';
+  setRecordFlow('idle');
+  filterAssetSearchResults();
   // 滚动到下方表单
   setTimeout(() => {
     document.querySelector('#recordSheetModal .sheet-body')?.scrollTo({ top: 0, behavior: 'smooth' });
   }, 50);
+}
+
+// 根据当前类别进入对应的新增表单（有代码类→add详细表单，无代码类→simple简表）
+function handleRecordAddNew() {
+  if (CATEGORY_WITH_CODE.has(activeRecordCategory)) {
+    fillAddAssetForm({ name: '', code: '', type: activeRecordCategory, price: 0 });
+    setRecordFlow('add');
+  } else {
+    fillSimpleFormByCategory(activeRecordCategory);
+    setRecordFlow('simple');
+  }
+  setTimeout(() => {
+    document.querySelector('#recordSheetModal .sheet-body')?.scrollTo({
+      top: document.getElementById(recordFlowState === 'simple' ? 'recordSimpleForm' : 'recordAddForm')?.offsetTop || 0,
+      behavior: 'smooth'
+    });
+  }, 80);
 }
 
 function fillSimpleFormByCategory(type) {
@@ -6207,7 +6358,6 @@ function setRecordFlow(state) {
   const showCat    = state === 'category';
   const showSimple = state === 'simple';
   const showSearch = (state === 'idle' || state === 'add' || state === 'trade');
-  document.getElementById('recordFlowHint')?.classList.toggle('show', state === 'idle');
   document.getElementById('recordCategoryForm')?.classList.toggle('show', showCat);
   document.getElementById('recordSimpleForm')?.classList.toggle('show', showSimple);
   document.getElementById('recordTradeForm')?.classList.toggle('show', showTrade);
@@ -6217,6 +6367,12 @@ function setRecordFlow(state) {
   // 非分类页面显示返回按钮
   const backBtn = document.getElementById('recordBackBtn');
   if (backBtn) backBtn.style.display = showCat ? 'none' : 'flex';
+  // idle 显示新增入口，其它状态隐藏
+  const addNewBtn = document.getElementById('recordAddNewBtn');
+  if (addNewBtn) addNewBtn.style.display = (state === 'idle' && activeRecordCategory) ? '' : 'none';
+  // 非idle状态隐藏提示文案
+  const hint = document.getElementById('recordFlowHint');
+  if (hint) hint.classList.toggle('show', state === 'idle' && !activeRecordCategory);
   const saveBtn = document.getElementById('recordSaveBtn');
   if (saveBtn) {
     if (state === 'category') saveBtn.textContent = '保存';
@@ -6246,15 +6402,36 @@ function backToRecordCategory() {
 function getHoldingSearchOptions() {
   return Array.from(document.querySelectorAll('.asset-item')).map(item => {
     const asset = getAssetData(item.dataset.code);
-    return asset ? {
+    if (!asset) return null;
+    const price = asset.price;
+    const cost = asset.cost;
+    const quantity = asset.quantity;
+    const prevClose = asset.prevClose || cost;
+    const marketValue = price * quantity;
+    const todayChange = (price - prevClose) * quantity;
+    const todayChangePct = prevClose ? (price - prevClose) / prevClose * 100 : 0;
+    const totalPnl = (price - cost) * quantity + (asset.rate ? (cost * asset.rate / 100 * (asset.holdDays || 0) / 365) : 0);
+    const totalCost = cost * quantity;
+    const totalPnlPct = totalCost ? totalPnl / totalCost * 100 : 0;
+    return {
       source: 'held',
       code: asset.code,
       name: asset.name,
       type: asset.type,
       typeLabel: asset.typeLabel,
-      price: asset.price,
+      price,
+      cost,
+      quantity,
+      holdDays: asset.holdDays,
+      rate: asset.rate,
+      maturity: asset.maturity,
+      marketValue,
+      todayChange,
+      todayChangePct,
+      totalPnl,
+      totalPnlPct,
       keywords: `${asset.code} ${asset.name} ${asset.typeLabel}`
-    } : null;
+    };
   }).filter(Boolean);
 }
 
@@ -6262,8 +6439,15 @@ function filterAssetSearchResults() {
   const list = document.getElementById('assetSearchResults');
   if (!list) return;
   const query = (document.getElementById('assetSearchInput')?.value || '').trim().toLowerCase();
+  const matchCategory = (a) => {
+    if (!activeRecordCategory || activeRecordCategory === 'other') return true;
+    if (activeRecordCategory === 'stock') return a.type === 'stock' || a.type === 'hkstock' || a.type === 'usstock';
+    if (activeRecordCategory === 'metal') return a.type === 'gold' || a.type === 'silver' || a.type === 'metal';
+    return a.type === activeRecordCategory;
+  };
   if (!query) {
     if (activeRecordAssetData) {
+      const held = getHoldingSearchOptions().find(h => h.code === activeRecordAssetData.code) || {};
       list.innerHTML = renderRecordSearchResults([{
         source: 'held',
         code: activeRecordAssetData.code,
@@ -6271,6 +6455,16 @@ function filterAssetSearchResults() {
         type: activeRecordAssetData.type,
         typeLabel: activeRecordAssetData.typeLabel,
         price: activeRecordAssetData.price,
+        cost: activeRecordAssetData.cost,
+        quantity: activeRecordAssetData.quantity,
+        holdDays: activeRecordAssetData.holdDays,
+        rate: activeRecordAssetData.rate,
+        maturity: activeRecordAssetData.maturity,
+        marketValue: held.marketValue || 0,
+        todayChange: held.todayChange || 0,
+        todayChangePct: held.todayChangePct || 0,
+        totalPnl: held.totalPnl || 0,
+        totalPnlPct: held.totalPnlPct || 0,
         keywords: `${activeRecordAssetData.code} ${activeRecordAssetData.name} ${activeRecordAssetData.typeLabel}`
       }]);
       return;
@@ -6280,7 +6474,7 @@ function filterAssetSearchResults() {
       list.innerHTML = asset ? renderRecordSearchResults([asset]) : '';
       return;
     }
-    list.innerHTML = renderRecordSearchResults(getHoldingSearchOptions());
+    list.innerHTML = renderRecordSearchResults(getHoldingSearchOptions().filter(matchCategory));
     // 仅当用户已进入搜索/交易/新增流程（trade/add/idle）时，才自动切回 idle；
     // category/simple 阶段不应被这里反向跳回。
     if (!activeRecordAssetData && !activeAddAssetCode && ['trade','add','idle'].includes(recordFlowState) && recordFlowState !== 'idle') setRecordFlow('idle');
@@ -6288,8 +6482,15 @@ function filterAssetSearchResults() {
   }
 
   const holdingMatches = getHoldingSearchOptions()
+    .filter(matchCategory)
     .filter(asset => `${asset.code} ${asset.name} ${asset.typeLabel} ${asset.keywords}`.toLowerCase().includes(query));
   const newMatches = assetSearchOptions
+    .filter(asset => {
+      if (!activeRecordCategory || activeRecordCategory === 'other') return true;
+      if (activeRecordCategory === 'stock') return ['stock','hkstock','usstock'].includes(asset.type);
+      if (activeRecordCategory === 'metal') return ['gold','silver','metal'].includes(asset.type);
+      return asset.type === activeRecordCategory;
+    })
     .filter(asset => `${asset.code} ${asset.name} ${asset.typeLabel} ${asset.keywords}`.toLowerCase().includes(query));
   const matched = [...holdingMatches, ...newMatches].slice(0, 6);
 
@@ -6307,18 +6508,76 @@ function filterAssetSearchResults() {
 
 function renderRecordSearchResults(assets) {
   if (!assets.length) return '';
+  const typeMetaMap = {
+    stock:   { tag: '股', color: '#a44a3f' },
+    hkstock: { tag: '港', color: '#a44a3f' },
+    usstock: { tag: '美', color: '#a44a3f' },
+    fund:    { tag: '基', color: '#b8860b' },
+    etf:     { tag: 'E',  color: '#b8860b' },
+    gold:    { tag: '金', color: '#c9a227' },
+    silver:  { tag: '银', color: '#8a8a8a' },
+    deposit: { tag: '存', color: '#2e8b57' },
+    wealth:  { tag: '理', color: '#2e8b57' },
+    other:   { tag: '其', color: '#666' }
+  };
   return assets.map(asset => {
     const isHeld = asset.source === 'held';
     const selected = isHeld
       ? activeRecordAssetData?.code === asset.code
       : activeAddAssetCode === asset.code;
+    const meta = typeMetaMap[asset.type] || typeMetaMap.other;
+    let rightTop = '', rightBottom = '';
+    let subLine = '';
+
+    if (isHeld) {
+      // 已持仓：按资产类型差异化展示
+      if (asset.type === 'stock' || asset.type === 'hkstock' || asset.type === 'usstock' || asset.type === 'etf') {
+        rightTop = `¥${formatNumber(asset.marketValue || asset.price * asset.quantity, 0)}`;
+        const pct = asset.todayChangePct;
+        rightBottom = `<span class="sr-pct ${pct>=0?'up':'dn'}">${signedPercent(pct)}</span><span class="${asset.totalPnlPct>=0?'up':'dn'}" style="font-weight:600">${signedPercent(asset.totalPnlPct)}</span>`;
+        subLine = `${asset.code} · ¥${formatNumber(asset.price)} · ${asset.quantity>0?formatNumber(asset.quantity,0)+'股':''}`;
+      } else if (asset.type === 'fund') {
+        rightTop = `¥${formatNumber(asset.marketValue || asset.price * asset.quantity, 0)}`;
+        rightBottom = `<span class="sr-pct ${asset.todayChangePct>=0?'up':'dn'}">${signedPercent(asset.todayChangePct)}</span><span class="${asset.totalPnlPct>=0?'up':'dn'}" style="font-weight:600">${signedPercent(asset.totalPnlPct)}</span>`;
+        subLine = `${asset.code} · 净值${formatNumber(asset.price,3)} · ${asset.quantity>0?formatNumber(asset.quantity,0)+'份':''}`;
+      } else if (asset.type === 'gold' || asset.type === 'silver') {
+        rightTop = `¥${formatNumber(asset.marketValue || asset.price * asset.quantity, 0)}`;
+        rightBottom = `<span class="sr-pct ${asset.todayChangePct>=0?'up':'dn'}">${signedPercent(asset.todayChangePct)}</span>`;
+        subLine = `${asset.typeLabel} · ${asset.quantity>0?formatNumber(asset.quantity,2)+'克':''} · ¥${formatNumber(asset.price,2)}/克`;
+      } else if (asset.type === 'deposit') {
+        rightTop = `¥${formatNumber(asset.marketValue || asset.price * asset.quantity, 0)}`;
+        rightBottom = `<span class="sr-pct up">${asset.rate?signedPercent(asset.rate):'--'}</span>`;
+        subLine = `${asset.maturity||'活期'} · ${asset.holdDays?asset.holdDays+'天':''}`;
+      } else if (asset.type === 'wealth') {
+        rightTop = `¥${formatNumber(asset.marketValue || asset.price * asset.quantity, 0)}`;
+        rightBottom = `<span class="sr-pct up">${asset.rate?signedPercent(asset.rate):'--'}</span>`;
+        subLine = `${asset.maturity||'活期'} · ${asset.holdDays?asset.holdDays+'天':''}`;
+      } else {
+        rightTop = `¥${formatNumber(asset.marketValue || asset.price * asset.quantity, 0)}`;
+        rightBottom = `<span class="sr-tag-new">${asset.typeLabel}</span>`;
+        subLine = `${asset.code||'--'} · ${asset.quantity>0?formatNumber(asset.quantity,2):''}`;
+      }
+    } else {
+      // 新资产候选
+      rightTop = `¥${formatNumber(asset.price, 2)}`;
+      rightBottom = `<span class="sr-tag-new">新资产</span>`;
+      subLine = `${asset.code||'--'} · ${asset.typeLabel}`;
+    }
+
     return `
-      <div class="asset-search-result${isHeld ? ' held' : ''}${selected ? ' selected' : ''}" onclick="selectRecordSearchResult('${isHeld ? 'held' : 'new'}','${asset.code}')">
-        <div class="asset-search-main">
-          <span class="asset-search-name">${asset.name}</span>
-          <span class="asset-search-code">${asset.code} · ${asset.typeLabel}</span>
+      <div class="asset-search-row${isHeld?' held':''}${selected?' selected':''}" onclick="selectRecordSearchResult('${isHeld?'held':'new'}','${asset.code}')">
+        <div class="sr-type-dot" style="background:${meta.color}">${meta.tag}</div>
+        <div class="sr-info">
+          <div class="sr-name-line">
+            <span class="sr-name">${asset.name}</span>
+            ${isHeld?'<span class="sr-held-badge">持仓</span>':''}
+            <span class="sr-right-top">${rightTop}</span>
+          </div>
+          <div class="sr-sub-line">
+            <span class="sr-sub-text">${subLine}</span>
+            <span class="sr-right-bottom">${rightBottom}</span>
+          </div>
         </div>
-        <span class="asset-search-type${isHeld ? ' held' : ''}">${isHeld ? '已持仓' : '新资产'}</span>
       </div>
     `;
   }).join('');
