@@ -1561,6 +1561,209 @@ body {
 #historyTransactionsModal .history-sheet-search {
   margin:12px 16px;
 }
+/* 记笔记半弹框 */
+#noteInputModal .record-sheet {
+  width:96% !important;
+  max-width:96% !important;
+}
+#noteInputModal .sheet-body.history-sheet-body {
+  padding:0 !important;
+}
+.note-input-body {
+  padding:16px 16px 24px;
+  overflow-y:auto;
+  max-height:calc(88vh - 100px);
+  scrollbar-width:none;
+}
+.note-input-body::-webkit-scrollbar { display:none; }
+.note-input-body .insight-textarea {
+  width:100%;
+  min-height:120px;
+  border:none;
+  background:var(--input-bg);
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:14px;
+  font-family:var(--font-body);
+  color:var(--text);
+  resize:none;
+  outline:none;
+  box-sizing:border-box;
+  line-height:1.6;
+}
+.note-input-body .insight-textarea::placeholder { color:var(--text-muted); }
+.note-input-body .insight-actions {
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+}
+.note-input-body .trash-btn {
+  background:none;
+  border:none;
+  padding:8px;
+  cursor:pointer;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.note-input-body .trash-btn:active { background:var(--input-bg); }
+.note-input-body .trash-btn svg { width:18px; height:18px; fill:var(--text-muted); }
+.note-input-body .analyze-btn {
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:8px 22px;
+  font-size:14px;
+  font-weight:700;
+  font-family:var(--font-body);
+  cursor:pointer;
+}
+.note-input-body .analyze-btn:active { transform:scale(0.98); }
+.note-input-body .analysis-result {
+  margin-top:16px;
+  background:var(--card);
+  border-radius:12px;
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.note-input-body .analysis-header-bar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 16px;
+  border-bottom:1px solid rgba(164,74,63,0.06);
+}
+.note-input-body .analysis-body { padding:16px; }
+.note-input-body .analysis-summary {
+  font-size:13px;
+  line-height:1.7;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.note-input-body .analysis-tags {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:14px;
+}
+.note-input-body .analysis-field-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+.note-input-body .analysis-field {
+  background:var(--input-bg);
+  border-radius:8px;
+  padding:10px 12px;
+}
+.note-input-body .analysis-field span {
+  display:block;
+  color:var(--text-muted);
+  font-size:11px;
+  margin-bottom:4px;
+}
+.note-input-body .analysis-field strong {
+  display:block;
+  color:var(--text);
+  font-size:13px;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.note-input-body .analysis-linked {
+  background:var(--input-bg);
+  border-radius:8px;
+  padding:12px;
+}
+.note-input-body .analysis-linked-title {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-bottom:8px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-weight:500;
+}
+.note-input-body .analysis-next-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.note-input-body .analysis-action-btn {
+  border:none;
+  border-radius:14px;
+  padding:12px 10px;
+  font-size:13px;
+  font-weight:700;
+  font-family:var(--font-body);
+  cursor:pointer;
+}
+.note-input-body .analysis-action-btn.primary {
+  background:var(--brand);
+  color:#fff;
+}
+.note-input-body .analysis-action-btn.secondary {
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
+}
+.note-input-body .analysis-action-btn:active { transform:scale(0.98); }
+.note-input-history-entry {
+  margin-top:16px;
+}
+.note-input-history-entry .history-entry-btn {
+  width:100%;
+  padding:14px 16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  font-family:var(--font-body);
+}
+.note-input-history-entry .history-entry-btn:active { background:var(--input-bg); }
+.note-input-history-entry .history-entry-left {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.note-input-history-entry .history-entry-left svg {
+  width:20px;
+  height:20px;
+  fill:var(--brand);
+}
+.note-input-history-entry .history-entry-text { text-align:left; }
+.note-input-history-entry .history-entry-title {
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+}
+.note-input-history-entry .history-entry-sub {
+  font-size:12px;
+  color:var(--text-muted);
+  margin-top:2px;
+}
+.note-input-history-entry .history-entry-right {
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.note-input-history-entry .history-entry-count {
+  font-size:13px;
+  font-weight:600;
+  color:var(--brand);
+}
+.note-input-history-entry .history-entry-arrow {
+  font-size:14px;
+  color:var(--text-muted);
+}
 .history-sheet-search {
   display:flex;
   align-items:center;
@@ -4276,6 +4479,62 @@ body {
     </div>
   </div>
 
+  <!-- 记笔记半弹框 -->
+  <div class="modal-overlay" id="noteInputModal" onclick="if(event.target===this) closeNoteInputSheet()">
+    <div class="record-sheet" onclick="event.stopPropagation()">
+      <div class="record-sheet-header">
+        <div class="sheet-title">
+          <span class="sheet-name">记笔记</span>
+        </div>
+        <div class="sheet-header-actions">
+          <button class="sheet-save-btn" onclick="closeNoteInputSheet()">完成</button>
+        </div>
+      </div>
+      <div class="sheet-body history-sheet-body">
+        <div class="note-input-body">
+          <textarea class="insight-textarea" id="sheetInsightInput" placeholder="粘贴文章、输入观点或链接..."></textarea>
+          <div class="insight-actions">
+            <button class="trash-btn" onclick="clearSheetInsightInput()">
+              <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
+            <button class="analyze-btn" onclick="analyzeSheetText()">分析</button>
+          </div>
+          <div class="analysis-result" id="sheetAnalysisResult" style="display:none;">
+            <div class="analysis-header-bar">
+              <span style="font-family:var(--font-display);font-weight:600;font-size:16px;">分析结果</span>
+              <span class="analysis-type-badge" id="sheetArticleType">行业研究</span>
+            </div>
+            <div class="analysis-body">
+              <div class="analysis-summary" id="sheetAnalysisSummary"></div>
+              <div class="analysis-tags" id="sheetAnalysisTags"></div>
+              <div class="analysis-field-grid" id="sheetAnalysisFields"></div>
+              <div class="analysis-linked" id="sheetAnalysisLinked"></div>
+              <div class="analysis-next-actions">
+                <button class="analysis-action-btn primary" onclick="saveSheetAnalysisToNote()">存入笔记</button>
+                <button class="analysis-action-btn secondary" onclick="openRecordSheet('add')">新增资产</button>
+              </div>
+            </div>
+          </div>
+          <div class="note-input-history-entry">
+            <button class="history-entry-btn" onclick="openHistoryNotesSheet()">
+              <div class="history-entry-left">
+                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                <div class="history-entry-text">
+                  <div class="history-entry-title">历史笔记</div>
+                  <div class="history-entry-sub">回看已存入的决策信号</div>
+                </div>
+              </div>
+              <div class="history-entry-right">
+                <span class="history-entry-count" id="sheetNoteCount">3</span>
+                <span class="history-entry-arrow">›</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Tab Bar -->
   <div class="tab-bar">
     <div class="tab-item active" onclick="switchTab('portfolio')">
@@ -5132,10 +5391,121 @@ function deleteNote(id) {
 }
 
 function openInsightInput() {
-  switchTab('insights');
+  document.getElementById('noteInputModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  // 同步 insights 页 textarea 内容到 sheet
+  const src = document.getElementById('insightInput');
+  const dst = document.getElementById('sheetInsightInput');
+  if (src && dst) dst.value = src.value;
+  // 同步分析结果状态
+  const srcResult = document.getElementById('analysisResult');
+  const dstResult = document.getElementById('sheetAnalysisResult');
+  if (srcResult && dstResult) {
+    dstResult.style.display = srcResult.classList.contains('show') ? 'block' : 'none';
+  }
+  // 更新笔记数量
+  const count = NOTES_DEMO_DATA.length;
+  document.getElementById('sheetNoteCount').textContent = count;
   setTimeout(() => {
-    document.getElementById('insightInput')?.focus();
+    document.getElementById('sheetInsightInput')?.focus();
   }, 250);
+}
+
+function closeNoteInputSheet() {
+  document.getElementById('noteInputModal').classList.remove('show');
+  document.body.style.overflow = '';
+  // 同步 sheet textarea 内容回 insights 页
+  const src = document.getElementById('sheetInsightInput');
+  const dst = document.getElementById('insightInput');
+  if (src && dst) dst.value = src.value;
+  // 同步分析结果状态
+  const srcResult = document.getElementById('sheetAnalysisResult');
+  const dstResult = document.getElementById('analysisResult');
+  if (srcResult && dstResult) {
+    if (srcResult.style.display !== 'none') {
+      dstResult.classList.add('show');
+    } else {
+      dstResult.classList.remove('show');
+    }
+  }
+}
+
+function clearSheetInsightInput() {
+  const input = document.getElementById('sheetInsightInput');
+  if (input) input.value = '';
+  document.getElementById('sheetAnalysisResult').style.display = 'none';
+}
+
+function analyzeSheetText() {
+  const input = document.getElementById('sheetInsightInput');
+  if (!input.value.trim()) {
+    showToast('请输入内容');
+    return;
+  }
+  // 填充分析结果
+  document.getElementById('sheetAnalysisSummary').textContent = 'AI芯片需求持续扩张，国产替代进程加速。半导体行业景气度上行，关注龙头企业。';
+  document.getElementById('sheetAnalysisTags').innerHTML = '<span class="tag tag-up">看多</span><span class="tag">半导体</span><span class="tag">成长</span>';
+  document.getElementById('sheetAnalysisFields').innerHTML = `
+    <div class="analysis-field"><span>发文时间</span><strong>2026-06-18</strong></div>
+    <div class="analysis-field"><span>作者</span><strong>鸡</strong></div>
+    <div class="analysis-field"><span>行业/公司</span><strong>半导体 / 中芯国际</strong></div>
+    <div class="analysis-field"><span>方向</span><strong>看多</strong></div>
+    <div class="analysis-field"><span>预期幅度</span><strong>+12%</strong></div>
+    <div class="analysis-field"><span>兑现时间</span><strong>3-6个月</strong></div>
+  `;
+  document.getElementById('sheetAnalysisLinked').innerHTML = `
+    <div class="analysis-linked-title">关联资产</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;">
+      <span style="font-size:14px;font-weight:500;">中芯国际 · 未持仓</span>
+      <span style="font-size:14px;font-weight:600;color:var(--positive);">看多 +12%</span>
+    </div>
+  `;
+  document.getElementById('sheetAnalysisResult').style.display = 'block';
+  showToast('分析完成');
+}
+
+function saveSheetAnalysisToNote() {
+  const existing = document.getElementById('analysisSavedNote');
+  if (existing) {
+    existing.classList.add('open');
+    showToast('已在历史笔记中');
+    return;
+  }
+  const notesList = document.getElementById('notesHistoryList');
+  if (!notesList) return;
+  const item = document.createElement('div');
+  item.className = 'history-item open';
+  item.id = 'analysisSavedNote';
+  item.dataset.historyId = 'history-analysis';
+  item.setAttribute('onclick', 'toggleHistoryItem(this)');
+  item.innerHTML = `
+    <div class="history-item-header">
+      <div class="history-title-row">
+        <span class="history-item-title">半导体：AI算力扩张与国产替代</span>
+        <span class="history-item-date">刚刚</span>
+      </div>
+      <div class="history-tags-preview">
+        <span class="history-mini-tag up">看多</span>
+        <span class="history-mini-tag">半导体</span>
+        <span class="history-asset-pill">苹果公司等 2 项</span>
+      </div>
+    </div>
+    <div class="history-item-expand">
+      <div class="history-detail" style="padding-top:16px;">
+        <div style="margin-bottom:12px;">
+          <span class="tag tag-up">看多</span>
+          <span class="tag">+12%</span>
+          <span class="tag">3-6个月</span>
+        </div>
+        <div style="font-size:13px;line-height:1.7;color:var(--text);">AI芯片需求持续扩张，国产替代进程加速。半导体行业景气度上行，关注龙头企业。</div>
+      </div>
+    </div>
+  `;
+  notesList.insertBefore(item, notesList.firstChild);
+  // 更新计数
+  const count = notesList.querySelectorAll('.history-item').length;
+  document.getElementById('sheetNoteCount').textContent = count;
+  showToast('已存入笔记');
 }
 
 function openNoteDetail(id) {
