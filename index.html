@@ -795,40 +795,221 @@ body {
 .kline-chart-svg {
   display:block;
   width:100%;
-  height:76px;
+  height:180px;
 }
 .kline-grid {
   stroke:rgba(164,74,63,0.08);
-  stroke-width:0.7;
+  stroke-width:0.6;
 }
 .kline-axis-label {
-  font-size:7px;
+  font-size:5px;
   fill:var(--text-muted);
   font-family:var(--font-body);
   letter-spacing:0.04em;
 }
 .kline-value-label {
-  font-size:7px;
+  font-size:5px;
   font-weight:700;
   font-family:var(--font-body);
+}
+.kline-step-line {
+  fill:none;
+  stroke:#2a2a2a;
+  stroke-width:0.9;
+  stroke-linecap:round;
+  stroke-linejoin:miter;
+}
+.kline-step-dot {
+  fill:#2a2a2a;
+}
+.kline-ref-line {
+  stroke:var(--negative);
+  stroke-width:0.5;
+  stroke-dasharray:2 2;
+  opacity:0.7;
 }
 .return-line {
   fill:none;
   stroke:var(--brand-accent);
-  stroke-width:1.35;
+  stroke-width:0.9;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
 .return-dot {
   fill:var(--brand-accent);
   stroke:#fff;
-  stroke-width:0.8;
+  stroke-width:0.4;
 }
 .return-label {
-  font-size:7px;
+  font-size:5px;
   font-weight:700;
   font-family:var(--font-body);
   fill:var(--brand-accent);
+}
+.stats-summary-card {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  margin:0 16px 12px;
+  background:linear-gradient(180deg, #fff 0%, #faf6f3 100%);
+  border-radius:14px;
+  border:1px solid rgba(164,74,63,0.08);
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.stats-summary-card:active {
+  transform:scale(0.98);
+  background:rgba(164,74,63,0.04);
+}
+.stats-summary-info {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  flex:1;
+  min-width:0;
+}
+.stats-summary-date {
+  font-size:12px;
+  color:var(--text-muted);
+  font-variant-numeric:lining-nums;
+}
+.stats-summary-net {
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  font-variant-numeric:lining-nums;
+  letter-spacing:-0.01em;
+}
+.stats-summary-debt {
+  font-size:12px;
+  color:var(--text-muted);
+  font-variant-numeric:lining-nums;
+}
+.stats-summary-arrow {
+  width:20px;
+  height:20px;
+  fill:var(--text-muted);
+  flex-shrink:0;
+}
+.stats-chart-wrap {
+  margin:0 16px 10px;
+}
+.stats-range-bar {
+  position:relative;
+  display:flex;
+  margin:0 16px 14px;
+  background:var(--input-bg);
+  border-radius:12px;
+  padding:3px;
+}
+.stats-range-indicator {
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:calc(25% - 2.25px);
+  height:calc(100% - 6px);
+  background:var(--card);
+  border-radius:9px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  transition:transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94);
+  z-index:0;
+}
+.stats-range {
+  flex:1;
+  position:relative;
+  z-index:1;
+  background:transparent;
+  border:none;
+  padding:7px 0;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:color 0.3s;
+  font-family:var(--font-body);
+}
+.stats-range.active {
+  color:var(--text);
+  font-weight:600;
+}
+.home-quick-actions {
+  display:flex;
+  gap:10px;
+  margin:0 16px 12px;
+}
+.home-quick-btn {
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:11px 12px;
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:12px;
+  color:var(--text);
+  font-size:13px;
+  font-weight:500;
+  font-family:var(--font-body);
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.home-quick-btn svg {
+  width:16px;
+  height:16px;
+  fill:var(--brand);
+}
+.home-quick-btn:active {
+  transform:scale(0.97);
+  background:rgba(164,74,63,0.06);
+}
+.prediction-action-btn {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-top:12px;
+  width:100%;
+  cursor:pointer;
+  font-family:var(--font-body);
+  transition:all 0.2s;
+}
+.prediction-action-btn:active {
+  transform:scale(0.98);
+  background:rgba(164,74,63,0.04);
+}
+.prediction-action-left {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text);
+  font-size:13px;
+  font-weight:500;
+}
+.prediction-action-left svg {
+  width:16px;
+  height:16px;
+  fill:var(--text-secondary);
+}
+.prediction-action-count {
+  font-size:12px;
+  color:var(--text-muted);
+  font-variant-numeric:lining-nums;
+}
+.me-menu-count {
+  font-size:11px;
+  color:var(--text-muted);
+  font-weight:500;
+  background:var(--input-bg);
+  padding:1px 8px;
+  border-radius:10px;
+  margin-left:auto;
+  margin-right:8px;
+  font-variant-numeric:lining-nums;
 }
 
 /* Record Page */
@@ -2791,48 +2972,45 @@ body {
       </div>
     </div>
 
-    <div class="stats-panel">
-      <div class="stats-panel-header">
-        <span class="stats-panel-title">概览</span>
-        <div class="scope-info-wrap">
-          <button class="scope-info-btn" onclick="toggleScopeTip(event)" aria-label="资产数据说明">!</button>
-          <div class="scope-tip" id="scopeTip">资产数据以北京时间 13:00 为分界线计算。</div>
+    <div class="stats-panel" id="homeStatsPanel">
+      <div class="stats-summary-card" onclick="showToast('查看净资产构成')">
+        <div class="stats-summary-info">
+          <span class="stats-summary-date" id="statsSummaryDate">2026/5/21</span>
+          <span class="stats-summary-net">我的净资产 ¥1,236,600</span>
+          <span class="stats-summary-debt">负债 ¥1,005,000</span>
         </div>
+        <svg class="stats-summary-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </div>
-      <div class="stats-grid">
-        <div class="stats-item">
-          <div class="stats-value" id="dailyAssetDiff">+2,340.50</div>
-          <div class="stats-label">资产变动</div>
-          <div class="stats-trend up">总资产</div>
-        </div>
-        <div class="stats-item">
-          <div class="stats-value" id="dailyAssetYield">+1.86%</div>
-          <div class="stats-label">收益率</div>
-          <div class="stats-trend up">当前</div>
-        </div>
-        <div class="stats-item">
-          <div class="stats-value" id="prevOneValue">126,115</div>
-          <div class="stats-label">前值</div>
-          <div class="stats-trend neutral">T-1</div>
-        </div>
-        <div class="stats-item">
-          <div class="stats-value" id="todayOneValue">128,456</div>
-          <div class="stats-label">当前</div>
-          <div class="stats-trend neutral">T</div>
-        </div>
-      </div>
-      <div class="stats-kline">
-        <div class="chart-legend">
-          <span class="legend-item"><i class="legend-mark"></i>K线</span>
-          <span class="legend-item"><i class="legend-mark return"></i>收益率</span>
-        </div>
-        <svg class="kline-chart-svg" viewBox="0 0 120 72" preserveAspectRatio="none" aria-label="总资产K线">
-          <line class="kline-grid" x1="6" y1="18" x2="114" y2="18"/>
-          <line class="kline-grid" x1="6" y1="36" x2="114" y2="36"/>
-          <line class="kline-grid" x1="6" y1="54" x2="114" y2="54"/>
-          <g id="totalAssetKlineSeries"></g>
+      <div class="stats-chart-wrap">
+        <svg class="kline-chart-svg" viewBox="0 0 120 96" preserveAspectRatio="none" aria-label="总资产K线">
+          <g id="klineYAxis"></g>
+          <g id="klineXAxis"></g>
+          <line class="kline-grid" x1="14" y1="22" x2="114" y2="22"/>
+          <line class="kline-grid" x1="14" y1="50" x2="114" y2="50"/>
+          <line class="kline-grid" x1="14" y1="78" x2="114" y2="78"/>
+          <g id="klineRefLine"></g>
+          <g id="klineStepSeries"></g>
+          <g id="klineReturnSeries"></g>
         </svg>
       </div>
+      <div class="stats-range-bar" id="statsRangeBar">
+        <div class="stats-range-indicator" id="statsRangeIndicator"></div>
+        <button class="stats-range active" data-range="30d" onclick="setKlineRange('30d')">30天</button>
+        <button class="stats-range" data-range="6m" onclick="setKlineRange('6m')">6月</button>
+        <button class="stats-range" data-range="1y" onclick="setKlineRange('1y')">1年</button>
+        <button class="stats-range" data-range="custom" onclick="setKlineRange('custom')">自定义</button>
+      </div>
+    </div>
+
+    <div class="home-quick-actions">
+      <button class="home-quick-btn" onclick="openRecordSheet()">
+        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
+        <span>记资产</span>
+      </button>
+      <button class="home-quick-btn" onclick="openInsightInput()">
+        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <span>记笔记</span>
+      </button>
     </div>
 
     <div class="holdings-toolbar">
@@ -3166,242 +3344,51 @@ body {
       <span class="me-sync-meta" id="meSyncTime">最近同步 13:00 · 静态高保真 Demo</span>
     </div>
 
-    <div class="me-tabbar" id="meTabbar">
-      <div class="me-tab-indicator" id="meTabIndicator"></div>
-      <button class="me-tab active" data-tab="assets" onclick="switchMeTab('assets')">记资产</button>
-      <button class="me-tab" data-tab="notes" onclick="switchMeTab('notes')">记笔记</button>
-    </div>
-
-    <!-- 记资产面板 -->
-    <div class="me-pane" id="mePaneAssets">
-      <div class="me-section">
-        <div class="me-section-title">账户</div>
-        <div class="me-menu">
-          <div class="me-menu-item" onclick="openAccountModal()">
-            <div class="me-menu-left">
-              <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-              <span class="me-menu-label">管理账户</span>
-            </div>
-            <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    <div class="me-section">
+      <div class="me-section-title">账户与数据</div>
+      <div class="me-menu">
+        <div class="me-menu-item" onclick="openAccountModal()">
+          <div class="me-menu-left">
+            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="me-menu-label">管理账户</span>
           </div>
+          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
-      </div>
-
-      <div class="me-section">
-        <div class="me-section-title">交易记录 <span class="me-section-count">12 笔</span></div>
-        <div class="me-menu">
-          <div class="me-menu-item" onclick="openRecordSheet()">
-            <div class="me-menu-left">
-              <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
-              <span class="me-menu-label">新增交易</span>
-            </div>
-            <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        <div class="me-menu-item" onclick="openTransactionHistory()">
+          <div class="me-menu-left">
+            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            <span class="me-menu-label">交易记录</span>
+            <span class="me-menu-count">12</span>
           </div>
+          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
-        <div class="txn-list">
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">贵州茅台</span>
-              <span class="txn-time">2026-05-21</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type buy">买入</span>
-              <span class="txn-qty">100 份</span>
-              <span class="txn-amount up">+¥191,600.00</span>
-            </div>
+        <div class="me-menu-item" onclick="openNoteHistory()">
+          <div class="me-menu-left">
+            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span class="me-menu-label">历史笔记</span>
+            <span class="me-menu-count">3</span>
           </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">腾讯控股</span>
-              <span class="txn-time">2026-05-15</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type buy">买入</span>
-              <span class="txn-qty">100 份</span>
-              <span class="txn-amount up">+¥38,200.00</span>
-            </div>
-          </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">苹果公司</span>
-              <span class="txn-time">2026-05-08</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type buy">买入</span>
-              <span class="txn-qty">12 份</span>
-              <span class="txn-amount up">+¥17,040.00</span>
-            </div>
-          </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">易方达消费</span>
-              <span class="txn-time">2026-04-22</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type sell">卖出</span>
-              <span class="txn-qty">20 份</span>
-              <span class="txn-amount down">-¥98.00</span>
-            </div>
-          </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">贵州茅台</span>
-              <span class="txn-time">2026-04-10</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type sell">卖出</span>
-              <span class="txn-qty">10 份</span>
-              <span class="txn-amount down">-¥18,200.00</span>
-            </div>
-          </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">易方达消费</span>
-              <span class="txn-time">2026-03-18</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type buy">买入</span>
-              <span class="txn-qty">50 份</span>
-              <span class="txn-amount up">+¥245.00</span>
-            </div>
-          </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">苹果公司</span>
-              <span class="txn-time">2026-03-05</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type buy">买入</span>
-              <span class="txn-qty">5 份</span>
-              <span class="txn-amount up">+¥7,100.00</span>
-            </div>
-          </div>
-          <div class="txn-item">
-            <div class="txn-main">
-              <span class="txn-asset">腾讯控股</span>
-              <span class="txn-time">2026-02-22</span>
-            </div>
-            <div class="txn-meta">
-              <span class="txn-type buy">买入</span>
-              <span class="txn-qty">50 份</span>
-              <span class="txn-amount up">+¥19,100.00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="me-section">
-        <div class="me-section-title">资产管理 <span class="me-section-count">4 项</span></div>
-        <div class="me-menu">
-          <div class="me-menu-item" onclick="openRecordSheet('add')">
-            <div class="me-menu-left">
-              <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
-              <span class="me-menu-label">新增资产</span>
-            </div>
-            <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-          </div>
-        </div>
-        <div class="me-asset-list">
-          <div class="me-asset-item" data-code="600519">
-            <div class="me-asset-info">
-              <span class="me-asset-name">贵州茅台</span>
-              <span class="me-asset-code">600519 · 股票</span>
-            </div>
-            <div class="me-asset-actions">
-              <button class="me-asset-btn" onclick="openAssetSheet('600519')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteAsset('600519')">删除</button>
-            </div>
-          </div>
-          <div class="me-asset-item" data-code="00700">
-            <div class="me-asset-info">
-              <span class="me-asset-name">腾讯控股</span>
-              <span class="me-asset-code">00700 · 股票</span>
-            </div>
-            <div class="me-asset-actions">
-              <button class="me-asset-btn" onclick="openAssetSheet('00700')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteAsset('00700')">删除</button>
-            </div>
-          </div>
-          <div class="me-asset-item" data-code="110022">
-            <div class="me-asset-info">
-              <span class="me-asset-name">易方达消费</span>
-              <span class="me-asset-code">110022 · 基金</span>
-            </div>
-            <div class="me-asset-actions">
-              <button class="me-asset-btn" onclick="openAssetSheet('110022')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteAsset('110022')">删除</button>
-            </div>
-          </div>
-          <div class="me-asset-item" data-code="AAPL">
-            <div class="me-asset-info">
-              <span class="me-asset-name">苹果公司</span>
-              <span class="me-asset-code">AAPL · 股票</span>
-            </div>
-            <div class="me-asset-actions">
-              <button class="me-asset-btn" onclick="openAssetSheet('AAPL')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteAsset('AAPL')">删除</button>
-            </div>
-          </div>
+          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
       </div>
     </div>
 
-    <!-- 记笔记面板 -->
-    <div class="me-pane" id="mePaneNotes" style="display:none;">
-      <div class="me-section">
-        <div class="me-section-title">笔记管理 <span class="me-section-count">3 条</span></div>
-        <div class="me-menu">
-          <div class="me-menu-item" onclick="openInsightInput()">
-            <div class="me-menu-left">
-              <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
-              <span class="me-menu-label">新增笔记</span>
-            </div>
-            <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    <div class="me-section">
+      <div class="me-section-title">个人信息</div>
+      <div class="me-menu">
+        <div class="me-menu-item" onclick="openPersonalInfo()">
+          <div class="me-menu-left">
+            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span class="me-menu-label">个人信息</span>
           </div>
+          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
-        <div class="me-note-list">
-          <div class="me-note-item" data-id="history-ai-chip">
-            <div class="me-note-head">
-              <span class="me-note-title">半导体：AI芯片需求持续增长</span>
-              <span class="me-note-date">05-20</span>
-            </div>
-            <div class="me-note-tags">
-              <span class="history-mini-tag up">看多</span>
-              <span class="history-mini-tag">半导体</span>
-            </div>
-            <div class="me-note-actions">
-              <button class="me-asset-btn" onclick="openNoteDetail('history-ai-chip')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteNote('history-ai-chip')">删除</button>
-            </div>
+        <div class="me-menu-item" onclick="openPrivacyPolicy()">
+          <div class="me-menu-left">
+            <svg class="me-menu-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            <span class="me-menu-label">隐私政策</span>
           </div>
-          <div class="me-note-item" data-id="history-consumption">
-            <div class="me-note-head">
-              <span class="me-note-title">消费板块估值回归，白酒龙头稳定</span>
-              <span class="me-note-date">05-18</span>
-            </div>
-            <div class="me-note-tags">
-              <span class="history-mini-tag down">观望</span>
-              <span class="history-mini-tag">消费</span>
-            </div>
-            <div class="me-note-actions">
-              <button class="me-asset-btn" onclick="openNoteDetail('history-consumption')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteNote('history-consumption')">删除</button>
-            </div>
-          </div>
-          <div class="me-note-item" data-id="history-hk-tech">
-            <div class="me-note-head">
-              <span class="me-note-title">加息预期升温，港股科技承压</span>
-              <span class="me-note-date">05-15</span>
-            </div>
-            <div class="me-note-tags">
-              <span class="history-mini-tag down">谨慎</span>
-              <span class="history-mini-tag">金融</span>
-            </div>
-            <div class="me-note-actions">
-              <button class="me-asset-btn" onclick="openNoteDetail('history-hk-tech')">查看</button>
-              <button class="me-asset-btn danger" onclick="deleteNote('history-hk-tech')">删除</button>
-            </div>
-          </div>
+          <svg class="me-menu-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </div>
       </div>
     </div>
@@ -3681,7 +3668,7 @@ body {
 
       <div class="prediction-panel" id="assetNotesSection">
         <div class="panel-title-row">
-          <span class="panel-title">笔记预测价</span>
+          <span class="panel-title">笔记预测</span>
           <div class="notes-position-ratio" id="notesPositionRatio">
             <span class="ratio-bull">看多 0</span>
             <span class="ratio-vs">:</span>
@@ -3691,6 +3678,13 @@ body {
           </div>
         </div>
         <div id="predictionList"></div>
+        <button class="prediction-action-btn" onclick="openAssetTransactions()">
+          <div class="prediction-action-left">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            <span>交易记录</span>
+          </div>
+          <span class="prediction-action-count" id="assetTxnCount">8 笔 ›</span>
+        </button>
         <div class="notes-warning" id="notesWarning" style="display:none;">
           <span class="warning-icon">⚠️</span>
           <span class="warning-text">当前决策与笔记观点存在冲突</span>
@@ -3722,6 +3716,56 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+function switchMeTab(tabName) { /* 已废弃：我的页面改为平铺菜单 */ }
+
+function setKlineRange(range) {
+  const ranges = ['30d', '6m', '1y', 'custom'];
+  const buttons = document.querySelectorAll('.stats-range');
+  buttons.forEach(b => b.classList.toggle('active', b.dataset.range === range));
+  const idx = ranges.indexOf(range);
+  const indicator = document.getElementById('statsRangeIndicator');
+  if (indicator && idx >= 0) {
+    indicator.style.transform = `translateX(${idx * 100}%)`;
+  }
+  // 根据范围切片数据
+  const sliceMap = { '30d': 30, '6m': 180, '1y': 365, 'custom': 30 };
+  const days = sliceMap[range] || 30;
+  const sliced = totalAssetKlineDays.slice(-Math.min(days, totalAssetKlineDays.length));
+  updateTotalAssetKline(sliced);
+  if (range === 'custom') {
+    if (typeof showToast === 'function') showToast('自定义时间范围（演示）');
+  }
+}
+
+function openAssetTransactions() {
+  // 简单方案：toast 提示 + 后续可展开全屏交易记录视图
+  const code = (typeof activeAssetData !== 'undefined' && activeAssetData?.code) || document.getElementById('assetDetailCode')?.textContent || '该资产';
+  if (typeof showToast === 'function') showToast(`查看 ${code} 的交易记录（共 8 笔）`);
+}
+
+function openTransactionHistory() {
+  switchTab('insights');
+  setTimeout(() => {
+    if (typeof showToast === 'function') showToast('交易记录（演示）');
+  }, 200);
+}
+
+function openNoteHistory() {
+  switchTab('insights');
+  setTimeout(() => {
+    const history = document.querySelector('.insight-history');
+    if (history) history.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 250);
+}
+
+function openPersonalInfo() {
+  if (typeof showToast === 'function') showToast('个人信息（演示）');
+}
+
+function openPrivacyPolicy() {
+  if (typeof showToast === 'function') showToast('隐私政策（演示）');
+}
+
 function switchTab(tabName) {
   if (currentTab === tabName) return;
 
@@ -3738,17 +3782,7 @@ function switchTab(tabName) {
   currentTab = tabName;
 }
 
-function switchMeTab(tabName) {
-  const tabs = document.querySelectorAll('.me-tab');
-  tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
-  document.getElementById('mePaneAssets').style.display = tabName === 'assets' ? 'block' : 'none';
-  document.getElementById('mePaneNotes').style.display = tabName === 'notes' ? 'block' : 'none';
-  const indicator = document.getElementById('meTabIndicator');
-  const activeIdx = Array.from(tabs).findIndex(t => t.classList.contains('active'));
-  if (indicator && activeIdx >= 0) {
-    indicator.style.transform = `translateX(${activeIdx * 100}%)`;
-  }
-}
+function switchMeTab(tabName) { /* 已废弃：我的页面改为平铺菜单（保留为空以避免引用报错） */ }
 
 function deleteAsset(code) {
   if (confirm(`确认删除 ${code}？该操作不可撤销。`)) {
@@ -4432,9 +4466,135 @@ function updateTotalAssetSummary() {
 }
 
 function updateTotalAssetKline(days) {
-  const series = document.getElementById('totalAssetKlineSeries');
-  if (!series || !Array.isArray(days) || days.length === 0) return;
+  // 兼容旧调用：若使用 #totalAssetKlineSeries，回退到旧版绘制
+  const oldSeries = document.getElementById('totalAssetKlineSeries');
+  if (oldSeries && !document.getElementById('klineStepSeries')) {
+    drawKlineLegacy(oldSeries, days);
+    return;
+  }
+  const stepSeries = document.getElementById('klineStepSeries');
+  const retSeries = document.getElementById('klineReturnSeries');
+  const refLineGroup = document.getElementById('klineRefLine');
+  const yAxis = document.getElementById('klineYAxis');
+  const xAxis = document.getElementById('klineXAxis');
+  if (!stepSeries || !Array.isArray(days) || days.length === 0) return;
 
+  const top = 18;
+  const bottom = 82;
+  const values = days.flatMap(d => [Number(d.previousOne || 0), Number(d.todayOne || 0)]);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const padding = Math.max((maxValue - minValue) * 0.15, maxValue * 0.002);
+  const range = Math.max(maxValue - minValue + padding * 2, 1);
+  const yForValue = (v) => bottom - ((v - minValue + padding) / range) * (bottom - top);
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const chartLeft = 18;
+  const chartRight = 118;
+  const slot = (chartRight - chartLeft) / Math.max(days.length, 1);
+
+  const make = (tag, attrs) => {
+    const el = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    return el;
+  };
+
+  [stepSeries, retSeries, refLineGroup, yAxis, xAxis].forEach(g => g && (g.innerHTML = ''));
+
+  // Y 轴刻度
+  const yTicks = 3;
+  for (let i = 0; i < yTicks; i++) {
+    const v = minValue - padding + (range * i) / (yTicks - 1);
+    const y = yForValue(v);
+    const text = make('text', { class: 'kline-axis-label', x: 13, y: y.toFixed(2), 'text-anchor': 'end' });
+    text.textContent = formatKlineValue(v);
+    yAxis.appendChild(text);
+  }
+
+  // X 轴刻度
+  const xLabelCount = Math.min(days.length, 5);
+  for (let i = 0; i < xLabelCount; i++) {
+    const idx = Math.round((i / (xLabelCount - 1)) * (days.length - 1));
+    const x = chartLeft + slot * idx + slot / 2;
+    const text = make('text', { class: 'kline-axis-label', x: x.toFixed(2), y: '93', 'text-anchor': 'middle' });
+    text.textContent = days[idx].label;
+    xAxis.appendChild(text);
+  }
+
+  // 阶梯线（净资产）—— 黑色阶梯折线
+  const points = days.map((d, i) => {
+    const v = Number(d.todayOne || 0);
+    return [chartLeft + slot * i + slot / 2, yForValue(v)];
+  });
+
+  let pathD = '';
+  for (let i = 0; i < points.length; i++) {
+    if (i === 0) pathD += `M ${points[i][0].toFixed(2)} ${points[i][1].toFixed(2)}`;
+    else {
+      const prevX = points[i - 1][0];
+      pathD += ` L ${prevX.toFixed(2)} ${points[i][1].toFixed(2)} L ${points[i][0].toFixed(2)} ${points[i][1].toFixed(2)}`;
+    }
+  }
+  stepSeries.appendChild(make('path', { class: 'kline-step-line', d: pathD }));
+  // 阶梯起点圆点
+  if (points[0]) {
+    stepSeries.appendChild(make('circle', {
+      class: 'kline-step-dot', cx: points[0][0].toFixed(2), cy: points[0][1].toFixed(2), r: '1.1'
+    }));
+  }
+
+  // 收益率线
+  const returns = days.map(d => {
+    const p = Number(d.previousOne || 0);
+    const c = Number(d.todayOne || 0);
+    return p ? ((c - p) / p) * 100 : 0;
+  });
+  const rMin = Math.min(...returns);
+  const rMax = Math.max(...returns);
+  const rPad = Math.max((rMax - rMin) * 0.25, 0.5);
+  const rRange = Math.max(rMax - rMin + rPad * 2, 1);
+  const yForReturn = (v) => bottom - ((v - rMin + rPad) / rRange) * (bottom - top);
+
+  const returnPts = days.map((d, i) => [chartLeft + slot * i + slot / 2, yForReturn(returns[i])]);
+  if (returnPts.length > 1) {
+    const d = returnPts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`).join(' ');
+    retSeries.appendChild(make('path', { class: 'return-line', d }));
+    returnPts.forEach(([x, y]) => {
+      retSeries.appendChild(make('circle', {
+        class: 'return-dot', cx: x.toFixed(2), cy: y.toFixed(2), r: '1.0'
+      }));
+    });
+    // 末端标记
+    const [lx, ly] = returnPts[returnPts.length - 1];
+    refLineGroup.appendChild(make('circle', {
+      class: 'return-dot', cx: lx.toFixed(2), cy: ly.toFixed(2), r: '1.8'
+    }));
+    // 标签
+    const label = make('text', {
+      class: 'return-label', x: (lx - 1).toFixed(2), y: Math.max(15, ly - 3).toFixed(2), 'text-anchor': 'end'
+    });
+    label.textContent = signedPercent(returns[returns.length - 1]);
+    refLineGroup.appendChild(label);
+  }
+
+  // 红色虚线参考线（穿过最右侧点）
+  if (returnPts.length > 0) {
+    const [lx, ly] = returnPts[returnPts.length - 1];
+    refLineGroup.appendChild(make('line', {
+      class: 'kline-ref-line', x1: lx.toFixed(2), y1: top, x2: lx.toFixed(2), y2: bottom
+    }));
+  }
+}
+
+function formatKlineValue(v) {
+  if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+  if (v >= 1000) return Math.round(v / 1000) + 'K';
+  return Math.round(v).toString();
+}
+
+// 旧版 K 线绘制（保留兼容）
+function drawKlineLegacy(series, days) {
+  if (!series || !Array.isArray(days) || days.length === 0) return;
   const upColor = '#A44A3F';
   const downColor = '#2E8B57';
   const flatColor = '#999999';
@@ -4456,9 +4616,7 @@ function updateTotalAssetKline(days) {
     Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
     return el;
   };
-
   series.innerHTML = '';
-
   const returns = days.map(day => {
     const previous = Number(day.previousOne || 0);
     const current = Number(day.todayOne || 0);
@@ -4470,7 +4628,6 @@ function updateTotalAssetKline(days) {
   const returnRange = Math.max(maxReturn - minReturn + returnPadding * 2, 1);
   const yForReturn = (value) => bottom - ((value - minReturn + returnPadding) / returnRange) * (bottom - top);
   const returnPoints = [];
-
   days.forEach((day, index) => {
     const openValue = Number(day.previousOne || 0);
     const closeValue = Number(day.todayOne || 0);
@@ -4486,69 +4643,9 @@ function updateTotalAssetKline(days) {
     const bodyY = naturalHeight < 3 ? bodyTop - 1.5 : bodyTop;
     const wickTop = Math.max(top - 1, bodyY - 3.5);
     const wickBottom = Math.min(bottom + 1, bodyY + bodyHeight + 3.5);
-
-    series.appendChild(makeSvg('line', {
-      x1: x.toFixed(2),
-      y1: wickTop.toFixed(2),
-      x2: x.toFixed(2),
-      y2: wickBottom.toFixed(2),
-      stroke: candleColor,
-      'stroke-width': '1.1',
-      'stroke-linecap': 'round'
-    }));
-    series.appendChild(makeSvg('rect', {
-      x: (x - bodyWidth / 2).toFixed(2),
-      y: bodyY.toFixed(2),
-      width: bodyWidth.toFixed(2),
-      height: bodyHeight.toFixed(2),
-      rx: '1.2',
-      fill: candleColor,
-      opacity: diff === 0 ? '0.38' : '0.9'
-    }));
-
-    if (index === 0 || index === days.length - 1) {
-      series.appendChild(makeSvg('text', {
-        class: 'kline-axis-label',
-        x: (x - 8).toFixed(2),
-        y: '65'
-      })).textContent = day.label;
-    }
-
-    if (index === days.length - 1) {
-      series.appendChild(makeSvg('text', {
-        class: 'kline-value-label',
-        x: '108',
-        y: Math.min(51, Math.max(23, closeY + 12)).toFixed(2),
-        fill: candleColor,
-        'text-anchor': 'end'
-      })).textContent = formatNumber(closeValue, 0);
-    }
+    series.appendChild(makeSvg('line', { x1: x.toFixed(2), y1: wickTop.toFixed(2), x2: x.toFixed(2), y2: wickBottom.toFixed(2), stroke: candleColor, 'stroke-width': '1.1', 'stroke-linecap': 'round' }));
+    series.appendChild(makeSvg('rect', { x: (x - bodyWidth / 2).toFixed(2), y: bodyY.toFixed(2), width: bodyWidth.toFixed(2), height: bodyHeight.toFixed(2), rx: '1.2', fill: candleColor, opacity: diff === 0 ? '0.38' : '0.9' }));
   });
-
-  if (returnPoints.length > 1) {
-    const pathData = returnPoints
-      .map(([x, y], index) => `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`)
-      .join(' ');
-    series.appendChild(makeSvg('path', {
-      class: 'return-line',
-      d: pathData
-    }));
-    returnPoints.forEach(([x, y]) => {
-      series.appendChild(makeSvg('circle', {
-        class: 'return-dot',
-        cx: x.toFixed(2),
-        cy: y.toFixed(2),
-        r: '1.55'
-      }));
-    });
-    const [lastX, lastY] = returnPoints[returnPoints.length - 1];
-    series.appendChild(makeSvg('text', {
-      class: 'return-label',
-      x: '112',
-      y: '11',
-      'text-anchor': 'end'
-    })).textContent = signedPercent(returns[returns.length - 1]);
-  }
 }
 
 function initializeAssetOrder() {
