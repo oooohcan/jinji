@@ -1546,9 +1546,13 @@ body {
   flex-shrink:0;
 }
 
-/* 历史笔记半弹框 */
-.history-sheet-body {
-  padding:0;
+/* 历史笔记半弹框：拉满宽度，仅留 2% 边距 */
+#historyNotesModal .record-sheet {
+  width:96% !important;
+  max-width:96% !important;
+}
+.sheet-body.history-sheet-body {
+  padding:0 !important;
 }
 .history-sheet-search {
   display:flex;
@@ -1589,7 +1593,7 @@ body {
 /* sheet 内历史笔记卡片：拉满宽度、保留圆角卡片样式 */
 .history-sheet-list .insight-history { margin:0; }
 .history-sheet-list .history-item {
-  margin:0 2px 8px;
+  margin:0 0 8px;
   border-radius:12px;
   box-shadow:0 1px 4px rgba(164,74,63,0.04);
   border:1px solid var(--border);
