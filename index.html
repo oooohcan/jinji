@@ -943,21 +943,22 @@ body {
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:6px;
-  padding:11px 12px;
+  gap:8px;
+  padding:16px 14px;
   background:var(--card);
   border:1px solid rgba(164,74,63,0.06);
-  border-radius:12px;
+  border-radius:14px;
   color:var(--text);
-  font-size:13px;
-  font-weight:500;
+  font-size:15px;
+  font-weight:600;
   font-family:var(--font-body);
   cursor:pointer;
   transition:all 0.2s;
+  font-variant-numeric:lining-nums;
 }
 .home-quick-btn svg {
-  width:16px;
-  height:16px;
+  width:20px;
+  height:20px;
   fill:var(--brand);
 }
 .home-quick-btn:active {
@@ -1010,6 +1011,302 @@ body {
   margin-left:auto;
   margin-right:8px;
   font-variant-numeric:lining-nums;
+}
+
+/* 子页面通用头 */
+.sub-page-header {
+  display:flex;
+  align-items:center;
+  padding:14px 16px 10px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:var(--bg);
+}
+.sub-page-back {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:var(--card);
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:all 0.2s;
+  flex-shrink:0;
+}
+.sub-page-back:active {
+  transform:scale(0.92);
+  background:var(--input-bg);
+}
+.sub-page-back svg {
+  width:20px;
+  height:20px;
+  fill:var(--text);
+}
+.sub-page-title {
+  flex:1;
+  text-align:center;
+  font-size:17px;
+  font-weight:600;
+  margin:0;
+  color:var(--text);
+  font-family:var(--font-body);
+  letter-spacing:-0.01em;
+}
+.sub-page-spacer {
+  width:36px;
+  flex-shrink:0;
+}
+
+/* 交易记录页 */
+.txn-page-search-wrap {
+  padding:0 16px 10px;
+}
+.txn-page-search {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--card);
+  border-radius:12px;
+  padding:10px 14px;
+}
+.txn-page-search svg {
+  width:18px;
+  height:18px;
+  fill:var(--text-muted);
+  flex-shrink:0;
+}
+.txn-page-search input {
+  flex:1;
+  border:none;
+  background:transparent;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  font-family:var(--font-body);
+}
+.txn-page-search input::placeholder {
+  color:var(--text-muted);
+}
+.txn-page-filters {
+  display:flex;
+  gap:8px;
+  padding:0 16px 12px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.txn-page-filters::-webkit-scrollbar {
+  display:none;
+}
+.txn-filter {
+  background:var(--card);
+  border:none;
+  border-radius:100px;
+  padding:6px 14px;
+  font-size:13px;
+  color:var(--text-secondary);
+  cursor:pointer;
+  transition:all 0.2s;
+  font-family:var(--font-body);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.txn-filter.active {
+  background:var(--brand);
+  color:#fff;
+  font-weight:600;
+}
+.txn-page-list {
+  padding:0 16px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.txn-page-section {
+  margin-bottom:6px;
+}
+.txn-page-date {
+  font-size:12px;
+  color:var(--text-muted);
+  margin:10px 4px 6px;
+  font-weight:500;
+}
+.txn-page-item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--card);
+  border-radius:12px;
+  padding:14px;
+  gap:12px;
+}
+.txn-page-item:active {
+  background:var(--input-bg);
+}
+.txn-page-left {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  flex:1;
+  min-width:0;
+}
+.txn-page-asset {
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+}
+.txn-page-asset .txn-page-code {
+  font-size:12px;
+  color:var(--text-muted);
+  font-weight:400;
+  margin-left:6px;
+}
+.txn-page-detail {
+  font-size:12px;
+  color:var(--text-muted);
+  display:flex;
+  gap:10px;
+}
+.txn-page-right {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:4px;
+  flex-shrink:0;
+}
+.txn-page-amount {
+  font-size:15px;
+  font-weight:700;
+  font-variant-numeric:lining-nums;
+}
+.txn-page-amount.buy { color:var(--positive); }
+.txn-page-amount.sell { color:var(--negative); }
+.txn-page-type-tag {
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:6px;
+  font-weight:600;
+}
+.txn-page-type-tag.buy {
+  background:rgba(46,139,87,0.12);
+  color:var(--positive);
+}
+.txn-page-type-tag.sell {
+  background:rgba(205,92,92,0.12);
+  color:var(--negative);
+}
+.txn-empty {
+  text-align:center;
+  color:var(--text-muted);
+  padding:40px 16px;
+  font-size:14px;
+}
+
+/* 历史笔记页 */
+.notes-history-toolbar {
+  padding:0 16px 10px;
+}
+.notes-history-search {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--card);
+  border-radius:12px;
+  padding:10px 14px;
+}
+.notes-history-search svg {
+  width:18px;
+  height:18px;
+  fill:var(--text-muted);
+  flex-shrink:0;
+}
+.notes-history-search input {
+  flex:1;
+  border:none;
+  background:transparent;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  font-family:var(--font-body);
+}
+.notes-history-search input::placeholder {
+  color:var(--text-muted);
+}
+.notes-history-list {
+  padding:0 16px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.notes-history-item {
+  background:var(--card);
+  border-radius:12px;
+  padding:14px;
+  border-left:3px solid transparent;
+}
+.notes-history-item.bull { border-left-color:var(--positive); }
+.notes-history-item.bear { border-left-color:var(--negative); }
+.notes-history-item.watch { border-left-color:var(--text-muted); }
+.notes-history-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+  gap:10px;
+}
+.notes-history-title {
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.notes-history-date {
+  font-size:11px;
+  color:var(--text-muted);
+  flex-shrink:0;
+}
+.notes-history-content {
+  font-size:13px;
+  color:var(--text-secondary);
+  line-height:1.55;
+  margin-bottom:10px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.notes-history-tags {
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.notes-history-tag {
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:6px;
+  background:var(--input-bg);
+  color:var(--text-muted);
+}
+.notes-history-tag.trend-bull {
+  background:rgba(46,139,87,0.12);
+  color:var(--positive);
+  font-weight:600;
+}
+.notes-history-tag.trend-bear {
+  background:rgba(205,92,92,0.12);
+  color:var(--negative);
+  font-weight:600;
+}
+.notes-history-tag.trend-watch {
+  background:rgba(255,165,0,0.12);
+  color:#e68a00;
+  font-weight:600;
 }
 
 /* Record Page */
@@ -2973,14 +3270,6 @@ body {
     </div>
 
     <div class="stats-panel" id="homeStatsPanel">
-      <div class="stats-summary-card" onclick="showToast('查看净资产构成')">
-        <div class="stats-summary-info">
-          <span class="stats-summary-date" id="statsSummaryDate">2026/5/21</span>
-          <span class="stats-summary-net">我的净资产 ¥1,236,600</span>
-          <span class="stats-summary-debt">负债 ¥1,005,000</span>
-        </div>
-        <svg class="stats-summary-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-      </div>
       <div class="stats-chart-wrap">
         <svg class="kline-chart-svg" viewBox="0 0 120 96" preserveAspectRatio="none" aria-label="总资产K线">
           <g id="klineYAxis"></g>
@@ -3395,6 +3684,49 @@ body {
 
   </div>
 
+  <!-- 交易记录页 -->
+  <div class="page" id="page-transactions">
+    <div class="sub-page-header">
+      <button class="sub-page-back" onclick="switchTab('me')">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      </button>
+      <h1 class="sub-page-title">交易记录</h1>
+      <span class="sub-page-spacer"></span>
+    </div>
+    <div class="txn-page-search-wrap">
+      <div class="txn-page-search">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input id="txnSearchInput" type="text" placeholder="搜索资产名称/代码" oninput="filterTransactions()">
+      </div>
+    </div>
+    <div class="txn-page-filters" id="txnFilterBar">
+      <button class="txn-filter active" data-cat="all" onclick="setTxnCategory('all')">全部</button>
+      <button class="txn-filter" data-cat="stock" onclick="setTxnCategory('stock')">股票</button>
+      <button class="txn-filter" data-cat="fund" onclick="setTxnCategory('fund')">基金</button>
+      <button class="txn-filter" data-cat="buy" onclick="setTxnCategory('buy')">买入</button>
+      <button class="txn-filter" data-cat="sell" onclick="setTxnCategory('sell')">卖出</button>
+    </div>
+    <div class="txn-page-list" id="txnPageList"></div>
+  </div>
+
+  <!-- 历史笔记页 -->
+  <div class="page" id="page-notes-history">
+    <div class="sub-page-header">
+      <button class="sub-page-back" onclick="switchTab('me')">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      </button>
+      <h1 class="sub-page-title">历史笔记</h1>
+      <span class="sub-page-spacer"></span>
+    </div>
+    <div class="notes-history-toolbar">
+      <div class="notes-history-search">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input id="noteHistorySearch" type="text" placeholder="搜索笔记内容、标签" oninput="filterNotesHistory()">
+      </div>
+    </div>
+    <div class="notes-history-list" id="notesHistoryList"></div>
+  </div>
+
   <!-- Tab Bar -->
   <div class="tab-bar">
     <div class="tab-item active" onclick="switchTab('portfolio')">
@@ -3465,7 +3797,7 @@ body {
     <div class="record-sheet">
       <div class="record-sheet-header">
         <div class="sheet-title">
-          <span class="sheet-name">记一笔</span>
+          <span class="sheet-name" id="recordSheetTitle">记资产</span>
         </div>
         <div class="sheet-header-actions">
           <button class="sheet-save-btn" id="recordSaveBtn" onclick="saveRecord()">保存</button>
@@ -3744,18 +4076,134 @@ function openAssetTransactions() {
 }
 
 function openTransactionHistory() {
-  switchTab('insights');
-  setTimeout(() => {
-    if (typeof showToast === 'function') showToast('交易记录（演示）');
-  }, 200);
+  switchTab('transactions');
 }
 
 function openNoteHistory() {
-  switchTab('insights');
-  setTimeout(() => {
-    const history = document.querySelector('.insight-history');
-    if (history) history.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 250);
+  switchTab('notes-history');
+}
+
+// 交易记录页：示例数据 + 渲染 + 筛选
+const TXN_DEMO_DATA = [
+  { date:'2026-06-18', type:'SELL', typeLabel:'卖出', category:'stock', code:'600519', name:'贵州茅台', price:1928.50, qty:10, amount:19285.00, note:'获利了结部分仓位' },
+  { date:'2026-06-15', type:'BUY',  typeLabel:'买入', category:'stock', code:'000858', name:'五粮液',   price:138.60,  qty:200, amount:27720.00, note:'逢低加仓' },
+  { date:'2026-06-12', type:'BUY',  typeLabel:'买入', category:'fund',  code:'007119', name:'睿远成长', price:2.345,   qty:5000,amount:11725.00, note:'定投加仓' },
+  { date:'2026-06-08', type:'SELL', typeLabel:'卖出', category:'fund',  code:'110022', name:'易方达消费',price:3.612,   qty:2000,amount:7224.00,  note:'止盈赎回' },
+  { date:'2026-06-03', type:'BUY',  typeLabel:'买入', category:'stock', code:'601318', name:'中国平安', price:48.20,   qty:300, amount:14460.00, note:'左侧建仓' },
+  { date:'2026-05-28', type:'BUY',  typeLabel:'买入', category:'stock', code:'600036', name:'招商银行', price:35.80,   qty:500, amount:17900.00, note:'底仓配置' },
+  { date:'2026-05-21', type:'SELL', typeLabel:'卖出', category:'stock', code:'000001', name:'平安银行', price:11.25,   qty:1000,amount:11250.00, note:'换仓' },
+  { date:'2026-05-15', type:'BUY',  typeLabel:'买入', category:'fund',  code:'161725', name:'招商中证白酒',price:1.128, qty:10000,amount:11280.00, note:'定投' },
+];
+let txnCurrentCat = 'all';
+let txnSearchKeyword = '';
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function setTxnCategory(cat) {
+  txnCurrentCat = cat;
+  document.querySelectorAll('#txnFilterBar .txn-filter').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderTransactionPage();
+}
+function filterTransactions() {
+  txnSearchKeyword = document.getElementById('txnSearchInput').value.trim().toLowerCase();
+  renderTransactionPage();
+}
+function renderTransactionPage() {
+  const listEl = document.getElementById('txnPageList');
+  if (!listEl) return;
+  const kw = txnSearchKeyword;
+  let items = TXN_DEMO_DATA.slice().sort((a,b) => (a.date < b.date ? 1 : -1));
+  items = items.filter(t => {
+    if (txnCurrentCat === 'buy')  return t.type === 'BUY';
+    if (txnCurrentCat === 'sell') return t.type === 'SELL';
+    if (txnCurrentCat === 'stock' || txnCurrentCat === 'fund') return t.category === txnCurrentCat;
+    return true;
+  });
+  if (kw) {
+    items = items.filter(t => t.name.toLowerCase().includes(kw) || t.code.includes(kw));
+  }
+  if (items.length === 0) {
+    listEl.innerHTML = '<div class="txn-empty">暂无符合条件的交易记录</div>';
+    return;
+  }
+  // 按日期分组
+  const groups = {};
+  items.forEach(t => {
+    if (!groups[t.date]) groups[t.date] = [];
+    groups[t.date].push(t);
+  });
+  const html = Object.keys(groups).sort((a,b) => a < b ? 1 : -1).map(date => {
+    const rows = groups[date].map(t => `
+      <div class="txn-page-item">
+        <div class="txn-page-left">
+          <div class="txn-page-asset">${t.name}<span class="txn-page-code">${t.code}</span></div>
+          <div class="txn-page-detail">
+            <span>${t.typeLabel} ${t.qty} @ ¥${t.price.toFixed(2)}</span>
+          </div>
+        </div>
+        <div class="txn-page-right">
+          <div class="txn-page-amount ${t.type === 'BUY' ? 'buy' : 'sell'}">${t.type === 'BUY' ? '-' : '+'}¥${t.amount.toLocaleString('zh-CN', {minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+          <div class="txn-page-type-tag ${t.type === 'BUY' ? 'buy' : 'sell'}">${t.typeLabel}</div>
+        </div>
+      </div>
+    `).join('');
+    return `<div class="txn-page-section"><div class="txn-page-date">${formatDate(date)}</div>${rows}</div>`;
+  }).join('');
+  listEl.innerHTML = html;
+}
+
+// 历史笔记页：示例数据 + 渲染
+const NOTES_DEMO_DATA = [
+  { date:'2026-06-18', title:'茅台观察：高位震荡', trend:'bull', content:'白酒板块整体反弹，茅台放量突破前高，成交量配合良好，继续持有观察。若站稳1930可考虑加仓。', tags:['#白酒','#持仓观察','#突破'] },
+  { date:'2026-06-14', title:'新能源拐点将至？', trend:'watch', content:'宁德时代连续缩量调整，产业链反馈电池排产环比改善，关注Q3业绩指引。', tags:['#新能源','#观察'] },
+  { date:'2026-06-10', title:'消费复苏不及预期', trend:'bear', content:'5月社零数据低于预期，消费板块短期承压，建议降低消费ETF仓位。', tags:['#宏观','#消费','#减仓'] },
+  { date:'2026-06-05', title:'定投策略复盘', trend:'watch', content:'本周继续执行双周定投，重点加仓沪深300和中证红利。注意止盈线设为+25%。', tags:['#定投','#策略'] },
+  { date:'2026-05-29', title:'保险板块配置机会', trend:'bull', content:'中国平安PEV回到0.7倍以下，估值进入历史低位区间，具备中长期配置价值。', tags:['#保险','#价值投资','#低估值'] },
+];
+let notesSearchKeyword = '';
+function filterNotesHistory() {
+  notesSearchKeyword = document.getElementById('noteHistorySearch').value.trim().toLowerCase();
+  renderNotesHistoryPage();
+}
+function renderNotesHistoryPage() {
+  const listEl = document.getElementById('notesHistoryList');
+  if (!listEl) return;
+  const kw = notesSearchKeyword;
+  let items = NOTES_DEMO_DATA.slice().sort((a,b) => a.date < b.date ? 1 : -1);
+  if (kw) {
+    items = items.filter(n =>
+      n.title.toLowerCase().includes(kw) ||
+      n.content.toLowerCase().includes(kw) ||
+      n.tags.some(t => t.toLowerCase().includes(kw))
+    );
+  }
+  if (items.length === 0) {
+    listEl.innerHTML = '<div class="txn-empty">暂无符合条件的笔记</div>';
+    return;
+  }
+  listEl.innerHTML = items.map(n => {
+    const tagHtml = n.tags.map(t => {
+      let cls = 'notes-history-tag';
+      if (t.includes('bull') || n.trend === 'bull' && (t === '#持仓观察' || t === '#低估值' || t === '#价值投资' || t === '#突破')) cls += ' trend-bull';
+      else if (n.trend === 'bear' && (t === '#减仓' || t === '#宏观')) cls += ' trend-bear';
+      else if (n.trend === 'watch' && (t === '#观察' || t === '#策略' || t === '#定投')) cls += ' trend-watch';
+      return `<span class="${cls}">${t}</span>`;
+    }).join('');
+    return `
+      <div class="notes-history-item ${n.trend}">
+        <div class="notes-history-head">
+          <div class="notes-history-title">${n.title}</div>
+          <div class="notes-history-date">${formatDate(n.date)}</div>
+        </div>
+        <div class="notes-history-content">${n.content}</div>
+        <div class="notes-history-tags">${tagHtml}</div>
+      </div>
+    `;
+  }).join('');
 }
 
 function openPersonalInfo() {
@@ -3771,15 +4219,32 @@ function switchTab(tabName) {
 
   const pages = document.querySelectorAll('.page');
   const tabs = document.querySelectorAll('.tab-item');
+  const tabBar = document.querySelector('.tab-bar');
 
   pages.forEach(page => page.classList.remove('active'));
   tabs.forEach(tab => tab.classList.remove('active'));
 
-  document.getElementById('page-' + tabName).classList.add('active');
-  const eventTarget = typeof event !== 'undefined' ? event.currentTarget : null;
-  const currentTabEl = eventTarget || Array.from(tabs).find(tab => tab.getAttribute('onclick')?.includes(`'${tabName}'`));
-  currentTabEl?.classList.add('active');
+  const targetPage = document.getElementById('page-' + tabName);
+  if (targetPage) targetPage.classList.add('active');
+
+  const isSubPage = (tabName === 'transactions' || tabName === 'notes-history' || tabName === 'asset-detail' || tabName === 'record');
+  if (tabBar) {
+    tabBar.style.display = isSubPage ? 'none' : '';
+  }
+
+  if (!isSubPage) {
+    const eventTarget = typeof event !== 'undefined' ? event.currentTarget : null;
+    const currentTabEl = eventTarget || Array.from(tabs).find(tab => tab.getAttribute('onclick')?.includes(`'${tabName}'`));
+    currentTabEl?.classList.add('active');
+  }
+
   currentTab = tabName;
+  if (tabName === 'transactions') {
+    renderTransactionPage();
+  } else if (tabName === 'notes-history') {
+    renderNotesHistoryPage();
+  }
+  window.scrollTo(0, 0);
 }
 
 function switchMeTab(tabName) { /* 已废弃：我的页面改为平铺菜单（保留为空以避免引用报错） */ }
@@ -4454,13 +4919,17 @@ function updateAssetListRow(item, asset) {
 function updateTotalAssetSummary() {
   const diff = totalAssetSnapshots.todayOne - totalAssetSnapshots.previousOne;
   const yieldPct = totalAssetSnapshots.previousOne ? diff / totalAssetSnapshots.previousOne * 100 : 0;
-  document.getElementById('totalAsset').textContent = formatNumber(totalAssetSnapshots.todayOne);
-  document.getElementById('todayPnL').textContent = signedNumber(diff);
-  document.getElementById('todayPnLPct').textContent = signedPercent(yieldPct);
-  document.getElementById('dailyAssetDiff').textContent = signedNumber(diff);
-  document.getElementById('dailyAssetYield').textContent = signedPercent(yieldPct);
-  document.getElementById('prevOneValue').textContent = formatNumber(totalAssetSnapshots.previousOne, 0);
-  document.getElementById('todayOneValue').textContent = formatNumber(totalAssetSnapshots.todayOne, 0);
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+  setText('totalAsset', formatNumber(totalAssetSnapshots.todayOne));
+  setText('todayPnL', signedNumber(diff));
+  setText('todayPnLPct', signedPercent(yieldPct));
+  setText('dailyAssetDiff', signedNumber(diff));
+  setText('dailyAssetYield', signedPercent(yieldPct));
+  setText('prevOneValue', formatNumber(totalAssetSnapshots.previousOne, 0));
+  setText('todayOneValue', formatNumber(totalAssetSnapshots.todayOne, 0));
   updateTotalAssetKline(totalAssetKlineDays);
   updatePortfolioScope();
 }
