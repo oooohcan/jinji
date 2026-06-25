@@ -2733,6 +2733,14 @@ body {
 .prediction-panel {
   scroll-margin-top:126px;
 }
+.prediction-panel {
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.08);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(164,74,63,0.04);
+}
 .record-sheet .record-form,
 .record-sheet .mode-switch {
   margin-left:0;
@@ -2914,13 +2922,68 @@ body {
   transform:translateY(0);
 }
 .note-summary-panel,
-.prediction-panel,
 .field-editor {
   background:var(--card);
   border:1px solid rgba(164,74,63,0.08);
   border-radius:var(--radius-sm);
   padding:14px;
   margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(164,74,63,0.04);
+}
+.detail-card .detail-weight-bar {
+  width:60px;
+  height:5px;
+  background:var(--input-bg);
+  border-radius:3px;
+  overflow:hidden;
+  margin-top:8px;
+}
+.detail-card .detail-weight-bar-fill {
+  height:100%;
+  background:linear-gradient(90deg, var(--brand-light), var(--brand));
+  border-radius:3px;
+  transition:width 0.3s;
+}
+.detail-value.today-up { color:var(--positive); }
+.detail-value.today-down { color:var(--negative); }
+.detail-value.today-neutral { color:var(--text-secondary); }
+.fixed-income-only {
+  display:none;
+}
+.asset-fixed-income .fixed-income-only {
+  display:block;
+}
+.detail-type-tag {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:4px;
+  font-size:11px;
+  font-weight:600;
+  margin-left:8px;
+  vertical-align:middle;
+}
+.detail-type-tag.type-stock { background:rgba(209,75,75,0.08); color:#d14b4b; }
+.detail-type-tag.type-fund { background:rgba(46,139,87,0.08); color:#2e8b57; }
+.detail-type-tag.type-deposit { background:rgba(212,175,55,0.1); color:#b8941f; }
+.detail-type-tag.type-wealth { background:rgba(74,111,164,0.08); color:#4a6fa4; }
+.detail-type-tag.type-etf { background:rgba(156,84,164,0.08); color:#9c54a4; }
+.detail-type-tag.type-metal { background:rgba(180,140,80,0.1); color:#b48c50; }
+.days-to-maturity {
+  font-size:13px;
+  font-weight:600;
+  color:#b8941f;
+  margin-top:4px;
+}
+.days-to-maturity.soon {
+  color:var(--negative);
+}
+.asset-txn-card {
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.08);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(164,74,63,0.04);
 }
 .panel-title-row {
   display:flex;
@@ -2946,9 +3009,11 @@ body {
 .note-summary-item,
 .prediction-item {
   background:var(--card);
-  border-radius:var(--radius-xs);
-  padding:11px 12px;
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:10px;
+  padding:12px;
   margin-top:10px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.03);
 }
 .note-summary-item.clickable,
 .prediction-item.clickable {
@@ -2958,7 +3023,7 @@ body {
 .note-summary-item.clickable:active,
 .prediction-item.clickable:active {
   transform:scale(0.99);
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 .note-summary-grid {
   display:grid;
@@ -2995,15 +3060,17 @@ body {
 .prediction-empty {
   margin-top:10px;
   background:var(--card);
-  border-radius:var(--radius-xs);
+  border-radius:10px;
   padding:20px 16px;
   text-align:center;
   cursor:pointer;
   transition:transform 0.18s ease, box-shadow 0.18s ease;
   border:1px dashed var(--border);
+  box-shadow:0 1px 4px rgba(0,0,0,0.03);
 }
 .prediction-empty:active {
   transform:scale(0.99);
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
 .prediction-empty-icon {
   font-size:28px;
@@ -5228,6 +5295,7 @@ body {
     <div class="record-sheet-header">
       <div class="sheet-title">
         <span class="sheet-eyebrow" id="detailAssetCode">600519</span>
+        <span class="detail-type-tag type-stock" id="detailTypeTag">股票</span>
         <span class="sheet-name" id="detailAssetName">贵州茅台</span>
         <span class="sheet-status profit" id="detailAssetStatus">盈利 +41,600.00 · +27.73% · 3 条笔记</span>
       </div>
@@ -5248,7 +5316,7 @@ body {
         <div class="detail-card editable">
           <span class="detail-label">持仓成本价</span>
           <span class="detail-value" id="detailCost">1,500.00</span>
-          <input class="input-field detail-edit-input" type="number" id="editCost">
+          <input class="input-field detail-edit-input" type="number" step="0.01" id="editCost">
         </div>
         <div class="detail-card editable">
           <span class="detail-label">持仓数量</span>
@@ -5256,20 +5324,49 @@ body {
           <input class="input-field detail-edit-input" type="number" id="editQuantity">
         </div>
         <div class="detail-card">
-          <span class="detail-label">当前总市值</span>
-          <span class="detail-value" id="detailMarketValue">191,600.00</span>
+          <span class="detail-label">最新价</span>
+          <span class="detail-value" id="detailLatestPrice">¥1,916.00</span>
         </div>
         <div class="detail-card editable">
-          <span class="detail-label">持仓时间</span>
+          <span class="detail-label">持仓天数</span>
           <span class="detail-value" id="detailHoldTime">186 天</span>
           <input class="input-field detail-edit-input" type="number" id="editHoldDays">
         </div>
         <div class="detail-card">
-          <span class="detail-label">盈亏金额</span>
-          <span class="detail-value profit" id="detailPnL">+41,600.00</span>
+          <span class="detail-label">当前总市值</span>
+          <span class="detail-value" id="detailMarketValue">191,600.00</span>
         </div>
         <div class="detail-card">
-          <span class="detail-label">盈亏比例</span>
+          <span class="detail-label">持仓占比</span>
+          <span class="detail-value" id="detailWeight">57.3%</span>
+          <div class="detail-weight-bar">
+            <div class="detail-weight-bar-fill" id="detailWeightBar" style="width:57.3%"></div>
+          </div>
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">今日盈亏</span>
+          <span class="detail-value today-up" id="detailTodayPnL">+¥1,400 (+0.74%)</span>
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">持仓盈亏</span>
+          <span class="detail-value profit" id="detailPnL">+¥41,600</span>
+        </div>
+        <div class="detail-card wide editable fixed-income-only">
+          <span class="detail-label">到期日</span>
+          <span class="detail-value" id="detailMaturity">2026-12-31</span>
+          <input class="input-field detail-edit-input" type="date" id="editMaturity">
+        </div>
+        <div class="detail-card editable fixed-income-only">
+          <span class="detail-label">年化收益率</span>
+          <span class="detail-value" id="detailRate">2.15%</span>
+          <input class="input-field detail-edit-input" type="number" step="0.01" id="editRate">
+        </div>
+        <div class="detail-card fixed-income-only">
+          <span class="detail-label">距到期天数</span>
+          <span class="days-to-maturity" id="detailDaysToMaturity">还剩 188 天</span>
+        </div>
+        <div class="detail-card wide">
+          <span class="detail-label">持仓收益率</span>
           <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
         </div>
       </div>
@@ -6417,7 +6514,7 @@ function getAssetData(code) {
   const quantity = numberFromText(item.dataset.quantity);
   return {
     code,
-    name: item.querySelector('.asset-name')?.textContent || code,
+    name: item.querySelector('.col-name-main')?.textContent || code,
     type: item.dataset.type || 'other',
     typeLabel: item.dataset.typeLabel || '其他',
     price,
@@ -6427,8 +6524,38 @@ function getAssetData(code) {
     holdDays: numberFromText(item.dataset.holdDays),
     maturity: item.dataset.maturity || '',
     rate: numberFromText(item.dataset.rate),
-    notes: assetInsightMap[code] || []
+    notes: assetInsightMap[code] || [],
+    element: item
   };
+}
+
+function calculateTotalMarketValue() {
+  let total = 0;
+  document.querySelectorAll('.asset-item').forEach(item => {
+    const price = numberFromText(item.dataset.price);
+    const quantity = numberFromText(item.dataset.quantity);
+    total += price * quantity;
+  });
+  return total;
+}
+
+function getCurrencyPrefix(asset) {
+  if (asset.type === 'stock' && asset.code === '00700') return 'HK$';
+  if (asset.type === 'stock' && asset.code === 'AAPL') return 'US$';
+  return '¥';
+}
+
+function calculateDaysToMaturity(maturityStr) {
+  if (!maturityStr) return null;
+  const maturity = new Date(maturityStr);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diff = Math.ceil((maturity - today) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function isFixedIncome(asset) {
+  return asset.type === 'deposit' || asset.type === 'wealth';
 }
 
 function calculateAssetMetrics(asset) {
@@ -7208,26 +7335,74 @@ function closeAssetDetail() {
 function fillAssetDetail(asset) {
   const metrics = calculateAssetMetrics(asset);
   const isProfit = metrics.pnl >= 0;
+  const isTodayUp = metrics.todayPnl >= 0;
+  const currency = getCurrencyPrefix(asset);
+  const totalMv = calculateTotalMarketValue();
+  const weight = totalMv > 0 ? (metrics.marketValue / totalMv) * 100 : 0;
+  const fixedIncome = isFixedIncome(asset);
+  const daysToMaturity = calculateDaysToMaturity(asset.maturity);
+
   document.getElementById('detailAssetCode').textContent = asset.code;
   document.getElementById('detailAssetName').textContent = asset.name;
-  document.getElementById('detailCost').textContent = formatNumber(asset.cost);
-  document.getElementById('detailQuantity').textContent = formatNumber(asset.quantity, 0);
-  document.getElementById('detailMarketValue').textContent = formatNumber(metrics.marketValue);
+
+  const typeTag = document.getElementById('detailTypeTag');
+  typeTag.textContent = asset.typeLabel;
+  typeTag.className = `detail-type-tag type-${asset.type}`;
+
+  document.getElementById('detailCost').textContent = currency + formatNumber(asset.cost);
+  document.getElementById('detailQuantity').textContent = formatNumber(asset.quantity, 0) + (fixedIncome ? ' 份' : '');
+  document.getElementById('detailLatestPrice').textContent = currency + formatNumber(asset.price);
   document.getElementById('detailHoldTime').textContent = `${asset.holdDays} 天`;
-  document.getElementById('detailPnL').textContent = signedNumber(metrics.pnl);
+  document.getElementById('detailMarketValue').textContent = currency + formatNumber(metrics.marketValue);
+  document.getElementById('detailWeight').textContent = weight.toFixed(1) + '%';
+  const weightBar = document.getElementById('detailWeightBar');
+  weightBar.style.width = Math.min(weight, 100) + '%';
+
+  const todayPnlText = `${isTodayUp ? '+' : ''}${currency}${formatNumber(metrics.todayPnl)} (${isTodayUp ? '+' : ''}${metrics.todayPct.toFixed(2)}%)`;
+  const todayPnlEl = document.getElementById('detailTodayPnL');
+  todayPnlEl.textContent = todayPnlText;
+  todayPnlEl.className = `detail-value ${isTodayUp ? 'today-up' : metrics.todayPnl < 0 ? 'today-down' : 'today-neutral'}`;
+
+  document.getElementById('detailPnL').textContent = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))}`;
   document.getElementById('detailPnLPct').textContent = signedPercent(metrics.pnlPct);
   document.getElementById('detailPnL').className = isProfit ? 'detail-value profit' : 'detail-value loss';
   document.getElementById('detailPnLPct').className = isProfit ? 'detail-value profit' : 'detail-value loss';
+
+  const content = document.getElementById('assetDetailContent');
+  content.classList.toggle('asset-fixed-income', fixedIncome);
+
+  if (fixedIncome) {
+    document.getElementById('detailMaturity').textContent = asset.maturity || '-';
+    document.getElementById('detailRate').textContent = (asset.rate || 0) + '%';
+    const daysEl = document.getElementById('detailDaysToMaturity');
+    if (daysToMaturity !== null) {
+      if (daysToMaturity < 0) {
+        daysEl.textContent = `已过期 ${Math.abs(daysToMaturity)} 天`;
+        daysEl.className = 'days-to-maturity soon';
+      } else if (daysToMaturity <= 30) {
+        daysEl.textContent = `还剩 ${daysToMaturity} 天`;
+        daysEl.className = 'days-to-maturity soon';
+      } else {
+        daysEl.textContent = `还剩 ${daysToMaturity} 天`;
+        daysEl.className = 'days-to-maturity';
+      }
+    }
+  }
+
   const noteCount = asset.notes.length;
   const hasConflict = asset.notes.some(note => note.direction === '看多') && asset.notes.some(note => note.direction === '看空');
   const statusEl = document.getElementById('detailAssetStatus');
-  statusEl.textContent = `${isProfit ? '盈利' : '亏损'} ${signedNumber(metrics.pnl)} · ${signedPercent(metrics.pnlPct)} · ${noteCount} 条笔记${hasConflict ? ' · 观点分歧' : ''}`;
+  statusEl.textContent = `${isProfit ? '盈利' : '亏损'} ${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))} · ${signedPercent(metrics.pnlPct)} · ${noteCount} 条笔记${hasConflict ? ' · 观点分歧' : ''}`;
   statusEl.className = isProfit ? 'sheet-status profit' : 'sheet-status loss';
 
   document.getElementById('editCost').value = asset.cost.toFixed(2);
   document.getElementById('editQuantity').value = Math.round(asset.quantity);
   document.getElementById('editPrice').value = asset.price.toFixed(2);
   document.getElementById('editHoldDays').value = asset.holdDays;
+  if (fixedIncome) {
+    document.getElementById('editMaturity').value = asset.maturity || '';
+    document.getElementById('editRate').value = asset.rate || 0;
+  }
 }
 
 function fillAssetQuickForm(asset) {
@@ -7395,6 +7570,10 @@ function enterAssetEditMode() {
   document.getElementById('editQuantity').value = Math.round(activeAssetData.quantity);
   document.getElementById('editPrice').value = activeAssetData.price.toFixed(2);
   document.getElementById('editHoldDays').value = activeAssetData.holdDays;
+  if (isFixedIncome(activeAssetData)) {
+    document.getElementById('editMaturity').value = activeAssetData.maturity || '';
+    document.getElementById('editRate').value = activeAssetData.rate || 0;
+  }
 }
 
 function saveAssetInlineEdit() {
@@ -7415,11 +7594,22 @@ function applyAssetFieldEdits() {
   activeAssetData.price = numberFromText(document.getElementById('editPrice').value);
   activeAssetData.holdDays = numberFromText(document.getElementById('editHoldDays').value);
 
+  if (isFixedIncome(activeAssetData)) {
+    const maturityVal = document.getElementById('editMaturity').value;
+    const rateVal = numberFromText(document.getElementById('editRate').value);
+    if (maturityVal) activeAssetData.maturity = maturityVal;
+    if (!isNaN(rateVal)) activeAssetData.rate = rateVal;
+  }
+
   if (item) {
     item.dataset.cost = activeAssetData.cost;
     item.dataset.quantity = activeAssetData.quantity;
     item.dataset.price = activeAssetData.price;
     item.dataset.holdDays = activeAssetData.holdDays;
+    if (isFixedIncome(activeAssetData)) {
+      item.dataset.maturity = activeAssetData.maturity;
+      item.dataset.rate = activeAssetData.rate;
+    }
     updateAssetListRow(item, activeAssetData);
   }
 
