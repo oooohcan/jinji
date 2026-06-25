@@ -1571,6 +1571,24 @@ body {
   max-height:calc(88vh - 130px);
   overflow-y:auto;
 }
+/* 交易记录半弹框：内部筛选 + 列表 */
+.txn-sheet-filters {
+  display:flex;
+  gap:8px;
+  padding:0 16px 12px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.txn-sheet-filters::-webkit-scrollbar { display:none; }
+.txn-sheet-list {
+  margin:0 16px 0;
+  padding:0 0 24px;
+  max-height:calc(88vh - 200px);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
 
 /* Record Page */
 .record-header {
@@ -4024,6 +4042,34 @@ body {
     </div>
   </div>
 
+  <!-- 交易记录半弹框（学习记资产 / 历史笔记 sheet 样式） -->
+  <div class="modal-overlay" id="historyTransactionsModal" onclick="if(event.target===this) closeHistoryTransactionsSheet()">
+    <div class="record-sheet" onclick="event.stopPropagation()">
+      <div class="record-sheet-header">
+        <div class="sheet-title">
+          <span class="sheet-name">交易记录</span>
+        </div>
+        <div class="sheet-header-actions">
+          <button class="sheet-save-btn" onclick="closeHistoryTransactionsSheet()">完成</button>
+        </div>
+      </div>
+      <div class="sheet-body history-sheet-body">
+        <div class="history-sheet-search">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input id="txnSheetSearchInput" type="text" placeholder="搜索资产名称 / 代码" oninput="filterTransactionsSheet()">
+        </div>
+        <div class="txn-sheet-filters" id="txnSheetFilterBar">
+          <button class="txn-filter active" data-cat="all" onclick="setTxnSheetCategory('all')">全部</button>
+          <button class="txn-filter" data-cat="stock" onclick="setTxnSheetCategory('stock')">股票</button>
+          <button class="txn-filter" data-cat="fund" onclick="setTxnSheetCategory('fund')">基金</button>
+          <button class="txn-filter" data-cat="buy" onclick="setTxnSheetCategory('buy')">买入</button>
+          <button class="txn-filter" data-cat="sell" onclick="setTxnSheetCategory('sell')">卖出</button>
+        </div>
+        <div class="txn-sheet-list" id="txnSheetList"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Tab Bar -->
   <div class="tab-bar">
     <div class="tab-item active" onclick="switchTab('portfolio')">
@@ -4392,8 +4438,8 @@ function openTransactionHistory() {
 }
 
 function openTransactionHistoryFromMe() {
-  txnReturnTo = 'me';
-  switchTab('transactions');
+  // 从「我的」进入交易记录：半弹框方式呈现（与历史笔记一致）
+  openHistoryTransactionsSheet();
 }
 
 function openTransactionBack() {
@@ -4436,6 +4482,83 @@ function closeHistoryNotesSheet() {
   document.getElementById('historyNotesModal').classList.remove('show');
   document.body.style.overflow = '';
   noteHistoryReturnTo = 'me';
+}
+
+// ===== 交易记录半弹框（复用 TXN_DEMO_DATA + 同样的 UI 结构） =====
+let txnSheetCurrentCat = 'all';
+let txnSheetSearchKeyword = '';
+
+function openHistoryTransactionsSheet() {
+  document.getElementById('historyTransactionsModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  // 重置 sheet 内的搜索/分类状态，确保打开时是干净视图
+  txnSheetCurrentCat = 'all';
+  txnSheetSearchKeyword = '';
+  const searchInput = document.getElementById('txnSheetSearchInput');
+  if (searchInput) searchInput.value = '';
+  document.querySelectorAll('#txnSheetFilterBar .txn-filter').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === 'all');
+  });
+  renderTransactionSheet();
+}
+
+function closeHistoryTransactionsSheet() {
+  document.getElementById('historyTransactionsModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function setTxnSheetCategory(cat) {
+  txnSheetCurrentCat = cat;
+  document.querySelectorAll('#txnSheetFilterBar .txn-filter').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderTransactionSheet();
+}
+
+function filterTransactionsSheet() {
+  txnSheetSearchKeyword = document.getElementById('txnSheetSearchInput').value.trim().toLowerCase();
+  renderTransactionSheet();
+}
+
+function renderTransactionSheet() {
+  const listEl = document.getElementById('txnSheetList');
+  if (!listEl) return;
+  const kw = txnSheetSearchKeyword;
+  let items = TXN_DEMO_DATA.slice().sort((a, b) => (a.date < b.date ? 1 : -1));
+  items = items.filter(t => {
+    if (txnSheetCurrentCat === 'buy')  return t.type === 'BUY';
+    if (txnSheetCurrentCat === 'sell') return t.type === 'SELL';
+    if (txnSheetCurrentCat === 'stock' || txnSheetCurrentCat === 'fund') return t.category === txnSheetCurrentCat;
+    return true;
+  });
+  if (kw) {
+    items = items.filter(t => t.name.toLowerCase().includes(kw) || t.code.includes(kw));
+  }
+  if (items.length === 0) {
+    listEl.innerHTML = '<div class="txn-empty">暂无符合条件的交易记录</div>';
+    return;
+  }
+  // 按日期分组
+  const groups = {};
+  items.forEach(t => { if (!groups[t.date]) groups[t.date] = []; groups[t.date].push(t); });
+  const html = Object.keys(groups).sort((a, b) => a < b ? 1 : -1).map(date => {
+    const rows = groups[date].map(t => `
+      <div class="txn-page-item">
+        <div class="txn-page-left">
+          <div class="txn-page-asset">${t.name}<span class="txn-page-code">${t.code}</span></div>
+          <div class="txn-page-detail">
+            <span>${t.typeLabel} ${t.qty} @ ¥${t.price.toFixed(2)}</span>
+          </div>
+        </div>
+        <div class="txn-page-right">
+          <div class="txn-page-amount ${t.type === 'BUY' ? 'buy' : 'sell'}">${t.type === 'BUY' ? '-' : '+'}¥${t.amount.toLocaleString('zh-CN', {minimumFractionDigits:2, maximumFractionDigits:2})}</div>
+          <div class="txn-page-type-tag ${t.type === 'BUY' ? 'buy' : 'sell'}">${t.typeLabel}</div>
+        </div>
+      </div>
+    `).join('');
+    return `<div class="txn-page-section"><div class="txn-page-date">${formatDate(date)}</div>${rows}</div>`;
+  }).join('');
+  listEl.innerHTML = html;
 }
 
 // 资产交易记录卡片：宽度与笔记预测一致，超过 4 笔时底部倒三角展开
