@@ -1585,29 +1585,23 @@ body {
   padding:0 4px 24px;
 }
 .history-sheet-list::-webkit-scrollbar { display:none; }
-/* sheet 内历史笔记卡片：极简白底顶满，仿交易记录行间分隔线 */
+/* sheet 内历史笔记卡片：拉满宽度、保留圆角卡片样式 */
 .history-sheet-list .insight-history { margin:0; }
 .history-sheet-list .history-item {
-  margin:0;
-  border-radius:0;
-  box-shadow:none;
-  border:none;
-  background:transparent;
-  position:relative;
-}
-.history-sheet-list .history-item + .history-item::before {
-  content:'';
-  position:absolute;
-  top:0; left:16px; right:16px;
-  height:1px;
-  background:rgba(164,74,63,0.08);
+  margin:0 4px 8px;
+  border-radius:12px;
+  box-shadow:0 1px 4px rgba(164,74,63,0.04);
+  border:1px solid var(--border);
+  background:var(--card);
 }
 .history-sheet-list .history-item-header {
-  padding:13px 16px;
+  padding:13px 14px;
 }
 .history-sheet-list .history-item.expand-open .history-detail {
-  padding:0 16px 14px;
-  border:none;
+  padding:0 14px 14px;
+  border-top:1px solid rgba(164,74,63,0.06);
+  margin-top:0;
+  padding-top:14px;
 }
 /* 交易记录半弹框：内部筛选 + 列表 */
 .txn-sheet-filters {
