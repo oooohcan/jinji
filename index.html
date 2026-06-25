@@ -2002,6 +2002,7 @@ body {
 }
 .record-sheet-header {
   display:flex;
+  justify-content:space-between;
   align-items:center;
   padding:24px 20px 12px;
   border-bottom:1px solid var(--border);
@@ -2009,7 +2010,6 @@ body {
   flex-shrink:0;
   background:var(--card);
   z-index:12;
-  gap:4px;
 }
 .sheet-back-btn {
   display:flex;
@@ -2017,9 +2017,8 @@ body {
   justify-content:center;
   width:32px;
   height:32px;
-  margin-right:6px;
   border:none;
-  background:transparent;
+  background:var(--input-bg);
   color:var(--text);
   border-radius:50%;
   cursor:pointer;
@@ -2027,7 +2026,7 @@ body {
   flex-shrink:0;
 }
 .sheet-back-btn:active {
-  background:var(--input-bg);
+  background:rgba(164,74,63,0.12);
 }
 #assetDetailModal .record-sheet-header {
   border-bottom:none;
@@ -2037,6 +2036,8 @@ body {
   display:flex;
   flex-direction:column;
   gap:2px;
+  flex:1;
+  min-width:0;
 }
 .sheet-eyebrow {
   font-size:11px;
@@ -4386,13 +4387,13 @@ body {
   <div class="modal-overlay record-sheet-overlay" id="recordSheetModal">
     <div class="record-sheet">
       <div class="record-sheet-header">
-        <button class="sheet-back-btn" id="recordBackBtn" onclick="backToRecordCategory()" style="display:none;">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" fill="currentColor"/></svg>
-        </button>
         <div class="sheet-title">
           <span class="sheet-name" id="recordSheetTitle">记资产</span>
         </div>
         <div class="sheet-header-actions">
+          <button class="sheet-back-btn" id="recordBackBtn" onclick="backToRecordCategory()" style="display:none;">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" fill="currentColor"/></svg>
+          </button>
           <button class="sheet-save-btn" id="recordSaveBtn" onclick="saveRecord()">保存</button>
         </div>
       </div>
@@ -6209,12 +6210,33 @@ function setRecordFlow(state) {
   document.getElementById('recordAddForm')?.classList.toggle('show', showAdd);
   const searchBox = document.querySelector('#recordSheetModal .asset-search-box');
   if (searchBox) searchBox.style.display = showSearch ? '' : 'none';
+  // 非分类页面显示返回按钮
+  const backBtn = document.getElementById('recordBackBtn');
+  if (backBtn) backBtn.style.display = showCat ? 'none' : 'flex';
   const saveBtn = document.getElementById('recordSaveBtn');
   if (saveBtn) {
     if (state === 'category') saveBtn.textContent = '保存';
     else if (state === 'trade' || state === 'simple') saveBtn.textContent = '记录';
     else saveBtn.textContent = '保存';
   }
+}
+
+function backToRecordCategory() {
+  // 重置当前选择，回到分类选择页
+  activeRecordCategory = '';
+  activeRecordAssetData = null;
+  activeAddAssetCode = '';
+  const searchInput = document.getElementById('assetSearchInput');
+  if (searchInput) searchInput.value = '';
+  document.querySelectorAll('#recordCategoryGrid .record-category-card').forEach(card => {
+    card.classList.remove('active');
+  });
+  setRecordFlow('category');
+  filterAssetSearchResults();
+  // 滚动回到顶部
+  setTimeout(() => {
+    document.querySelector('#recordSheetModal .sheet-body')?.scrollTo({ top: 0, behavior: 'auto' });
+  }, 30);
 }
 
 function getHoldingSearchOptions() {
