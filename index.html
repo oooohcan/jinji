@@ -1618,7 +1618,7 @@ body {
 
 /* 历史笔记半弹框 */
 .history-sheet-body {
-  padding:0 0 24px;
+  padding:0 10px 24px;
 }
 .history-sheet-search {
   display:flex;
@@ -1627,7 +1627,7 @@ body {
   background:var(--input-bg);
   border-radius:12px;
   padding:10px 14px;
-  margin:0 16px 12px;
+  margin:0 0 12px;
 }
 .history-sheet-search svg {
   width:18px;
@@ -1648,28 +1648,32 @@ body {
   color:var(--text-muted);
 }
 .history-sheet-list {
-  margin:0 8px 0;
+  margin:0;
   max-height:calc(88vh - 130px);
   overflow-y:auto;
+  scrollbar-width:none;
 }
+.history-sheet-list::-webkit-scrollbar { display:none; }
 /* 交易记录半弹框：内部筛选 + 列表 */
 .txn-sheet-filters {
   display:flex;
   gap:8px;
-  padding:0 16px 12px;
+  padding:0 0 12px;
   overflow-x:auto;
   scrollbar-width:none;
 }
 .txn-sheet-filters::-webkit-scrollbar { display:none; }
 .txn-sheet-list {
-  margin:0 16px 0;
+  margin:0;
   padding:0 0 24px;
   max-height:calc(88vh - 200px);
   overflow-y:auto;
   display:flex;
   flex-direction:column;
   gap:10px;
+  scrollbar-width:none;
 }
+.txn-sheet-list::-webkit-scrollbar { display:none; }
 
 /* Record Page */
 .record-header {
@@ -4394,7 +4398,7 @@ body {
           <button class="sheet-back-btn" id="recordBackBtn" onclick="backToRecordCategory()" style="display:none;">
             <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" fill="currentColor"/></svg>
           </button>
-          <button class="sheet-save-btn" id="recordSaveBtn" onclick="saveRecord()">保存</button>
+          <button class="sheet-save-btn" id="recordSaveBtn" onclick="handleRecordSaveClick()">保存</button>
         </div>
       </div>
       <div class="sheet-body">
@@ -6784,6 +6788,15 @@ function saveRecord(type) {
   }
 
   showToast('请先选择资产分类');
+}
+
+// category 状态下保存按钮视为关闭（因为没有内容可保存，用户通常想退出）
+function handleRecordSaveClick() {
+  if (recordFlowState === 'category' || recordFlowState === 'idle') {
+    closeRecordSheet();
+    return;
+  }
+  saveRecord();
 }
 
 function applyPrototypeStateFromUrl() {
