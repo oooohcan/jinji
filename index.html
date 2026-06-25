@@ -4515,21 +4515,6 @@ body {
               </div>
             </div>
           </div>
-          <div class="note-input-history-entry">
-            <button class="history-entry-btn" onclick="openHistoryNotesSheet()">
-              <div class="history-entry-left">
-                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                <div class="history-entry-text">
-                  <div class="history-entry-title">历史笔记</div>
-                  <div class="history-entry-sub">回看已存入的决策信号</div>
-                </div>
-              </div>
-              <div class="history-entry-right">
-                <span class="history-entry-count" id="sheetNoteCount">3</span>
-                <span class="history-entry-arrow">›</span>
-              </div>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -5403,9 +5388,6 @@ function openInsightInput() {
   if (srcResult && dstResult) {
     dstResult.style.display = srcResult.classList.contains('show') ? 'block' : 'none';
   }
-  // 更新笔记数量
-  const count = NOTES_DEMO_DATA.length;
-  document.getElementById('sheetNoteCount').textContent = count;
   setTimeout(() => {
     document.getElementById('sheetInsightInput')?.focus();
   }, 250);
@@ -5502,9 +5484,6 @@ function saveSheetAnalysisToNote() {
     </div>
   `;
   notesList.insertBefore(item, notesList.firstChild);
-  // 更新计数
-  const count = notesList.querySelectorAll('.history-item').length;
-  document.getElementById('sheetNoteCount').textContent = count;
   showToast('已存入笔记');
 }
 
