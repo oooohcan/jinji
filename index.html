@@ -2049,6 +2049,49 @@ body {
 .record-flow-panel.show {
   display:block;
 }
+/* 步骤 1：分类选择网格 */
+.record-category-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:10px;
+  margin-top:6px;
+}
+.record-category-card {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:18px 8px 14px;
+  background:var(--input-bg);
+  border:1.5px solid transparent;
+  border-radius:14px;
+  cursor:pointer;
+  transition:all 0.18s ease;
+  text-align:center;
+}
+.record-category-card:active {
+  transform:scale(0.97);
+  background:rgba(164,74,63,0.06);
+}
+.record-category-card.active {
+  border-color:var(--brand);
+  background:rgba(164,74,63,0.06);
+}
+.record-category-icon {
+  font-size:26px;
+  line-height:1;
+}
+.record-category-name {
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+}
+.record-category-hint {
+  font-size:11px;
+  color:var(--text-muted);
+  letter-spacing:0.02em;
+}
 #recordFlowHint {
   display:none;
 }
@@ -4147,6 +4190,51 @@ body {
         </div>
       </div>
       <div class="sheet-body">
+        <!-- 步骤 1：选择资产分类 -->
+        <div class="record-form record-flow-panel" id="recordCategoryForm">
+          <div class="form-group">
+            <label class="form-label">选择资产分类</label>
+            <div class="record-category-grid" id="recordCategoryGrid">
+              <div class="record-category-card" data-cat="stock" onclick="selectRecordCategory('stock')">
+                <div class="record-category-icon">📈</div>
+                <div class="record-category-name">股票</div>
+                <div class="record-category-hint">有代码 / 可搜索</div>
+              </div>
+              <div class="record-category-card" data-cat="fund" onclick="selectRecordCategory('fund')">
+                <div class="record-category-icon">💼</div>
+                <div class="record-category-name">基金</div>
+                <div class="record-category-hint">有代码 / 可搜索</div>
+              </div>
+              <div class="record-category-card" data-cat="etf" onclick="selectRecordCategory('etf')">
+                <div class="record-category-icon">🧾</div>
+                <div class="record-category-name">ETF</div>
+                <div class="record-category-hint">有代码 / 可搜索</div>
+              </div>
+              <div class="record-category-card" data-cat="metal" onclick="selectRecordCategory('metal')">
+                <div class="record-category-icon">🥇</div>
+                <div class="record-category-name">贵金属</div>
+                <div class="record-category-hint">直接记录</div>
+              </div>
+              <div class="record-category-card" data-cat="deposit" onclick="selectRecordCategory('deposit')">
+                <div class="record-category-icon">🏦</div>
+                <div class="record-category-name">存款</div>
+                <div class="record-category-hint">直接记录</div>
+              </div>
+              <div class="record-category-card" data-cat="wealth" onclick="selectRecordCategory('wealth')">
+                <div class="record-category-icon">💰</div>
+                <div class="record-category-name">理财</div>
+                <div class="record-category-hint">直接记录</div>
+              </div>
+              <div class="record-category-card" data-cat="other" onclick="selectRecordCategory('other')">
+                <div class="record-category-icon">📦</div>
+                <div class="record-category-name">其他</div>
+                <div class="record-category-hint">直接记录</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 步骤 2A：有代码资产 → 搜索 + 列表 -->
         <div class="asset-search-box">
           <div class="form-group">
             <label class="form-label">搜索资产</label>
@@ -4156,6 +4244,44 @@ body {
         </div>
 
         <div class="asset-search-empty" id="recordFlowHint">可直接选择已有持仓，或搜索新资产进行新增。</div>
+
+        <!-- 步骤 2B：无代码资产 → 直接买卖表单 -->
+        <div class="record-form record-flow-panel" id="recordSimpleForm">
+          <div class="form-group">
+            <label class="form-label">资产名称</label>
+            <input class="input-field" id="recordSimpleName" placeholder="如：活期存款 / 黄金 / 余额宝">
+          </div>
+          <div class="mode-switch" id="recordSimpleSwitch">
+            <div class="mode-indicator" id="recordSimpleIndicator"></div>
+            <button class="mode-btn active" id="recordSimpleModeBuy" onclick="switchRecordSimpleMode('BUY')">买入</button>
+            <button class="mode-btn" id="recordSimpleModeSell" onclick="switchRecordSimpleMode('SELL')">取出</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="recordSimplePriceLabel">单价</label>
+              <input class="input-field" type="number" id="recordSimplePrice" placeholder="0.00" oninput="updateSimpleAmount()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="recordSimpleQtyLabel">数量</label>
+              <input class="input-field" type="number" id="recordSimpleQty" placeholder="0" oninput="updateSimpleAmount()">
+            </div>
+          </div>
+          <div class="trade-preview">
+            <div class="trade-preview-item">
+              <span class="trade-preview-label" id="recordSimpleAmountLabel">交易额</span>
+              <span class="trade-preview-value" id="recordSimpleAmount">¥0</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">记录日期</label>
+            <input type="date" class="input-field" id="recordSimpleDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">备注</label>
+            <input class="input-field" id="recordSimpleNote" placeholder="可选，记录这笔买卖原因...">
+          </div>
+          <button class="btn-primary" style="width:100%;padding:16px;font-size:15px;border-radius:16px;" onclick="saveRecord()">确认记录</button>
+        </div>
 
         <div class="record-form record-flow-panel" id="recordTradeForm">
           <div class="sheet-context" id="recordSelectedAsset">
@@ -5774,31 +5900,117 @@ function resetRecordSheet() {
   activeRecordTxnType = 'BUY';
   activeRecordAssetData = null;
   activeAddAssetCode = '';
+  activeRecordCategory = '';
   setDateInputToday('recordDate');
   setDateInputToday('recordTradeDate');
+  setDateInputToday('recordSimpleDate');
   const searchInput = document.getElementById('assetSearchInput');
   if (searchInput) {
     searchInput.disabled = false;
     searchInput.value = '';
     searchInput.placeholder = '输入名称、代码或关键词';
   }
-  ['recordAddName', 'recordAddCode', 'recordAddCost', 'recordAddPrice', 'recordAddQuantity', 'recordAddNote', 'recordTradeNote'].forEach(id => {
+  ['recordAddName', 'recordAddCode', 'recordAddCost', 'recordAddPrice', 'recordAddQuantity', 'recordAddNote', 'recordTradeNote',
+   'recordSimpleName', 'recordSimplePrice', 'recordSimpleQty', 'recordSimpleNote'].forEach(id => {
     const input = document.getElementById(id);
     if (input) input.value = '';
   });
   const typeSelect = document.getElementById('recordAddType');
   if (typeSelect) typeSelect.value = 'stock';
-  setRecordFlow('idle');
+  setRecordFlow('category');
   filterAssetSearchResults();
+  updateSimpleAmount();
+}
+
+// 有代码/API 的分类：股票 / 基金 / ETF
+const CATEGORY_WITH_CODE = new Set(['stock', 'fund', 'etf']);
+let activeRecordCategory = '';
+
+function selectRecordCategory(type) {
+  activeRecordCategory = type;
+  // 高亮当前选中的卡片
+  document.querySelectorAll('#recordCategoryGrid .record-category-card').forEach(card => {
+    card.classList.toggle('active', card.dataset.cat === type);
+  });
+  if (CATEGORY_WITH_CODE.has(type)) {
+    // 有代码：进入搜索 + 列表环节
+    // 预填 recordAddType 以便后续新增时携带正确分类
+    const typeSelect = document.getElementById('recordAddType');
+    if (typeSelect) typeSelect.value = type;
+    setRecordFlow('idle'); // 复用 idle = 显示搜索
+    filterAssetSearchResults();
+  } else {
+    // 无代码：直接进入简化买卖表单
+    fillSimpleFormByCategory(type);
+    setRecordFlow('simple');
+  }
+  // 滚动到下方表单
+  setTimeout(() => {
+    document.querySelector('#recordSheetModal .sheet-body')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 50);
+}
+
+function fillSimpleFormByCategory(type) {
+  const nameInput = document.getElementById('recordSimpleName');
+  const qtyLabel = document.getElementById('recordSimpleQtyLabel');
+  const priceLabel = document.getElementById('recordSimplePriceLabel');
+  const amountLabel = document.getElementById('recordSimpleAmountLabel');
+  const placeholders = {
+    metal:   { name: '黄金 / 白银 / 铂金',       qty: '克',  price: '元/克',   amount: '交易额',  sellLabel: '卖出' },
+    deposit: { name: '活期存款 / 定期存款',         qty: '金额(元)', price: '年化%',    amount: '本息合计',  sellLabel: '取出' },
+    wealth:  { name: '余额宝 / 银行理财 / 货币基金', qty: '金额(元)', price: '年化%',    amount: '本息合计',  sellLabel: '赎回' },
+    other:   { name: '自定义资产名称',             qty: '数量',   price: '单价',     amount: '交易额',  sellLabel: '卖出' }
+  };
+  const cfg = placeholders[type] || placeholders.other;
+  if (nameInput) nameInput.placeholder = cfg.name;
+  if (qtyLabel) qtyLabel.textContent = cfg.qty;
+  if (priceLabel) priceLabel.textContent = cfg.price;
+  if (amountLabel) amountLabel.textContent = cfg.amount;
+  const sellBtn = document.getElementById('recordSimpleModeSell');
+  if (sellBtn) sellBtn.textContent = cfg.sellLabel;
+  // 同步 recordAddType，保持后续逻辑一致
+  const typeSelect = document.getElementById('recordAddType');
+  if (typeSelect) typeSelect.value = type;
+  switchRecordSimpleMode('BUY');
+  updateSimpleAmount();
+}
+
+function switchRecordSimpleMode(type) {
+  const isSell = type === 'SELL';
+  document.getElementById('recordSimpleIndicator')?.classList.toggle('right', isSell);
+  document.getElementById('recordSimpleModeBuy')?.classList.toggle('active', !isSell);
+  document.getElementById('recordSimpleModeSell')?.classList.toggle('active', isSell);
+  updateSimpleAmount();
+}
+
+function updateSimpleAmount() {
+  const price = parseFloat(document.getElementById('recordSimplePrice')?.value) || 0;
+  const qty = parseFloat(document.getElementById('recordSimpleQty')?.value) || 0;
+  const amount = price * qty;
+  const amountEl = document.getElementById('recordSimpleAmount');
+  if (amountEl) amountEl.textContent = '¥' + amount.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function setRecordFlow(state) {
   recordFlowState = state;
+  const showTrade  = state === 'trade';
+  const showAdd    = state === 'add';
+  const showCat    = state === 'category';
+  const showSimple = state === 'simple';
+  const showSearch = (state === 'idle' || state === 'add' || state === 'trade');
   document.getElementById('recordFlowHint')?.classList.toggle('show', state === 'idle');
-  document.getElementById('recordTradeForm')?.classList.toggle('show', state === 'trade');
-  document.getElementById('recordAddForm')?.classList.toggle('show', state === 'add');
+  document.getElementById('recordCategoryForm')?.classList.toggle('show', showCat);
+  document.getElementById('recordSimpleForm')?.classList.toggle('show', showSimple);
+  document.getElementById('recordTradeForm')?.classList.toggle('show', showTrade);
+  document.getElementById('recordAddForm')?.classList.toggle('show', showAdd);
+  const searchBox = document.querySelector('#recordSheetModal .asset-search-box');
+  if (searchBox) searchBox.style.display = showSearch ? '' : 'none';
   const saveBtn = document.getElementById('recordSaveBtn');
-  if (saveBtn) saveBtn.textContent = state === 'trade' ? '记录' : '保存';
+  if (saveBtn) {
+    if (state === 'category') saveBtn.textContent = '保存';
+    else if (state === 'trade' || state === 'simple') saveBtn.textContent = '记录';
+    else saveBtn.textContent = '保存';
+  }
 }
 
 function getHoldingSearchOptions() {
@@ -6320,6 +6532,18 @@ function saveRecord(type) {
     return;
   }
 
+  if (flow === 'simple') {
+    const name = document.getElementById('recordSimpleName')?.value.trim();
+    if (!name) {
+      showToast('请填写资产名称');
+      return;
+    }
+    const sell = document.getElementById('recordSimpleModeSell')?.classList.contains('active');
+    showToast(sell ? '取出记录已保存' : '买入记录已保存');
+    closeRecordSheet();
+    return;
+  }
+
   if (flow === 'add') {
     const name = document.getElementById('recordAddName')?.value.trim();
     if (!name) {
@@ -6331,7 +6555,7 @@ function saveRecord(type) {
     return;
   }
 
-  showToast('请先搜索或填写资产');
+  showToast('请先选择资产分类');
 }
 
 function applyPrototypeStateFromUrl() {
