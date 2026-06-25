@@ -1551,8 +1551,15 @@ body {
   width:96% !important;
   max-width:96% !important;
 }
-.sheet-body.history-sheet-body {
+#historyNotesModal .sheet-body.history-sheet-body {
   padding:0 !important;
+}
+/* 交易记录半弹框：恢复合适的内边距 */
+#historyTransactionsModal .sheet-body.history-sheet-body {
+  padding:0 0 24px !important;
+}
+#historyTransactionsModal .history-sheet-search {
+  margin:12px 16px;
 }
 .history-sheet-search {
   display:flex;
