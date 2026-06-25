@@ -22,8 +22,8 @@
   --text-muted: #999;
   --border: #e8e6e3;
   --input-bg: #f5f4f2;
-  --positive: #2E8B57;
-  --negative: #CD5C5C;
+  --positive: #c0392b;
+  --negative: #27ae60;
   --shadow: 0 2px 24px rgba(164,74,63,0.08);
   --shadow-lg: 0 8px 32px rgba(164,74,63,0.12);
   --radius: 24px;
@@ -219,8 +219,8 @@ body {
   background: var(--input-bg);
   color: var(--text-secondary);
 }
-.tag-up { background: rgba(46,139,87,0.08); color: var(--positive); }
-.tag-down { background: rgba(205,92,92,0.08); color: var(--negative); }
+.tag-up { background: rgba(192,57,43,0.08); color: var(--positive); }
+.tag-down { background: rgba(39,174,96,0.08); color: var(--negative); }
 
 /* Portfolio */
 .summary-card {
@@ -304,14 +304,19 @@ body {
   display:block;
   font-size:22px;
   font-weight:600;
-  color: var(--positive);
   font-variant-numeric: lining-nums;
   text-shadow: none;
   width: 100%;
   min-width: 0;
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  transition: opacity 0.3s ease, filter 0.3s ease, color 0.3s ease;
   white-space:nowrap;
 }
+.summary-col .value.small.up { color: var(--positive); }
+.summary-col .value.small.down { color: var(--negative); }
+.summary-col .value.small.neutral { color: var(--text-secondary); }
+#todayPnLPct.up { color: var(--positive); }
+#todayPnLPct.down { color: var(--negative); }
+#todayPnLPct.neutral { color: var(--text-secondary); }
 .summary-col .value.small.privacy-hide {
   opacity: 0.3;
   filter: blur(2px);
@@ -698,8 +703,8 @@ body {
 }
 .col-today .today-amount { white-space:nowrap; }
 .col-today .today-pct { white-space:nowrap; font-size:10px; opacity:0.85; }
-.col-today.up { color:#d14b4b; }
-.col-today.down { color:#2e8b57; }
+.col-today.up { color:#c0392b; }
+.col-today.down { color:#27ae60; }
 .col-today.neutral { color:var(--text-secondary); }
 
 /* 第二行：持仓量 | 成本价 | 市值 | 持仓盈亏（4列网格） */
@@ -739,8 +744,8 @@ body {
   line-height:1.3;
   letter-spacing:-0.02em;
 }
-.asset-sub-cell .sub-value.up { color:#d14b4b; }
-.asset-sub-cell .sub-value.down { color:#2e8b57; }
+.asset-sub-cell .sub-value.up { color:#c0392b; }
+.asset-sub-cell .sub-value.down { color:#27ae60; }
 .asset-sub-cell:last-child { align-items:flex-end; }
 
 /* 第三行：辅助信息（持仓占比、到期信息等） */
@@ -813,8 +818,8 @@ body {
   white-space:nowrap;
 }
 .extra-maturity.maturity-soon {
-  background:rgba(205,92,92,0.08);
-  color:var(--negative);
+  background:rgba(192,57,43,0.08);
+  color:#c0392b;
 }
 .extra-rate {
   font-weight:600;
@@ -1280,11 +1285,11 @@ body {
   font-weight:600;
 }
 .asset-txn-row-tag.buy {
-  background:rgba(46,139,87,0.12);
+  background:rgba(192,57,43,0.12);
   color:var(--positive);
 }
 .asset-txn-row-tag.sell {
-  background:rgba(205,92,92,0.12);
+  background:rgba(39,174,96,0.12);
   color:var(--negative);
 }
 /* 4笔后倒三角展开 */
@@ -1572,11 +1577,11 @@ body {
   font-weight:600;
 }
 .txn-page-type-tag.buy {
-  background:rgba(46,139,87,0.12);
+  background:rgba(192,57,43,0.12);
   color:var(--positive);
 }
 .txn-page-type-tag.sell {
-  background:rgba(205,92,92,0.12);
+  background:rgba(39,174,96,0.12);
   color:var(--negative);
 }
 .txn-empty {
@@ -1676,12 +1681,12 @@ body {
   color:var(--text-muted);
 }
 .notes-history-tag.trend-bull {
-  background:rgba(46,139,87,0.12);
+  background:rgba(192,57,43,0.12);
   color:var(--positive);
   font-weight:600;
 }
 .notes-history-tag.trend-bear {
-  background:rgba(205,92,92,0.12);
+  background:rgba(39,174,96,0.12);
   color:var(--negative);
   font-weight:600;
 }
@@ -2337,11 +2342,11 @@ body {
   font-weight:600;
 }
 .scan-badge.new {
-  background:rgba(46,139,87,0.1);
+  background:rgba(192,57,43,0.1);
   color:var(--positive);
 }
 .scan-badge.exist {
-  background:rgba(205,92,92,0.1);
+  background:rgba(39,174,96,0.1);
   color:var(--negative);
 }
 
@@ -2539,8 +2544,8 @@ body {
   font-weight:600;
   padding:1px 6px;
   border-radius:4px;
-  background:rgba(46,139,87,0.12);
-  color:#2e8b57;
+  background:rgba(164,74,63,0.08);
+  color:var(--brand);
   flex-shrink:0;
 }
 .sr-right-top {
@@ -2583,8 +2588,8 @@ body {
   background:rgba(0,0,0,0.08);
   margin-right:8px;
 }
-.sr-pct.up { color:#d14b4b; font-weight:600; }
-.sr-pct.dn { color:#2e8b57; font-weight:600; }
+.sr-pct.up { color:#c0392b; font-weight:600; }
+.sr-pct.dn { color:#27ae60; font-weight:600; }
 .sr-tag-new {
   font-size:11px;
   padding:1px 7px;
@@ -2978,7 +2983,7 @@ body {
   margin-top:4px;
 }
 .days-to-maturity.soon {
-  color:var(--negative);
+  color:#c0392b;
 }
 .asset-txn-card {
   background:var(--card);
@@ -3363,11 +3368,11 @@ body {
   white-space:nowrap;
 }
 .history-mini-tag.up {
-  background:rgba(46,139,87,0.08);
+  background:rgba(192,57,43,0.08);
   color:var(--positive);
 }
 .history-mini-tag.down {
-  background:rgba(205,92,92,0.08);
+  background:rgba(39,174,96,0.08);
   color:var(--negative);
 }
 .history-asset-pill {
@@ -3448,11 +3453,11 @@ body {
 }
 .history-asset-trend.up {
   color:var(--positive);
-  background:rgba(46,139,87,0.08);
+  background:rgba(192,57,43,0.08);
 }
 .history-asset-trend.down {
   color:var(--negative);
-  background:rgba(205,92,92,0.08);
+  background:rgba(39,174,96,0.08);
 }
 .history-asset-trend.neutral {
   color:var(--brand);
@@ -3501,7 +3506,7 @@ body {
   width:7px;
   height:7px;
   border-radius:50%;
-  background:var(--positive);
+  background:var(--brand-light);
 }
 .me-stats {
   display:flex;
@@ -3766,11 +3771,11 @@ body {
   font-size:11px;
 }
 .txn-type.buy {
-  background:rgba(46,139,87,0.12);
+  background:rgba(192,57,43,0.12);
   color:var(--positive);
 }
 .txn-type.sell {
-  background:rgba(205,92,92,0.12);
+  background:rgba(39,174,96,0.12);
   color:var(--negative);
 }
 .txn-qty {
@@ -3835,11 +3840,11 @@ body {
   background:var(--border);
 }
 .me-asset-btn.danger {
-  background:rgba(205,92,92,0.1);
-  color:var(--negative);
+  background:rgba(192,57,43,0.1);
+  color:#c0392b;
 }
 .me-asset-btn.danger:active {
-  background:rgba(205,92,92,0.2);
+  background:rgba(192,57,43,0.2);
 }
 .me-note-list {
   display:flex;
@@ -4130,11 +4135,11 @@ body {
   margin-bottom:8px;
 }
 .tag-bull {
-  background:rgba(46,139,87,0.15);
+  background:rgba(192,57,43,0.15);
   color:var(--positive);
 }
 .tag-bear {
-  background:rgba(205,92,92,0.15);
+  background:rgba(39,174,96,0.15);
   color:var(--negative);
 }
 .note-content {
@@ -4380,8 +4385,8 @@ body {
           <div class="summary-divider"></div>
           <div class="summary-col">
             <span class="label">今日盈亏</span>
-            <span class="value small" id="todayPnL">+2,340.50</span>
-            <span class="label" style="margin-top:6px;" id="todayPnLPct">+1.85%</span>
+            <span class="value small up" id="todayPnL">+2,340.50</span>
+            <span class="label up" style="margin-top:6px;" id="todayPnLPct">+1.85%</span>
           </div>
         </div>
         <div class="summary-actions">
@@ -4513,7 +4518,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥41,600 (+27.73%)</span>
+            <span class="sub-value up">+¥41,600 | +27.73%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4523,9 +4528,6 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:57.3%"></span></span>
               <span class="weight-value">57.3%</span>
             </span>
-          </div>
-          <div class="extra-right">
-            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 27.73%</span>
           </div>
         </div>
       </div>
@@ -4559,7 +4561,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥3,830 (+10.03%)</span>
+            <span class="sub-value up">+¥3,830 | +10.03%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4569,9 +4571,6 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:12.6%"></span></span>
               <span class="weight-value">12.6%</span>
             </span>
-          </div>
-          <div class="extra-right">
-            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 10.03%</span>
           </div>
         </div>
       </div>
@@ -4605,7 +4604,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value down">-¥70.00 (-14.29%)</span>
+            <span class="sub-value down">-¥70.00 | -14.29%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4615,9 +4614,6 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:0.1%"></span></span>
               <span class="weight-value">0.1%</span>
             </span>
-          </div>
-          <div class="extra-right">
-            <span style="color:var(--negative);font-size:10px;">持仓收益率 -14.29%</span>
           </div>
         </div>
       </div>
@@ -4651,7 +4647,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥1,781 (+10.45%)</span>
+            <span class="sub-value up">+¥1,781 | +10.45%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4661,9 +4657,6 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:5.6%"></span></span>
               <span class="weight-value">5.6%</span>
             </span>
-          </div>
-          <div class="extra-right">
-            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 10.45%</span>
           </div>
         </div>
       </div>
@@ -4697,7 +4690,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥354 (+0.71%)</span>
+            <span class="sub-value up">+¥354 | +0.71%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4744,7 +4737,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥182 (+0.61%)</span>
+            <span class="sub-value up">+¥182 | +0.61%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -5365,11 +5358,11 @@ body {
         </div>
         <div class="detail-card">
           <span class="detail-label">今日盈亏</span>
-          <span class="detail-value today-up" id="detailTodayPnL">+¥1,400 (+0.74%)</span>
+          <span class="detail-value today-up" id="detailTodayPnL">+¥1,400 | +0.74%</span>
         </div>
         <div class="detail-card">
           <span class="detail-label">持仓盈亏</span>
-          <span class="detail-value profit" id="detailPnL">+¥41,600</span>
+          <span class="detail-value profit" id="detailPnL">+¥41,600.00 | +27.73%</span>
         </div>
         <div class="detail-card wide editable fixed-income-only">
           <span class="detail-label">到期日</span>
@@ -5384,10 +5377,6 @@ body {
         <div class="detail-card fixed-income-only">
           <span class="detail-label">距到期天数</span>
           <span class="days-to-maturity" id="detailDaysToMaturity">还剩 188 天</span>
-        </div>
-        <div class="detail-card wide">
-          <span class="detail-label">持仓收益率</span>
-          <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
         </div>
       </div>
       <input type="hidden" id="editPrice">
@@ -6618,13 +6607,22 @@ function updateAssetListRow(item, asset) {
 function updateTotalAssetSummary() {
   const diff = totalAssetSnapshots.todayOne - totalAssetSnapshots.previousOne;
   const yieldPct = totalAssetSnapshots.previousOne ? diff / totalAssetSnapshots.previousOne * 100 : 0;
+  const isUp = diff > 0;
+  const isDn = diff < 0;
+  const pnlClass = isUp ? 'up' : isDn ? 'down' : 'neutral';
   const setText = (id, val) => {
     const el = document.getElementById(id);
     if (el) el.textContent = val;
   };
+  const setClass = (id, cls) => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.remove('up','down','neutral'); el.classList.add(cls); }
+  };
   setText('totalAsset', formatNumber(totalAssetSnapshots.todayOne));
   setText('todayPnL', signedNumber(diff));
   setText('todayPnLPct', signedPercent(yieldPct));
+  setClass('todayPnL', pnlClass);
+  setClass('todayPnLPct', pnlClass);
   setText('dailyAssetDiff', signedNumber(diff));
   setText('dailyAssetYield', signedPercent(yieldPct));
   setText('prevOneValue', formatNumber(totalAssetSnapshots.previousOne, 0));
@@ -6777,8 +6775,8 @@ function formatKlineValue(v) {
 // 旧版 K 线绘制（保留兼容）
 function drawKlineLegacy(series, days) {
   if (!series || !Array.isArray(days) || days.length === 0) return;
-  const upColor = '#A44A3F';
-  const downColor = '#2E8B57';
+  const upColor = '#c0392b';
+  const downColor = '#27ae60';
   const flatColor = '#999999';
   const top = 12;
   const bottom = 54;
@@ -7405,15 +7403,14 @@ function fillAssetDetail(asset) {
   const weightBar = document.getElementById('detailWeightBar');
   weightBar.style.width = Math.min(weight, 100) + '%';
 
-  const todayPnlText = `${isTodayUp ? '+' : ''}${currency}${formatNumber(metrics.todayPnl)} (${isTodayUp ? '+' : ''}${metrics.todayPct.toFixed(2)}%)`;
+  const todayPnlText = `${isTodayUp ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.todayPnl))} | ${isTodayUp ? '+' : '-'}${Math.abs(metrics.todayPct).toFixed(2)}%`;
   const todayPnlEl = document.getElementById('detailTodayPnL');
   todayPnlEl.textContent = todayPnlText;
   todayPnlEl.className = `detail-value ${isTodayUp ? 'today-up' : metrics.todayPnl < 0 ? 'today-down' : 'today-neutral'}`;
 
-  document.getElementById('detailPnL').textContent = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))}`;
-  document.getElementById('detailPnLPct').textContent = signedPercent(metrics.pnlPct);
+  const pnlText = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))} | ${isProfit ? '+' : '-'}${Math.abs(metrics.pnlPct).toFixed(2)}%`;
+  document.getElementById('detailPnL').textContent = pnlText;
   document.getElementById('detailPnL').className = isProfit ? 'detail-value profit' : 'detail-value loss';
-  document.getElementById('detailPnLPct').className = isProfit ? 'detail-value profit' : 'detail-value loss';
 
   const content = document.getElementById('assetDetailContent');
   content.classList.toggle('asset-fixed-income', fixedIncome);
