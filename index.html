@@ -35,10 +35,27 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --tab-height: 72px;
   --page-top: max(0px, var(--safe-top));
+  --tab-total-height: calc(var(--tab-height) + 9px + var(--safe-bottom));
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  :root {
+    --safe-top: constant(safe-area-inset-top, 0px);
+    --safe-bottom: constant(safe-area-inset-bottom, 0px);
+  }
 }
 
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html, body { height:100%; overflow:hidden; }
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 0;
+  margin: 0;
+}
+html {
+  height: -webkit-fill-available;
+}
 body {
   font-family: var(--font-body);
   background: var(--bg);
@@ -47,23 +64,28 @@ body {
   line-height: 1.5;
   letter-spacing: -0.01em;
   font-weight: 400;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 .app-container {
   width: 100%;
   max-width: 430px;
+  height: 100%;
   height: 100vh;
-  min-height: -webkit-fill-available;
+  height: -webkit-fill-available;
+  height: fill-available;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
   background: var(--bg);
+  padding-bottom: 0;
 }
 
 .page {
   position: absolute;
   top: var(--page-top); left: 0; right: 0;
-  bottom: calc(var(--tab-height) + var(--safe-bottom));
+  bottom: var(--tab-total-height);
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -71,6 +93,8 @@ body {
   transform: translateY(8px);
   pointer-events: none;
   transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding-bottom: 12px;
+  box-sizing: border-box;
 }
 .page.active {
   opacity: 1;
@@ -86,16 +110,30 @@ body {
 
 .tab-bar {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: calc(var(--tab-height) + var(--safe-bottom));
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  height: calc(var(--tab-height) + var(--safe-bottom) + 9px);
   padding-bottom: var(--safe-bottom);
-  background: rgba(255,255,255,0.9);
+  padding-top: 8px;
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid rgba(0,0,0,0.05);
   display: flex;
-  padding-top: 8px;
   z-index: 100;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-sizing: border-box;
+}
+@supports (padding-bottom: constant(safe-area-inset-bottom)) {
+  .tab-bar {
+    height: calc(var(--tab-height) + constant(safe-area-inset-bottom, 0px) + 9px);
+    padding-bottom: constant(safe-area-inset-bottom, 0px);
+  }
 }
 .tab-item {
   flex: 1;
@@ -530,9 +568,10 @@ body {
 .sort-option.active { color:var(--brand); font-weight:600; }
 .sort-option.active::after { content:'✓'; font-size:14px; color:var(--brand); }
 
-/* ========== 持仓列表：卡片式两行布局 ========== */
+/* ========== 持仓列表：卡片式三行布局（字段增强） ========== */
 .asset-list-header {
-  display:none; /* 隐藏表头，改用卡片内标签 */
+  display:none !important;
+  width:0; height:0; overflow:hidden;
 }
 
 #assetList {
@@ -541,7 +580,12 @@ body {
   border:1px solid rgba(164,74,63,0.06);
   border-radius:18px;
   overflow:hidden;
+  overflow-x:hidden;
   box-shadow:0 10px 22px rgba(164,74,63,0.05);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  width: auto;
+  max-width: calc(100% - 32px);
 }
 
 .asset-item {
@@ -552,6 +596,8 @@ body {
   position:relative;
   cursor:pointer;
   transition:background 0.15s;
+  overflow:hidden;
+  min-width:0;
 }
 .asset-item + .asset-item::before {
   content:'';
@@ -562,42 +608,91 @@ body {
 }
 .asset-item:active { background:#faf5f2; }
 
-/* 第一行：资产名称 + 现价/今日 */
+/* 第一行：资产名称 + 最新价/今日盈亏 */
 .asset-row-main {
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
   gap:12px;
+  min-width:0;
 }
-.col-name { text-align:left; min-width:0; flex:1; }
+.col-name { text-align:left; min-width:0; flex:1; overflow:hidden; }
 .col-name .col-name-main {
   display:block;
-  font-size:15px;
+  font-size:16px;
   font-weight:700;
   color:var(--text);
   letter-spacing:-0.01em;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  line-height:1.3;
 }
 .col-name .col-name-sub {
-  display:block;
+  display:flex;
+  align-items:center;
+  gap:4px;
   font-size:11px;
   color:var(--text-muted);
-  margin-top:3px;
+  margin-top:4px;
+  font-weight:500;
+  flex-wrap:wrap;
+  line-height:1.4;
+}
+.col-name .col-name-sub .type-tag {
+  display:inline-block;
+  padding:1px 6px;
+  border-radius:4px;
+  font-size:10px;
+  font-weight:600;
+  background:var(--input-bg);
+  color:var(--text-secondary);
+  line-height:1.4;
+}
+.type-tag.type-stock { background:rgba(209,75,75,0.08); color:#d14b4b; }
+.type-tag.type-fund { background:rgba(46,139,87,0.08); color:#2e8b57; }
+.type-tag.type-deposit { background:rgba(212,175,55,0.1); color:#b8941f; }
+.type-tag.type-wealth { background:rgba(74,111,164,0.08); color:#4a6fa4; }
+.type-tag.type-etf { background:rgba(156,84,164,0.08); color:#9c54a4; }
+.type-tag.type-metal { background:rgba(180,140,80,0.1); color:#b48c50; }
+
+.hold-days-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  font-size:10px;
+  color:var(--text-muted);
+  opacity:0.85;
+}
+.hold-days-badge::before {
+  content:'·';
+}
+.asset-code {
+  font-variant-numeric: tabular-nums;
+}
+.maturity-info {
+  font-size:10px;
+  color:#b8941f;
   font-weight:500;
 }
+.days-to-maturity {
+  color:#b8941f;
+  font-weight:600;
+}
 
-/* 现价区域 */
+/* 最新价+今日盈亏区域 */
 .asset-price-block {
   text-align:right;
   flex-shrink:0;
+  min-width:0;
 }
 .asset-price-block .col-price {
-  font-size:15px;
+  font-size:16px;
   font-weight:700;
   color:var(--text);
   font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  line-height:1.3;
 }
 .asset-price-block .col-today {
   display:flex;
@@ -605,49 +700,141 @@ body {
   align-items:flex-end;
   font-size:11px;
   font-weight:600;
-  line-height:1.3;
-  margin-top:2px;
+  line-height:1.4;
+  margin-top:3px;
 }
+.col-today .today-amount { white-space:nowrap; }
+.col-today .today-pct { white-space:nowrap; font-size:10px; opacity:0.85; }
 .col-today.up { color:#d14b4b; }
 .col-today.down { color:#2e8b57; }
+.col-today.neutral { color:var(--text-secondary); }
 
-/* 第二行：持仓量 | 成本 | 市值 | 盈亏 */
+/* 第二行：持仓量 | 成本价 | 市值 | 持仓盈亏（4列网格） */
 .asset-row-sub {
   display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1.2fr;
-  gap:0;
+  grid-template-columns: 0.75fr 0.9fr 0.9fr 1.45fr;
+  gap:2px;
   margin-top:12px;
   padding-top:10px;
-  border-top:1px solid rgba(164,74,63,0.04);
+  border-top:1px solid rgba(164,74,63,0.06);
+  min-width:0;
 }
 .asset-sub-cell {
   display:flex;
   flex-direction:column;
   align-items:flex-start;
   gap:2px;
+  min-width:0;
+  overflow:hidden;
 }
 .asset-sub-cell .sub-label {
   font-size:10px;
   color:var(--text-muted);
   font-weight:500;
-  letter-spacing:0.02em;
+  letter-spacing:0.01em;
+  white-space:nowrap;
 }
 .asset-sub-cell .sub-value {
   font-size:12px;
   font-weight:600;
   color:var(--text);
   font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+  line-height:1.3;
+  letter-spacing:-0.02em;
 }
 .asset-sub-cell .sub-value.up { color:#d14b4b; }
 .asset-sub-cell .sub-value.down { color:#2e8b57; }
 .asset-sub-cell:last-child { align-items:flex-end; }
 
-/* 旧样式隐藏（不再使用） */
-.asset-left, .asset-row-head, .asset-title, .asset-name, .asset-code,
+/* 第三行：辅助信息（持仓占比、到期信息等） */
+.asset-row-extra {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:8px;
+  padding-top:8px;
+  border-top:1px solid rgba(164,74,63,0.03);
+  font-size:11px;
+  color:var(--text-muted);
+  min-width:0;
+}
+.asset-row-extra .extra-left {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  overflow:hidden;
+}
+.asset-row-extra .weight-bar-wrap {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-width:0;
+}
+.asset-row-extra .weight-label {
+  font-size:10px;
+  color:var(--text-muted);
+  white-space:nowrap;
+}
+.asset-row-extra .weight-value {
+  font-size:11px;
+  font-weight:600;
+  color:var(--text-secondary);
+  font-variant-numeric:tabular-nums;
+}
+.weight-bar {
+  width:48px;
+  height:4px;
+  background:var(--input-bg);
+  border-radius:2px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.weight-bar-fill {
+  height:100%;
+  background:linear-gradient(90deg, var(--brand-light), var(--brand));
+  border-radius:2px;
+  transition:width 0.3s;
+}
+.asset-row-extra .extra-right {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0;
+  font-size:10px;
+}
+.extra-maturity {
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:2px 7px;
+  border-radius:6px;
+  background:rgba(212,175,55,0.08);
+  color:#b8941f;
+  font-weight:600;
+  white-space:nowrap;
+}
+.extra-maturity.maturity-soon {
+  background:rgba(205,92,92,0.08);
+  color:var(--negative);
+}
+.extra-rate {
+  font-weight:600;
+  color:var(--positive);
+  font-variant-numeric:tabular-nums;
+}
+
+/* 旧样式隐藏 */
+.asset-left, .asset-row-head, .asset-title, .asset-name, .asset-code-old,
 .asset-mv, .asset-mv-label, .asset-mv-value, .asset-type-badge,
 .asset-row-meta, .asset-meta-item, .asset-row-price, .asset-last-price,
 .asset-pnl-group, .asset-pnl-today, .asset-pnl-hold,
-.asset-meta, .asset-hold-days, .asset-code-old, .asset-right,
+.asset-meta, .asset-hold-days, .asset-right,
 .asset-value-label, .asset-price, .asset-pnl { display:none !important; }
 
 .asset-empty-state {
@@ -1617,16 +1804,21 @@ body {
 }
 #noteInputModal .sheet-body.history-sheet-body {
   padding:0 !important;
+  display:flex;
+  flex-direction:column;
 }
 .note-input-body {
   padding:16px 16px 24px;
   overflow-y:auto;
-  max-height:calc(88vh - 100px);
+  flex:1;
+  display:flex;
+  flex-direction:column;
   scrollbar-width:none;
 }
 .note-input-body::-webkit-scrollbar { display:none; }
 .note-input-body .insight-textarea {
   width:100%;
+  flex:1;
   min-height:120px;
   border:none;
   background:var(--input-bg);
@@ -1647,6 +1839,7 @@ body {
   align-items:center;
   gap:10px;
   margin-top:12px;
+  flex-shrink:0;
 }
 .note-input-body .trash-btn {
   background:none;
@@ -1678,6 +1871,7 @@ body {
   border-radius:12px;
   border:1px solid var(--border);
   overflow:hidden;
+  flex-shrink:0;
 }
 .note-input-body .analysis-header-bar {
   display:flex;
@@ -1764,6 +1958,7 @@ body {
 .note-input-body .analysis-action-btn:active { transform:scale(0.98); }
 .note-input-history-entry {
   margin-top:16px;
+  flex-shrink:0;
 }
 .note-input-history-entry .history-entry-btn {
   width:100%;
@@ -1843,7 +2038,7 @@ body {
 }
 .history-sheet-list {
   margin:0;
-  max-height:calc(88vh - 130px);
+  max-height:calc(70vh - 130px);
   overflow-y:auto;
   scrollbar-width:none;
   padding:0 0 24px;
@@ -1879,7 +2074,7 @@ body {
 .txn-sheet-list {
   margin:0;
   padding:0 0 24px;
-  max-height:calc(88vh - 200px);
+  max-height:calc(70vh - 200px);
   overflow-y:auto;
   display:flex;
   flex-direction:column;
@@ -2181,8 +2376,8 @@ body {
   width:100%;
   max-width:100%;
   background:var(--card);
-  height:88vh;
-  max-height:88vh;
+  height:70vh;
+  max-height:70vh;
   border-radius:20px 20px 0 0;
   overflow:hidden;
   scrollbar-width:none;
@@ -2538,6 +2733,14 @@ body {
 .prediction-panel {
   scroll-margin-top:126px;
 }
+.prediction-panel {
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.08);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(164,74,63,0.04);
+}
 .record-sheet .record-form,
 .record-sheet .mode-switch {
   margin-left:0;
@@ -2628,7 +2831,8 @@ body {
   margin-bottom:16px;
 }
 .detail-card {
-  background:var(--input-bg);
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.08);
   border-radius:var(--radius-sm);
   padding:12px;
   min-height:70px;
@@ -2718,12 +2922,68 @@ body {
   transform:translateY(0);
 }
 .note-summary-panel,
-.prediction-panel,
 .field-editor {
-  background:var(--input-bg);
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.08);
   border-radius:var(--radius-sm);
   padding:14px;
   margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(164,74,63,0.04);
+}
+.detail-card .detail-weight-bar {
+  width:60px;
+  height:5px;
+  background:var(--input-bg);
+  border-radius:3px;
+  overflow:hidden;
+  margin-top:8px;
+}
+.detail-card .detail-weight-bar-fill {
+  height:100%;
+  background:linear-gradient(90deg, var(--brand-light), var(--brand));
+  border-radius:3px;
+  transition:width 0.3s;
+}
+.detail-value.today-up { color:var(--positive); }
+.detail-value.today-down { color:var(--negative); }
+.detail-value.today-neutral { color:var(--text-secondary); }
+.fixed-income-only {
+  display:none;
+}
+.asset-fixed-income .fixed-income-only {
+  display:block;
+}
+.detail-type-tag {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:4px;
+  font-size:11px;
+  font-weight:600;
+  margin-left:8px;
+  vertical-align:middle;
+}
+.detail-type-tag.type-stock { background:rgba(209,75,75,0.08); color:#d14b4b; }
+.detail-type-tag.type-fund { background:rgba(46,139,87,0.08); color:#2e8b57; }
+.detail-type-tag.type-deposit { background:rgba(212,175,55,0.1); color:#b8941f; }
+.detail-type-tag.type-wealth { background:rgba(74,111,164,0.08); color:#4a6fa4; }
+.detail-type-tag.type-etf { background:rgba(156,84,164,0.08); color:#9c54a4; }
+.detail-type-tag.type-metal { background:rgba(180,140,80,0.1); color:#b48c50; }
+.days-to-maturity {
+  font-size:13px;
+  font-weight:600;
+  color:#b8941f;
+  margin-top:4px;
+}
+.days-to-maturity.soon {
+  color:var(--negative);
+}
+.asset-txn-card {
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.08);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(164,74,63,0.04);
 }
 .panel-title-row {
   display:flex;
@@ -2749,9 +3009,11 @@ body {
 .note-summary-item,
 .prediction-item {
   background:var(--card);
-  border-radius:var(--radius-xs);
-  padding:11px 12px;
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:10px;
+  padding:12px;
   margin-top:10px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.03);
 }
 .note-summary-item.clickable,
 .prediction-item.clickable {
@@ -2761,7 +3023,7 @@ body {
 .note-summary-item.clickable:active,
 .prediction-item.clickable:active {
   transform:scale(0.99);
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 .note-summary-grid {
   display:grid;
@@ -2794,6 +3056,46 @@ body {
   font-weight:700;
   color:var(--brand);
   white-space:nowrap;
+}
+.prediction-empty {
+  margin-top:10px;
+  background:var(--card);
+  border-radius:10px;
+  padding:20px 16px;
+  text-align:center;
+  cursor:pointer;
+  transition:transform 0.18s ease, box-shadow 0.18s ease;
+  border:1px dashed var(--border);
+  box-shadow:0 1px 4px rgba(0,0,0,0.03);
+}
+.prediction-empty:active {
+  transform:scale(0.99);
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+.prediction-empty-icon {
+  font-size:28px;
+  margin-bottom:8px;
+}
+.prediction-empty-text {
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:10px;
+}
+.prediction-empty-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:7px 16px;
+  border-radius:20px;
+  background:var(--brand);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+}
+.prediction-empty-btn:active {
+  opacity:0.85;
 }
 .field-editor {
   display:none;
@@ -3912,7 +4214,7 @@ body {
 
 /* Account Modal */
 .account-modal-body {
-  max-height: 70vh;
+  flex:1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -4160,18 +4462,21 @@ body {
       </div>
     </div>
 
-    <!-- 持仓列表字段说明行（仿腾讯自选：资产 / 持仓量 / 成本价 / 现价 / 今日 / 持仓盈亏） -->
     <div id="assetList">
-      <!-- 股票/基金/ETF：卡片式两行布局 -->
+      <!-- 股票/基金/ETF：卡片式三行布局 -->
       <div class="asset-item" data-code="600519" data-type="stock" data-type-label="股票" data-price="1916.00" data-prev-close="1902.00" data-cost="1500.00" data-quantity="100" data-hold-days="186" onclick="openAssetSheet('600519')">
         <div class="asset-row-main">
           <div class="col-name">
             <span class="col-name-main">贵州茅台</span>
-            <span class="col-name-sub">600519 · 股票</span>
+            <span class="col-name-sub">
+              <span class="type-tag type-stock">股票</span>
+              <span class="asset-code">600519</span>
+              <span class="hold-days-badge">持仓 186 天</span>
+            </span>
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,916.00</div>
-            <div class="col-today up"><span>+¥1,400</span><span>+0.74%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-pct">+0.74%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4192,16 +4497,32 @@ body {
             <span class="sub-value up">+¥41,600 (+27.73%)</span>
           </div>
         </div>
+        <div class="asset-row-extra">
+          <div class="extra-left">
+            <span class="weight-bar-wrap">
+              <span class="weight-label">占比</span>
+              <span class="weight-bar"><span class="weight-bar-fill" style="width:57.3%"></span></span>
+              <span class="weight-value">57.3%</span>
+            </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 27.73%</span>
+          </div>
+        </div>
       </div>
       <div class="asset-item" data-code="00700" data-type="stock" data-type-label="股票" data-price="420.30" data-prev-close="410.20" data-cost="382.00" data-quantity="100" data-hold-days="92" onclick="openAssetSheet('00700')">
         <div class="asset-row-main">
           <div class="col-name">
             <span class="col-name-main">腾讯控股</span>
-            <span class="col-name-sub">00700 · 股票</span>
+            <span class="col-name-sub">
+              <span class="type-tag type-stock">港股</span>
+              <span class="asset-code">00700</span>
+              <span class="hold-days-badge">持仓 92 天</span>
+            </span>
           </div>
           <div class="asset-price-block">
-            <div class="col-price">¥420.30</div>
-            <div class="col-today up"><span>+¥1,010</span><span>+2.46%</span></div>
+            <div class="col-price">HK$420.30</div>
+            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-pct">+2.46%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4211,7 +4532,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">成本价</span>
-            <span class="sub-value">¥382.00</span>
+            <span class="sub-value">HK$382.00</span>
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">市值</span>
@@ -4222,16 +4543,32 @@ body {
             <span class="sub-value up">+¥3,830 (+10.03%)</span>
           </div>
         </div>
+        <div class="asset-row-extra">
+          <div class="extra-left">
+            <span class="weight-bar-wrap">
+              <span class="weight-label">占比</span>
+              <span class="weight-bar"><span class="weight-bar-fill" style="width:12.6%"></span></span>
+              <span class="weight-value">12.6%</span>
+            </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 10.03%</span>
+          </div>
+        </div>
       </div>
       <div class="asset-item" data-code="110022" data-type="fund" data-type-label="基金" data-price="4.20" data-prev-close="4.32" data-cost="4.90" data-quantity="100" data-hold-days="318" onclick="openAssetSheet('110022')">
         <div class="asset-row-main">
           <div class="col-name">
-            <span class="col-name-main">易方达消费</span>
-            <span class="col-name-sub">110022 · 基金</span>
+            <span class="col-name-main">易方达消费行业</span>
+            <span class="col-name-sub">
+              <span class="type-tag type-fund">基金</span>
+              <span class="asset-code">110022</span>
+              <span class="hold-days-badge">持仓 318 天</span>
+            </span>
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥4.20</div>
-            <div class="col-today down"><span>-¥12.00</span><span>-2.78%</span></div>
+            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-pct">-2.78%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4252,16 +4589,32 @@ body {
             <span class="sub-value down">-¥70.00 (-14.29%)</span>
           </div>
         </div>
+        <div class="asset-row-extra">
+          <div class="extra-left">
+            <span class="weight-bar-wrap">
+              <span class="weight-label">占比</span>
+              <span class="weight-bar"><span class="weight-bar-fill" style="width:0.1%"></span></span>
+              <span class="weight-value">0.1%</span>
+            </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--negative);font-size:10px;">持仓收益率 -14.29%</span>
+          </div>
+        </div>
       </div>
       <div class="asset-item" data-code="AAPL" data-type="stock" data-type-label="股票" data-price="1568.40" data-prev-close="1542.00" data-cost="1420.00" data-quantity="12" data-hold-days="74" onclick="openAssetSheet('AAPL')">
         <div class="asset-row-main">
           <div class="col-name">
             <span class="col-name-main">苹果公司</span>
-            <span class="col-name-sub">AAPL · 股票</span>
+            <span class="col-name-sub">
+              <span class="type-tag type-stock">美股</span>
+              <span class="asset-code">AAPL</span>
+              <span class="hold-days-badge">持仓 74 天</span>
+            </span>
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,568.40</div>
-            <div class="col-today up"><span>+¥316.80</span><span>+1.71%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-pct">+1.71%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4275,11 +4628,23 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">市值</span>
-            <span class="sub-value">¥18,820.80</span>
+            <span class="sub-value">¥18,821</span>
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥1,780.80 (+10.45%)</span>
+            <span class="sub-value up">+¥1,781 (+10.45%)</span>
+          </div>
+        </div>
+        <div class="asset-row-extra">
+          <div class="extra-left">
+            <span class="weight-bar-wrap">
+              <span class="weight-label">占比</span>
+              <span class="weight-bar"><span class="weight-bar-fill" style="width:5.6%"></span></span>
+              <span class="weight-value">5.6%</span>
+            </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 10.45%</span>
           </div>
         </div>
       </div>
@@ -4288,11 +4653,14 @@ body {
         <div class="asset-row-main">
           <div class="col-name">
             <span class="col-name-main">一年期定期存款</span>
-            <span class="col-name-sub">存款 · 2026-12-31 到期</span>
+            <span class="col-name-sub">
+              <span class="type-tag type-deposit">存款</span>
+              <span class="hold-days-badge">已存 120 天</span>
+            </span>
           </div>
           <div class="asset-price-block">
-            <div class="col-price">¥51,075</div>
-            <div class="col-today up"><span>+¥2.95</span><span>利息累计</span></div>
+            <div class="col-price">¥50,354</div>
+            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-pct">累计利息</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4301,47 +4669,76 @@ body {
             <span class="sub-value">¥50,000</span>
           </div>
           <div class="asset-sub-cell">
-            <span class="sub-label">年化</span>
-            <span class="sub-value">2.15%</span>
+            <span class="sub-label">成本价</span>
+            <span class="sub-value">¥1.00</span>
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">市值</span>
-            <span class="sub-value">¥51,075</span>
+            <span class="sub-value">¥50,354</span>
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥355.00 (+0.71%)</span>
+            <span class="sub-value up">+¥354 (+0.71%)</span>
+          </div>
+        </div>
+        <div class="asset-row-extra">
+          <div class="extra-left">
+            <span class="weight-bar-wrap">
+              <span class="weight-label">占比</span>
+              <span class="weight-bar"><span class="weight-bar-fill" style="width:15.0%"></span></span>
+              <span class="weight-value">15.0%</span>
+            </span>
+          </div>
+          <div class="extra-right">
+            <span class="extra-maturity">📅 2026-12-31 到期</span>
+            <span class="extra-rate">年化 2.15%</span>
           </div>
         </div>
       </div>
       <!-- 无代码资产：理财 -->
-      <div class="asset-item asset-item-no-code" data-code="WL001" data-type="wealth" data-type-label="理财" data-price="1.012" data-prev-close="1.010" data-cost="1.0" data-quantity="30000" data-hold-days="68" data-maturity="2026-09-20" data-rate="3.25" onclick="openAssetSheet('WL001')">
+      <div class="asset-item asset-item-no-code" data-code="WL001" data-type="wealth" data-type-label="理财" data-price="1.006" data-prev-close="1.006" data-cost="1.0" data-quantity="30000" data-hold-days="68" data-maturity="2026-09-20" data-rate="3.25" onclick="openAssetSheet('WL001')">
         <div class="asset-row-main">
           <div class="col-name">
             <span class="col-name-main">招银理财·月开鑫</span>
-            <span class="col-name-sub">理财 · 2026-09-20 到期</span>
+            <span class="col-name-sub">
+              <span class="type-tag type-wealth">理财</span>
+              <span class="hold-days-badge">持有 68 天</span>
+            </span>
           </div>
           <div class="asset-price-block">
-            <div class="col-price">¥30,360</div>
-            <div class="col-today up"><span>+¥6.00</span><span>+0.20%</span></div>
+            <div class="col-price">¥30,182</div>
+            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-pct">+0.01%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
           <div class="asset-sub-cell">
-            <span class="sub-label">本金</span>
-            <span class="sub-value">¥30,000</span>
+            <span class="sub-label">持仓量</span>
+            <span class="sub-value">30,000 份</span>
           </div>
           <div class="asset-sub-cell">
-            <span class="sub-label">年化</span>
-            <span class="sub-value">3.25%</span>
+            <span class="sub-label">成本价</span>
+            <span class="sub-value">¥1.00</span>
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">市值</span>
-            <span class="sub-value">¥30,360</span>
+            <span class="sub-value">¥30,182</span>
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥360.00 (+1.20%)</span>
+            <span class="sub-value up">+¥182 (+0.61%)</span>
+          </div>
+        </div>
+        <div class="asset-row-extra">
+          <div class="extra-left">
+            <span class="weight-bar-wrap">
+              <span class="weight-label">占比</span>
+              <span class="weight-bar"><span class="weight-bar-fill" style="width:9.0%"></span></span>
+              <span class="weight-value">9.0%</span>
+            </span>
+          </div>
+          <div class="extra-right">
+            <span class="extra-maturity">📅 2026-09-20 到期</span>
+            <span class="extra-rate">年化 3.25%</span>
           </div>
         </div>
       </div>
@@ -4350,93 +4747,6 @@ body {
         <div class="asset-empty-copy" id="assetEmptyCopy">添加一项持仓后，这里会同步展示市值、盈亏和持仓时间。</div>
         <button class="asset-empty-action" onclick="openRecordSheet('add')">新增资产</button>
       </div>
-    </div>
-  </div>
-
-  <!-- Insights Page -->
-  <div class="page" id="page-insights">
-    <div class="insights-header">
-      <span class="insights-title">笔记</span>
-      <span class="insights-subtitle">把文章、观点和链接提炼成可回看、可关联资产的决策信号。</span>
-    </div>
-
-    <div class="insight-input-card">
-      <textarea class="insight-textarea" id="insightInput" placeholder="粘贴文章、输入观点或链接..."></textarea>
-      <div class="insight-actions">
-        <button class="trash-btn" onclick="clearInsightInput()">
-          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-        </button>
-        <button class="analyze-btn" onclick="analyzeText()">分析</button>
-      </div>
-    </div>
-
-    <div class="analysis-result" id="analysisResult">
-      <div class="analysis-header-bar">
-        <span style="font-family:var(--font-display);font-weight:600;font-size:16px;">分析结果</span>
-        <span class="analysis-type-badge" id="articleType">行业研究</span>
-      </div>
-      <div class="analysis-body">
-        <div class="analysis-summary" id="analysisSummary">
-          AI芯片需求持续扩张，国产替代进程加速。半导体行业景气度上行，关注龙头企业。
-        </div>
-        <div class="analysis-tags" id="analysisTags">
-          <span class="tag tag-up">看多</span>
-          <span class="tag">半导体</span>
-          <span class="tag">成长</span>
-        </div>
-        <div class="analysis-field-grid">
-          <div class="analysis-field">
-            <span>发文时间</span>
-            <strong>2026-06-18</strong>
-          </div>
-          <div class="analysis-field">
-            <span>作者</span>
-            <strong>鸡</strong>
-          </div>
-          <div class="analysis-field">
-            <span>行业/公司</span>
-            <strong>半导体 / 中芯国际</strong>
-          </div>
-          <div class="analysis-field">
-            <span>方向</span>
-            <strong>看多</strong>
-          </div>
-          <div class="analysis-field">
-            <span>预期幅度</span>
-            <strong>+12%</strong>
-          </div>
-          <div class="analysis-field">
-            <span>兑现时间</span>
-            <strong>3-6个月</strong>
-          </div>
-        </div>
-        <div class="analysis-linked" id="analysisLinked">
-          <div class="analysis-linked-title">关联资产</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;">
-            <span style="font-size:14px;font-weight:500;">中芯国际 · 未持仓</span>
-            <span style="font-size:14px;font-weight:600;color:var(--positive);">看多 +12%</span>
-          </div>
-        </div>
-        <div class="analysis-next-actions">
-          <button class="analysis-action-btn primary" onclick="saveAnalysisToNote()">存入笔记</button>
-          <button class="analysis-action-btn secondary" onclick="openRecordSheet('add')">新增资产</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 历史笔记入口（半弹框方式呈现） -->
-    <div class="history-entry-wrap">
-      <button class="history-entry-btn" onclick="openHistoryNotesSheet()">
-        <div class="history-entry-left">
-          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-          <div class="history-entry-text">
-            <div class="history-entry-title">历史笔记</div>
-            <div class="history-entry-sub">回看已存入的决策信号</div>
-          </div>
-        </div>
-        <span class="history-entry-count" id="historyEntryCount">3</span>
-        <svg class="history-entry-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-      </button>
     </div>
   </div>
 
@@ -4668,6 +4978,21 @@ body {
                 <button class="analysis-action-btn secondary" onclick="openRecordSheet('add')">新增资产</button>
               </div>
             </div>
+          </div>
+          <div class="note-input-history-entry" style="margin-top:12px;">
+            <button class="history-entry-btn" onclick="goToHistoryNotesFromNoteSheet()">
+              <div class="history-entry-left">
+                <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                <div class="history-entry-text">
+                  <div class="history-entry-title">历史笔记</div>
+                  <div class="history-entry-sub">回看已存入的决策信号</div>
+                </div>
+              </div>
+              <div class="history-entry-right">
+                <span class="history-entry-count" id="noteSheetHistoryCount">3</span>
+                <svg class="history-entry-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -4970,6 +5295,7 @@ body {
     <div class="record-sheet-header">
       <div class="sheet-title">
         <span class="sheet-eyebrow" id="detailAssetCode">600519</span>
+        <span class="detail-type-tag type-stock" id="detailTypeTag">股票</span>
         <span class="sheet-name" id="detailAssetName">贵州茅台</span>
         <span class="sheet-status profit" id="detailAssetStatus">盈利 +41,600.00 · +27.73% · 3 条笔记</span>
       </div>
@@ -4990,7 +5316,7 @@ body {
         <div class="detail-card editable">
           <span class="detail-label">持仓成本价</span>
           <span class="detail-value" id="detailCost">1,500.00</span>
-          <input class="input-field detail-edit-input" type="number" id="editCost">
+          <input class="input-field detail-edit-input" type="number" step="0.01" id="editCost">
         </div>
         <div class="detail-card editable">
           <span class="detail-label">持仓数量</span>
@@ -4998,20 +5324,49 @@ body {
           <input class="input-field detail-edit-input" type="number" id="editQuantity">
         </div>
         <div class="detail-card">
-          <span class="detail-label">当前总市值</span>
-          <span class="detail-value" id="detailMarketValue">191,600.00</span>
+          <span class="detail-label">最新价</span>
+          <span class="detail-value" id="detailLatestPrice">¥1,916.00</span>
         </div>
         <div class="detail-card editable">
-          <span class="detail-label">持仓时间</span>
+          <span class="detail-label">持仓天数</span>
           <span class="detail-value" id="detailHoldTime">186 天</span>
           <input class="input-field detail-edit-input" type="number" id="editHoldDays">
         </div>
         <div class="detail-card">
-          <span class="detail-label">盈亏金额</span>
-          <span class="detail-value profit" id="detailPnL">+41,600.00</span>
+          <span class="detail-label">当前总市值</span>
+          <span class="detail-value" id="detailMarketValue">191,600.00</span>
         </div>
         <div class="detail-card">
-          <span class="detail-label">盈亏比例</span>
+          <span class="detail-label">持仓占比</span>
+          <span class="detail-value" id="detailWeight">57.3%</span>
+          <div class="detail-weight-bar">
+            <div class="detail-weight-bar-fill" id="detailWeightBar" style="width:57.3%"></div>
+          </div>
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">今日盈亏</span>
+          <span class="detail-value today-up" id="detailTodayPnL">+¥1,400 (+0.74%)</span>
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">持仓盈亏</span>
+          <span class="detail-value profit" id="detailPnL">+¥41,600</span>
+        </div>
+        <div class="detail-card wide editable fixed-income-only">
+          <span class="detail-label">到期日</span>
+          <span class="detail-value" id="detailMaturity">2026-12-31</span>
+          <input class="input-field detail-edit-input" type="date" id="editMaturity">
+        </div>
+        <div class="detail-card editable fixed-income-only">
+          <span class="detail-label">年化收益率</span>
+          <span class="detail-value" id="detailRate">2.15%</span>
+          <input class="input-field detail-edit-input" type="number" step="0.01" id="editRate">
+        </div>
+        <div class="detail-card fixed-income-only">
+          <span class="detail-label">距到期天数</span>
+          <span class="days-to-maturity" id="detailDaysToMaturity">还剩 188 天</span>
+        </div>
+        <div class="detail-card wide">
+          <span class="detail-label">持仓收益率</span>
           <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
         </div>
       </div>
@@ -5138,8 +5493,7 @@ function openNoteHistory() {
 }
 
 function openNoteHistoryFromInsights() {
-  // 从「记笔记」(insights) 进入历史笔记：半弹框方式呈现
-  noteHistoryReturnTo = 'insights';
+  noteHistoryReturnTo = 'me';
   openHistoryNotesSheet();
 }
 
@@ -5532,16 +5886,6 @@ function deleteNote(id) {
 function openInsightInput() {
   document.getElementById('noteInputModal').classList.add('show');
   document.body.style.overflow = 'hidden';
-  // 同步 insights 页 textarea 内容到 sheet
-  const src = document.getElementById('insightInput');
-  const dst = document.getElementById('sheetInsightInput');
-  if (src && dst) dst.value = src.value;
-  // 同步分析结果状态
-  const srcResult = document.getElementById('analysisResult');
-  const dstResult = document.getElementById('sheetAnalysisResult');
-  if (srcResult && dstResult) {
-    dstResult.style.display = srcResult.classList.contains('show') ? 'block' : 'none';
-  }
   setTimeout(() => {
     document.getElementById('sheetInsightInput')?.focus();
   }, 250);
@@ -5550,20 +5894,15 @@ function openInsightInput() {
 function closeNoteInputSheet() {
   document.getElementById('noteInputModal').classList.remove('show');
   document.body.style.overflow = '';
-  // 同步 sheet textarea 内容回 insights 页
-  const src = document.getElementById('sheetInsightInput');
-  const dst = document.getElementById('insightInput');
-  if (src && dst) dst.value = src.value;
-  // 同步分析结果状态
-  const srcResult = document.getElementById('sheetAnalysisResult');
-  const dstResult = document.getElementById('analysisResult');
-  if (srcResult && dstResult) {
-    if (srcResult.style.display !== 'none') {
-      dstResult.classList.add('show');
-    } else {
-      dstResult.classList.remove('show');
-    }
-  }
+}
+
+function goToHistoryNotesFromNoteSheet() {
+  closeNoteInputSheet();
+  switchTab('me');
+  setTimeout(() => {
+    noteHistoryReturnTo = 'me';
+    openHistoryNotesSheet();
+  }, 200);
 }
 
 function clearSheetInsightInput() {
@@ -5642,14 +5981,16 @@ function saveSheetAnalysisToNote() {
 }
 
 function openNoteDetail(id) {
-  switchTab('insights');
+  switchTab('me');
+  noteHistoryReturnTo = 'me';
+  openHistoryNotesSheet();
   setTimeout(() => {
-    const item = document.querySelector(`.history-item[data-history-id="${id}"]`);
+    const item = document.querySelector(`#notesHistoryList .history-item[data-history-id="${id}"]`);
     if (item) {
       item.classList.add('open');
       item.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, 250);
+  }, 300);
 }
 
 function toggleSortMenu() {
@@ -6023,106 +6364,32 @@ function showMultiplierBadge() {
   }, 1000);
 }
 
-function analyzeText() {
-  const input = document.getElementById('insightInput');
-  if (!input.value.trim()) {
-    showToast('请输入内容');
-    return;
-  }
-  document.getElementById('analysisResult').classList.add('show');
-  showToast('分析完成');
-}
-
-function clearInsightInput() {
-  const input = document.getElementById('insightInput');
-  if (input) input.value = '';
-  document.getElementById('analysisResult')?.classList.remove('show');
-}
-
-function saveAnalysisToNote() {
-  const existing = document.getElementById('analysisSavedNote');
-  if (existing) {
-    existing.classList.add('open');
-    showToast('已在历史笔记中');
-    return;
-  }
-
-  const sectionTitle = document.querySelector('.insight-history .section-title');
-  if (!sectionTitle) return;
-  const item = document.createElement('div');
-  item.className = 'history-item open';
-  item.id = 'analysisSavedNote';
-  item.dataset.historyId = 'history-analysis';
-  item.setAttribute('onclick', 'toggleHistoryItem(this)');
-  item.innerHTML = `
-    <div class="history-item-header">
-      <div class="history-title-row">
-        <span class="history-item-title">半导体：AI算力扩张与国产替代</span>
-        <span class="history-item-date">刚刚</span>
-      </div>
-      <div class="history-tags-preview">
-        <span class="history-mini-tag up">看多</span>
-        <span class="history-mini-tag">半导体</span>
-        <span class="history-asset-pill">苹果公司等 2 项</span>
-      </div>
-    </div>
-    <div class="history-item-expand">
-      <div class="history-detail" style="padding-top:16px;">
-        <div style="margin-bottom:12px;">
-          <span class="tag tag-up">看多</span>
-          <span class="tag">+12%</span>
-          <span class="tag">3-6个月</span>
-        </div>
-        <p class="history-note-copy">
-          已提取发文时间、作者、行业/公司、方向、预期幅度与兑现时间，可在资产明细中作为决策笔记引用。
-        </p>
-        <div class="history-assets-title">提及持仓资产</div>
-        <div class="history-asset-list">
-          <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
-            <div class="history-asset-main">
-              <span class="history-asset-name">苹果公司</span>
-              <span class="history-asset-code">AAPL · 端侧 AI</span>
-            </div>
-            <span class="history-asset-trend up">看多 +7%</span>
-          </div>
-          <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
-            <div class="history-asset-main">
-              <span class="history-asset-name">腾讯控股</span>
-              <span class="history-asset-code">00700 · 云算力需求</span>
-            </div>
-            <span class="history-asset-trend neutral">观望 +3%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  sectionTitle.insertAdjacentElement('afterend', item);
-  showToast('已存入历史笔记');
-}
-
 function toggleHistoryItem(element) {
   element.classList.toggle('open');
 }
 
 function openHistoryNoteFromAsset(historyId) {
   if (!historyId) {
-    showToast('该笔记暂无历史详情');
+    closeAssetSheet();
+    openInsightInput();
     return;
   }
   closeAssetSheet();
-  switchTab('insights');
+  switchTab('me');
+  noteHistoryReturnTo = 'me';
+  openHistoryNotesSheet();
   setTimeout(() => {
-    const target = document.querySelector(`[data-history-id="${historyId}"], #${historyId}`);
+    const target = document.querySelector(`#notesHistoryList .history-item[data-history-id="${historyId}"]`);
     if (!target) {
       showToast('未找到对应历史笔记');
       return;
     }
-    document.querySelectorAll('.history-item.open').forEach(item => {
+    document.querySelectorAll('#notesHistoryList .history-item.open').forEach(item => {
       if (item !== target) item.classList.remove('open');
     });
     target.classList.add('open');
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 120);
+  }, 300);
 }
 
 function openAssetDetailFromHistory(event, code) {
@@ -6247,7 +6514,7 @@ function getAssetData(code) {
   const quantity = numberFromText(item.dataset.quantity);
   return {
     code,
-    name: item.querySelector('.asset-name')?.textContent || code,
+    name: item.querySelector('.col-name-main')?.textContent || code,
     type: item.dataset.type || 'other',
     typeLabel: item.dataset.typeLabel || '其他',
     price,
@@ -6257,8 +6524,38 @@ function getAssetData(code) {
     holdDays: numberFromText(item.dataset.holdDays),
     maturity: item.dataset.maturity || '',
     rate: numberFromText(item.dataset.rate),
-    notes: assetInsightMap[code] || []
+    notes: assetInsightMap[code] || [],
+    element: item
   };
+}
+
+function calculateTotalMarketValue() {
+  let total = 0;
+  document.querySelectorAll('.asset-item').forEach(item => {
+    const price = numberFromText(item.dataset.price);
+    const quantity = numberFromText(item.dataset.quantity);
+    total += price * quantity;
+  });
+  return total;
+}
+
+function getCurrencyPrefix(asset) {
+  if (asset.type === 'stock' && asset.code === '00700') return 'HK$';
+  if (asset.type === 'stock' && asset.code === 'AAPL') return 'US$';
+  return '¥';
+}
+
+function calculateDaysToMaturity(maturityStr) {
+  if (!maturityStr) return null;
+  const maturity = new Date(maturityStr);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diff = Math.ceil((maturity - today) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function isFixedIncome(asset) {
+  return asset.type === 'deposit' || asset.type === 'wealth';
 }
 
 function calculateAssetMetrics(asset) {
@@ -7038,26 +7335,74 @@ function closeAssetDetail() {
 function fillAssetDetail(asset) {
   const metrics = calculateAssetMetrics(asset);
   const isProfit = metrics.pnl >= 0;
+  const isTodayUp = metrics.todayPnl >= 0;
+  const currency = getCurrencyPrefix(asset);
+  const totalMv = calculateTotalMarketValue();
+  const weight = totalMv > 0 ? (metrics.marketValue / totalMv) * 100 : 0;
+  const fixedIncome = isFixedIncome(asset);
+  const daysToMaturity = calculateDaysToMaturity(asset.maturity);
+
   document.getElementById('detailAssetCode').textContent = asset.code;
   document.getElementById('detailAssetName').textContent = asset.name;
-  document.getElementById('detailCost').textContent = formatNumber(asset.cost);
-  document.getElementById('detailQuantity').textContent = formatNumber(asset.quantity, 0);
-  document.getElementById('detailMarketValue').textContent = formatNumber(metrics.marketValue);
+
+  const typeTag = document.getElementById('detailTypeTag');
+  typeTag.textContent = asset.typeLabel;
+  typeTag.className = `detail-type-tag type-${asset.type}`;
+
+  document.getElementById('detailCost').textContent = currency + formatNumber(asset.cost);
+  document.getElementById('detailQuantity').textContent = formatNumber(asset.quantity, 0) + (fixedIncome ? ' 份' : '');
+  document.getElementById('detailLatestPrice').textContent = currency + formatNumber(asset.price);
   document.getElementById('detailHoldTime').textContent = `${asset.holdDays} 天`;
-  document.getElementById('detailPnL').textContent = signedNumber(metrics.pnl);
+  document.getElementById('detailMarketValue').textContent = currency + formatNumber(metrics.marketValue);
+  document.getElementById('detailWeight').textContent = weight.toFixed(1) + '%';
+  const weightBar = document.getElementById('detailWeightBar');
+  weightBar.style.width = Math.min(weight, 100) + '%';
+
+  const todayPnlText = `${isTodayUp ? '+' : ''}${currency}${formatNumber(metrics.todayPnl)} (${isTodayUp ? '+' : ''}${metrics.todayPct.toFixed(2)}%)`;
+  const todayPnlEl = document.getElementById('detailTodayPnL');
+  todayPnlEl.textContent = todayPnlText;
+  todayPnlEl.className = `detail-value ${isTodayUp ? 'today-up' : metrics.todayPnl < 0 ? 'today-down' : 'today-neutral'}`;
+
+  document.getElementById('detailPnL').textContent = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))}`;
   document.getElementById('detailPnLPct').textContent = signedPercent(metrics.pnlPct);
   document.getElementById('detailPnL').className = isProfit ? 'detail-value profit' : 'detail-value loss';
   document.getElementById('detailPnLPct').className = isProfit ? 'detail-value profit' : 'detail-value loss';
+
+  const content = document.getElementById('assetDetailContent');
+  content.classList.toggle('asset-fixed-income', fixedIncome);
+
+  if (fixedIncome) {
+    document.getElementById('detailMaturity').textContent = asset.maturity || '-';
+    document.getElementById('detailRate').textContent = (asset.rate || 0) + '%';
+    const daysEl = document.getElementById('detailDaysToMaturity');
+    if (daysToMaturity !== null) {
+      if (daysToMaturity < 0) {
+        daysEl.textContent = `已过期 ${Math.abs(daysToMaturity)} 天`;
+        daysEl.className = 'days-to-maturity soon';
+      } else if (daysToMaturity <= 30) {
+        daysEl.textContent = `还剩 ${daysToMaturity} 天`;
+        daysEl.className = 'days-to-maturity soon';
+      } else {
+        daysEl.textContent = `还剩 ${daysToMaturity} 天`;
+        daysEl.className = 'days-to-maturity';
+      }
+    }
+  }
+
   const noteCount = asset.notes.length;
   const hasConflict = asset.notes.some(note => note.direction === '看多') && asset.notes.some(note => note.direction === '看空');
   const statusEl = document.getElementById('detailAssetStatus');
-  statusEl.textContent = `${isProfit ? '盈利' : '亏损'} ${signedNumber(metrics.pnl)} · ${signedPercent(metrics.pnlPct)} · ${noteCount} 条笔记${hasConflict ? ' · 观点分歧' : ''}`;
+  statusEl.textContent = `${isProfit ? '盈利' : '亏损'} ${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))} · ${signedPercent(metrics.pnlPct)} · ${noteCount} 条笔记${hasConflict ? ' · 观点分歧' : ''}`;
   statusEl.className = isProfit ? 'sheet-status profit' : 'sheet-status loss';
 
   document.getElementById('editCost').value = asset.cost.toFixed(2);
   document.getElementById('editQuantity').value = Math.round(asset.quantity);
   document.getElementById('editPrice').value = asset.price.toFixed(2);
   document.getElementById('editHoldDays').value = asset.holdDays;
+  if (fixedIncome) {
+    document.getElementById('editMaturity').value = asset.maturity || '';
+    document.getElementById('editRate').value = asset.rate || 0;
+  }
 }
 
 function fillAssetQuickForm(asset) {
@@ -7132,6 +7477,24 @@ function scrollAssetSection(section, instant = false) {
 function renderPredictions(notes) {
   const list = document.getElementById('predictionList');
   list.innerHTML = '';
+  if (!notes || notes.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'prediction-empty';
+    empty.onclick = () => {
+      closeAssetSheet();
+      setTimeout(() => openInsightInput(), 200);
+    };
+    empty.innerHTML = `
+      <div class="prediction-empty-icon">📝</div>
+      <div class="prediction-empty-text">暂无关联笔记，记录你的决策观点</div>
+      <button class="prediction-empty-btn" onclick="event.stopPropagation();this.closest('.prediction-empty').click();">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        记笔记
+      </button>
+    `;
+    list.appendChild(empty);
+    return;
+  }
   notes.forEach(note => {
     const item = document.createElement('div');
     item.className = 'prediction-item clickable';
@@ -7207,6 +7570,10 @@ function enterAssetEditMode() {
   document.getElementById('editQuantity').value = Math.round(activeAssetData.quantity);
   document.getElementById('editPrice').value = activeAssetData.price.toFixed(2);
   document.getElementById('editHoldDays').value = activeAssetData.holdDays;
+  if (isFixedIncome(activeAssetData)) {
+    document.getElementById('editMaturity').value = activeAssetData.maturity || '';
+    document.getElementById('editRate').value = activeAssetData.rate || 0;
+  }
 }
 
 function saveAssetInlineEdit() {
@@ -7227,11 +7594,22 @@ function applyAssetFieldEdits() {
   activeAssetData.price = numberFromText(document.getElementById('editPrice').value);
   activeAssetData.holdDays = numberFromText(document.getElementById('editHoldDays').value);
 
+  if (isFixedIncome(activeAssetData)) {
+    const maturityVal = document.getElementById('editMaturity').value;
+    const rateVal = numberFromText(document.getElementById('editRate').value);
+    if (maturityVal) activeAssetData.maturity = maturityVal;
+    if (!isNaN(rateVal)) activeAssetData.rate = rateVal;
+  }
+
   if (item) {
     item.dataset.cost = activeAssetData.cost;
     item.dataset.quantity = activeAssetData.quantity;
     item.dataset.price = activeAssetData.price;
     item.dataset.holdDays = activeAssetData.holdDays;
+    if (isFixedIncome(activeAssetData)) {
+      item.dataset.maturity = activeAssetData.maturity;
+      item.dataset.rate = activeAssetData.rate;
+    }
     updateAssetListRow(item, activeAssetData);
   }
 
@@ -7387,7 +7765,8 @@ function applyPrototypeStateFromUrl() {
   const category = params.get('category');
 
   if (state === 'analysis') {
-    switchTab('insights');
+    switchTab('portfolio');
+    setTimeout(() => openInsightInput(), 200);
   } else if (tab && document.getElementById('page-' + tab)) {
     switchTab(tab);
   }
@@ -7411,12 +7790,13 @@ function applyPrototypeStateFromUrl() {
   }
 
   if (params.get('analyze') === '1' || state === 'analysis') {
-    const input = document.getElementById('insightInput');
-    if (input) {
-      input.value = 'AI算力扩张带动半导体需求，国产替代加速，关注中芯国际与设备材料链。';
-      analyzeText();
-      document.getElementById('analysisResult')?.classList.add('show');
-    }
+    setTimeout(() => {
+      const input = document.getElementById('sheetInsightInput');
+      if (input) {
+        input.value = 'AI算力扩张带动半导体需求，国产替代加速，关注中芯国际与设备材料链。';
+        analyzeSheetText();
+      }
+    }, 400);
   }
 }
 
