@@ -4368,6 +4368,9 @@ body {
   <div class="modal-overlay record-sheet-overlay" id="recordSheetModal">
     <div class="record-sheet">
       <div class="record-sheet-header">
+        <button class="sheet-back-btn" id="recordBackBtn" onclick="backToRecordCategory()" style="display:none;">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" fill="currentColor"/></svg>
+        </button>
         <div class="sheet-title">
           <span class="sheet-name" id="recordSheetTitle">记资产</span>
         </div>
@@ -4384,37 +4387,30 @@ body {
               <div class="record-category-card" data-cat="stock" onclick="selectRecordCategory('stock')">
                 <div class="record-category-icon">📈</div>
                 <div class="record-category-name">股票</div>
-                <div class="record-category-hint">有代码 / 可搜索</div>
               </div>
               <div class="record-category-card" data-cat="fund" onclick="selectRecordCategory('fund')">
                 <div class="record-category-icon">💼</div>
                 <div class="record-category-name">基金</div>
-                <div class="record-category-hint">有代码 / 可搜索</div>
               </div>
               <div class="record-category-card" data-cat="etf" onclick="selectRecordCategory('etf')">
                 <div class="record-category-icon">🧾</div>
                 <div class="record-category-name">ETF</div>
-                <div class="record-category-hint">有代码 / 可搜索</div>
               </div>
               <div class="record-category-card" data-cat="metal" onclick="selectRecordCategory('metal')">
                 <div class="record-category-icon">🥇</div>
                 <div class="record-category-name">贵金属</div>
-                <div class="record-category-hint">直接记录</div>
               </div>
               <div class="record-category-card" data-cat="deposit" onclick="selectRecordCategory('deposit')">
                 <div class="record-category-icon">🏦</div>
                 <div class="record-category-name">存款</div>
-                <div class="record-category-hint">直接记录</div>
               </div>
               <div class="record-category-card" data-cat="wealth" onclick="selectRecordCategory('wealth')">
                 <div class="record-category-icon">💰</div>
                 <div class="record-category-name">理财</div>
-                <div class="record-category-hint">直接记录</div>
               </div>
               <div class="record-category-card" data-cat="other" onclick="selectRecordCategory('other')">
                 <div class="record-category-icon">📦</div>
                 <div class="record-category-name">其他</div>
-                <div class="record-category-hint">直接记录</div>
               </div>
             </div>
           </div>
