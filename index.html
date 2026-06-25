@@ -2985,6 +2985,44 @@ body {
   color:var(--brand);
   white-space:nowrap;
 }
+.prediction-empty {
+  margin-top:10px;
+  background:var(--card);
+  border-radius:var(--radius-xs);
+  padding:20px 16px;
+  text-align:center;
+  cursor:pointer;
+  transition:transform 0.18s ease, box-shadow 0.18s ease;
+  border:1px dashed var(--border);
+}
+.prediction-empty:active {
+  transform:scale(0.99);
+}
+.prediction-empty-icon {
+  font-size:28px;
+  margin-bottom:8px;
+}
+.prediction-empty-text {
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:10px;
+}
+.prediction-empty-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:7px 16px;
+  border-radius:20px;
+  background:var(--brand);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+}
+.prediction-empty-btn:active {
+  opacity:0.85;
+}
 .field-editor {
   display:none;
 }
@@ -4638,93 +4676,6 @@ body {
     </div>
   </div>
 
-  <!-- Insights Page -->
-  <div class="page" id="page-insights">
-    <div class="insights-header">
-      <span class="insights-title">笔记</span>
-      <span class="insights-subtitle">把文章、观点和链接提炼成可回看、可关联资产的决策信号。</span>
-    </div>
-
-    <div class="insight-input-card">
-      <textarea class="insight-textarea" id="insightInput" placeholder="粘贴文章、输入观点或链接..."></textarea>
-      <div class="insight-actions">
-        <button class="trash-btn" onclick="clearInsightInput()">
-          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-        </button>
-        <button class="analyze-btn" onclick="analyzeText()">分析</button>
-      </div>
-    </div>
-
-    <div class="analysis-result" id="analysisResult">
-      <div class="analysis-header-bar">
-        <span style="font-family:var(--font-display);font-weight:600;font-size:16px;">分析结果</span>
-        <span class="analysis-type-badge" id="articleType">行业研究</span>
-      </div>
-      <div class="analysis-body">
-        <div class="analysis-summary" id="analysisSummary">
-          AI芯片需求持续扩张，国产替代进程加速。半导体行业景气度上行，关注龙头企业。
-        </div>
-        <div class="analysis-tags" id="analysisTags">
-          <span class="tag tag-up">看多</span>
-          <span class="tag">半导体</span>
-          <span class="tag">成长</span>
-        </div>
-        <div class="analysis-field-grid">
-          <div class="analysis-field">
-            <span>发文时间</span>
-            <strong>2026-06-18</strong>
-          </div>
-          <div class="analysis-field">
-            <span>作者</span>
-            <strong>鸡</strong>
-          </div>
-          <div class="analysis-field">
-            <span>行业/公司</span>
-            <strong>半导体 / 中芯国际</strong>
-          </div>
-          <div class="analysis-field">
-            <span>方向</span>
-            <strong>看多</strong>
-          </div>
-          <div class="analysis-field">
-            <span>预期幅度</span>
-            <strong>+12%</strong>
-          </div>
-          <div class="analysis-field">
-            <span>兑现时间</span>
-            <strong>3-6个月</strong>
-          </div>
-        </div>
-        <div class="analysis-linked" id="analysisLinked">
-          <div class="analysis-linked-title">关联资产</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;">
-            <span style="font-size:14px;font-weight:500;">中芯国际 · 未持仓</span>
-            <span style="font-size:14px;font-weight:600;color:var(--positive);">看多 +12%</span>
-          </div>
-        </div>
-        <div class="analysis-next-actions">
-          <button class="analysis-action-btn primary" onclick="saveAnalysisToNote()">存入笔记</button>
-          <button class="analysis-action-btn secondary" onclick="openRecordSheet('add')">新增资产</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 历史笔记入口（半弹框方式呈现） -->
-    <div class="history-entry-wrap">
-      <button class="history-entry-btn" onclick="openHistoryNotesSheet()">
-        <div class="history-entry-left">
-          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-          <div class="history-entry-text">
-            <div class="history-entry-title">历史笔记</div>
-            <div class="history-entry-sub">回看已存入的决策信号</div>
-          </div>
-        </div>
-        <span class="history-entry-count" id="historyEntryCount">3</span>
-        <svg class="history-entry-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-      </button>
-    </div>
-  </div>
-
   <!-- Me Page -->
   <div class="page" id="page-me">
     <div class="me-header">
@@ -4953,6 +4904,21 @@ body {
                 <button class="analysis-action-btn secondary" onclick="openRecordSheet('add')">新增资产</button>
               </div>
             </div>
+          </div>
+          <div class="note-input-history-entry" style="margin-top:12px;">
+            <button class="history-entry-btn" onclick="goToHistoryNotesFromNoteSheet()">
+              <div class="history-entry-left">
+                <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                <div class="history-entry-text">
+                  <div class="history-entry-title">历史笔记</div>
+                  <div class="history-entry-sub">回看已存入的决策信号</div>
+                </div>
+              </div>
+              <div class="history-entry-right">
+                <span class="history-entry-count" id="noteSheetHistoryCount">3</span>
+                <svg class="history-entry-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -5423,8 +5389,7 @@ function openNoteHistory() {
 }
 
 function openNoteHistoryFromInsights() {
-  // 从「记笔记」(insights) 进入历史笔记：半弹框方式呈现
-  noteHistoryReturnTo = 'insights';
+  noteHistoryReturnTo = 'me';
   openHistoryNotesSheet();
 }
 
@@ -5817,16 +5782,6 @@ function deleteNote(id) {
 function openInsightInput() {
   document.getElementById('noteInputModal').classList.add('show');
   document.body.style.overflow = 'hidden';
-  // 同步 insights 页 textarea 内容到 sheet
-  const src = document.getElementById('insightInput');
-  const dst = document.getElementById('sheetInsightInput');
-  if (src && dst) dst.value = src.value;
-  // 同步分析结果状态
-  const srcResult = document.getElementById('analysisResult');
-  const dstResult = document.getElementById('sheetAnalysisResult');
-  if (srcResult && dstResult) {
-    dstResult.style.display = srcResult.classList.contains('show') ? 'block' : 'none';
-  }
   setTimeout(() => {
     document.getElementById('sheetInsightInput')?.focus();
   }, 250);
@@ -5835,20 +5790,15 @@ function openInsightInput() {
 function closeNoteInputSheet() {
   document.getElementById('noteInputModal').classList.remove('show');
   document.body.style.overflow = '';
-  // 同步 sheet textarea 内容回 insights 页
-  const src = document.getElementById('sheetInsightInput');
-  const dst = document.getElementById('insightInput');
-  if (src && dst) dst.value = src.value;
-  // 同步分析结果状态
-  const srcResult = document.getElementById('sheetAnalysisResult');
-  const dstResult = document.getElementById('analysisResult');
-  if (srcResult && dstResult) {
-    if (srcResult.style.display !== 'none') {
-      dstResult.classList.add('show');
-    } else {
-      dstResult.classList.remove('show');
-    }
-  }
+}
+
+function goToHistoryNotesFromNoteSheet() {
+  closeNoteInputSheet();
+  switchTab('me');
+  setTimeout(() => {
+    noteHistoryReturnTo = 'me';
+    openHistoryNotesSheet();
+  }, 200);
 }
 
 function clearSheetInsightInput() {
@@ -5927,14 +5877,16 @@ function saveSheetAnalysisToNote() {
 }
 
 function openNoteDetail(id) {
-  switchTab('insights');
+  switchTab('me');
+  noteHistoryReturnTo = 'me';
+  openHistoryNotesSheet();
   setTimeout(() => {
-    const item = document.querySelector(`.history-item[data-history-id="${id}"]`);
+    const item = document.querySelector(`#notesHistoryList .history-item[data-history-id="${id}"]`);
     if (item) {
       item.classList.add('open');
       item.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, 250);
+  }, 300);
 }
 
 function toggleSortMenu() {
@@ -6308,106 +6260,32 @@ function showMultiplierBadge() {
   }, 1000);
 }
 
-function analyzeText() {
-  const input = document.getElementById('insightInput');
-  if (!input.value.trim()) {
-    showToast('请输入内容');
-    return;
-  }
-  document.getElementById('analysisResult').classList.add('show');
-  showToast('分析完成');
-}
-
-function clearInsightInput() {
-  const input = document.getElementById('insightInput');
-  if (input) input.value = '';
-  document.getElementById('analysisResult')?.classList.remove('show');
-}
-
-function saveAnalysisToNote() {
-  const existing = document.getElementById('analysisSavedNote');
-  if (existing) {
-    existing.classList.add('open');
-    showToast('已在历史笔记中');
-    return;
-  }
-
-  const sectionTitle = document.querySelector('.insight-history .section-title');
-  if (!sectionTitle) return;
-  const item = document.createElement('div');
-  item.className = 'history-item open';
-  item.id = 'analysisSavedNote';
-  item.dataset.historyId = 'history-analysis';
-  item.setAttribute('onclick', 'toggleHistoryItem(this)');
-  item.innerHTML = `
-    <div class="history-item-header">
-      <div class="history-title-row">
-        <span class="history-item-title">半导体：AI算力扩张与国产替代</span>
-        <span class="history-item-date">刚刚</span>
-      </div>
-      <div class="history-tags-preview">
-        <span class="history-mini-tag up">看多</span>
-        <span class="history-mini-tag">半导体</span>
-        <span class="history-asset-pill">苹果公司等 2 项</span>
-      </div>
-    </div>
-    <div class="history-item-expand">
-      <div class="history-detail" style="padding-top:16px;">
-        <div style="margin-bottom:12px;">
-          <span class="tag tag-up">看多</span>
-          <span class="tag">+12%</span>
-          <span class="tag">3-6个月</span>
-        </div>
-        <p class="history-note-copy">
-          已提取发文时间、作者、行业/公司、方向、预期幅度与兑现时间，可在资产明细中作为决策笔记引用。
-        </p>
-        <div class="history-assets-title">提及持仓资产</div>
-        <div class="history-asset-list">
-          <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
-            <div class="history-asset-main">
-              <span class="history-asset-name">苹果公司</span>
-              <span class="history-asset-code">AAPL · 端侧 AI</span>
-            </div>
-            <span class="history-asset-trend up">看多 +7%</span>
-          </div>
-          <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
-            <div class="history-asset-main">
-              <span class="history-asset-name">腾讯控股</span>
-              <span class="history-asset-code">00700 · 云算力需求</span>
-            </div>
-            <span class="history-asset-trend neutral">观望 +3%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  sectionTitle.insertAdjacentElement('afterend', item);
-  showToast('已存入历史笔记');
-}
-
 function toggleHistoryItem(element) {
   element.classList.toggle('open');
 }
 
 function openHistoryNoteFromAsset(historyId) {
   if (!historyId) {
-    showToast('该笔记暂无历史详情');
+    closeAssetSheet();
+    openInsightInput();
     return;
   }
   closeAssetSheet();
-  switchTab('insights');
+  switchTab('me');
+  noteHistoryReturnTo = 'me';
+  openHistoryNotesSheet();
   setTimeout(() => {
-    const target = document.querySelector(`[data-history-id="${historyId}"], #${historyId}`);
+    const target = document.querySelector(`#notesHistoryList .history-item[data-history-id="${historyId}"]`);
     if (!target) {
       showToast('未找到对应历史笔记');
       return;
     }
-    document.querySelectorAll('.history-item.open').forEach(item => {
+    document.querySelectorAll('#notesHistoryList .history-item.open').forEach(item => {
       if (item !== target) item.classList.remove('open');
     });
     target.classList.add('open');
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 120);
+  }, 300);
 }
 
 function openAssetDetailFromHistory(event, code) {
@@ -7417,6 +7295,24 @@ function scrollAssetSection(section, instant = false) {
 function renderPredictions(notes) {
   const list = document.getElementById('predictionList');
   list.innerHTML = '';
+  if (!notes || notes.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'prediction-empty';
+    empty.onclick = () => {
+      closeAssetSheet();
+      setTimeout(() => openInsightInput(), 200);
+    };
+    empty.innerHTML = `
+      <div class="prediction-empty-icon">📝</div>
+      <div class="prediction-empty-text">暂无关联笔记，记录你的决策观点</div>
+      <button class="prediction-empty-btn" onclick="event.stopPropagation();this.closest('.prediction-empty').click();">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        记笔记
+      </button>
+    `;
+    list.appendChild(empty);
+    return;
+  }
   notes.forEach(note => {
     const item = document.createElement('div');
     item.className = 'prediction-item clickable';
@@ -7672,7 +7568,8 @@ function applyPrototypeStateFromUrl() {
   const category = params.get('category');
 
   if (state === 'analysis') {
-    switchTab('insights');
+    switchTab('portfolio');
+    setTimeout(() => openInsightInput(), 200);
   } else if (tab && document.getElementById('page-' + tab)) {
     switchTab(tab);
   }
@@ -7696,12 +7593,13 @@ function applyPrototypeStateFromUrl() {
   }
 
   if (params.get('analyze') === '1' || state === 'analysis') {
-    const input = document.getElementById('insightInput');
-    if (input) {
-      input.value = 'AI算力扩张带动半导体需求，国产替代加速，关注中芯国际与设备材料链。';
-      analyzeText();
-      document.getElementById('analysisResult')?.classList.add('show');
-    }
+    setTimeout(() => {
+      const input = document.getElementById('sheetInsightInput');
+      if (input) {
+        input.value = 'AI算力扩张带动半导体需求，国产替代加速，关注中芯国际与设备材料链。';
+        analyzeSheetText();
+      }
+    }, 400);
   }
 }
 
