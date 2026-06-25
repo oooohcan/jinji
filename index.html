@@ -530,7 +530,7 @@ body {
 .sort-option.active { color:var(--brand); font-weight:600; }
 .sort-option.active::after { content:'✓'; font-size:14px; color:var(--brand); }
 
-/* ========== 持仓列表：仿腾讯自选 6 列单行 + 字段说明行 ========== */
+/* ========== 持仓列表：仿腾讯自选 6 列单行 + 横向滚动 ========== */
 .asset-list-header {
   display:grid;
   grid-template-columns: 2fr 0.85fr 1.05fr 1.05fr 1.25fr 1.5fr;
@@ -547,6 +547,7 @@ body {
   border-bottom:1px solid rgba(164,74,63,0.10);
   border-radius:18px 18px 0 0;
   font-variant-numeric:tabular-nums;
+  min-width:420px;
 }
 .asset-list-header span { text-align:right; }
 .asset-list-header .h-name { text-align:left; }
@@ -557,9 +558,13 @@ body {
   border:1px solid rgba(164,74,63,0.06);
   border-top:none;
   border-radius:0 0 18px 18px;
-  overflow:hidden;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
   box-shadow:0 10px 22px rgba(164,74,63,0.05);
 }
+#assetList::-webkit-scrollbar { display:none; }
 .asset-item {
   display:grid;
   grid-template-columns: 2fr 0.85fr 1.05fr 1.05fr 1.25fr 1.5fr;
@@ -572,6 +577,7 @@ body {
   text-align:right;
   font-variant-numeric:tabular-nums;
   transition:background 0.15s;
+  min-width:420px;
 }
 .asset-item + .asset-item::before {
   content:'';
