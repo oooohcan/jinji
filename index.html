@@ -592,71 +592,152 @@ body {
   flex:0 0 auto;
   min-width:0;
 }
-.asset-meta {
+/* ========== 新版持仓卡片：三行布局 ========== */
+.asset-item {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.asset-row-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.asset-title {
   display:flex;
   align-items:center;
   gap:8px;
-  margin-top:7px;
+  flex:1;
+  min-width:0;
 }
-.asset-type-badge {
-  padding:3px 8px;
-  border-radius:100px;
-  background:rgba(164,74,63,0.08);
-  color:var(--brand);
-  font-size:11px;
-  font-weight:600;
-}
-.asset-hold-days {
-  font-size:11px;
-  color:var(--text-muted);
+.asset-name {
+  font-size:16px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-0.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .asset-code {
   font-family:var(--font-display);
-  font-size:15px;
-  font-weight:600;
-  color:var(--text);
-  display:block;
-  letter-spacing: -0.02em;
-}
-.asset-name {
-  font-size:13px;
+  font-size:12px;
   color:var(--text-muted);
-  display:block;
-  margin-top:4px;
+  background:var(--input-bg);
+  padding:2px 7px;
+  border-radius:6px;
+  font-variant-numeric:lining-nums;
+  letter-spacing:0.02em;
+  flex-shrink:0;
 }
-.asset-right {
-  flex:1;
+.asset-mv {
   text-align:right;
-  min-width:128px;
+  flex-shrink:0;
 }
-.asset-value-label {
+.asset-mv-label {
   display:block;
   font-size:10px;
   color:var(--text-muted);
-  margin-bottom:2px;
+  margin-bottom:1px;
 }
-.asset-price {
-  font-size:15px;
+.asset-mv-value {
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+  font-family:var(--font-display);
+  letter-spacing:-0.02em;
+  font-variant-numeric:lining-nums;
+}
+.asset-row-meta {
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:6px;
+}
+.asset-meta-item {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  padding:8px 6px;
+  background:var(--input-bg);
+  border-radius:8px;
+  text-align:center;
+}
+.asset-meta-item i {
+  font-size:10px;
+  font-style:normal;
+  color:var(--text-muted);
+  letter-spacing:0.02em;
+}
+.asset-meta-item b {
+  font-size:12px;
   font-weight:600;
   color:var(--text);
-  display:block;
-  letter-spacing: -0.02em;
-  font-variant-numeric: lining-nums;
+  font-style:normal;
+  font-variant-numeric:lining-nums;
+}
+.asset-meta-item b.up { color:var(--positive); }
+.asset-meta-item b.down { color:var(--negative); }
+.asset-meta-item b.maturity { color:#8a5a00; }
+.asset-row-price {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 .asset-last-price {
-  display:block;
-  margin-top:4px;
-  color:var(--text-muted);
   font-size:11px;
+  color:var(--text-muted);
 }
-.asset-pnl {
+.asset-last-price b {
+  font-weight:600;
+  color:var(--text);
   font-size:13px;
-  font-weight:500;
-  display:block;
-  margin-top:4px;
+  margin-left:2px;
+  font-variant-numeric:lining-nums;
 }
-.asset-pnl.up { color: var(--positive); }
-.asset-pnl.down { color: var(--negative); }
+.asset-pnl-group {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-variant-numeric:lining-nums;
+}
+.asset-pnl-today,
+.asset-pnl-hold {
+  font-size:12px;
+  font-weight:500;
+  padding:3px 8px;
+  border-radius:6px;
+}
+.asset-pnl-today.up, .asset-pnl-hold.up { color:var(--positive); background:rgba(220,53,69,0.06); }
+.asset-pnl-today.down, .asset-pnl-hold.down { color:var(--negative); background:rgba(0,150,100,0.06); }
+
+/* 类别徽章按分类着色 */
+.asset-type-badge {
+  font-size:10px;
+  font-weight:600;
+  padding:2px 7px;
+  border-radius:6px;
+  letter-spacing:0.02em;
+  flex-shrink:0;
+}
+.asset-type-badge.stock { background:rgba(220,53,69,0.08); color:#a44a3f; }
+.asset-type-badge.fund { background:rgba(52,152,219,0.08); color:#2980b9; }
+.asset-type-badge.etf { background:rgba(46,204,113,0.08); color:#27ae60; }
+.asset-type-badge.metal { background:rgba(243,156,18,0.1); color:#b7791f; }
+.asset-type-badge.deposit { background:rgba(52,73,94,0.08); color:#2c3e50; }
+.asset-type-badge.wealth { background:rgba(155,89,182,0.08); color:#7d3c98; }
+.asset-type-badge.other { background:var(--input-bg); color:var(--text-secondary); }
+
+/* 旧样式：兼容遗留 class（如 getAssetData 或其他地方可能使用） */
+.asset-meta { display:none; }
+.asset-type-badge:where(.stock,.fund,.etf,.metal,.deposit,.wealth,.other) { display:inline-block; }
+.asset-hold-days { display:none; }
+.asset-code-old { display:none; }
+.asset-right { display:none; }
+.asset-value-label { display:none; }
+.asset-price { display:none; }
+.asset-pnl { display:none; }
 
 /* Stats Panel */
 .stats-panel {
@@ -1567,7 +1648,7 @@ body {
   color:var(--text-muted);
 }
 .history-sheet-list {
-  margin:0 16px 0;
+  margin:0 8px 0;
   max-height:calc(88vh - 130px);
   overflow-y:auto;
 }
@@ -3737,7 +3818,7 @@ body {
       <div class="holdings-toolbar-top">
         <div class="holdings-title">
           <span class="sort-label">持仓</span>
-          <span class="holdings-count" id="holdingsCount">4 项资产</span>
+          <span class="holdings-count" id="holdingsCount">6 项资产</span>
         </div>
         <div class="sort-control" id="sortControl">
           <div class="sort-type" id="sortType">
@@ -3773,56 +3854,161 @@ body {
     </div>
 
     <div id="assetList">
-      <div class="asset-item" data-code="600519" data-type="stock" data-type-label="股票" data-price="1916.00" data-cost="1500.00" data-quantity="100" data-hold-days="186" onclick="openAssetSheet('600519')">
-        <div class="asset-left">
-          <span class="asset-code">600519</span>
-          <span class="asset-name">贵州茅台</span>
-          <div class="asset-meta"><span class="asset-type-badge">股票</span><span class="asset-hold-days">持仓 186 天</span></div>
+      <!-- 股票/基金/ETF：带代码、股价、盈亏字段 -->
+      <div class="asset-item" data-code="600519" data-type="stock" data-type-label="股票" data-price="1916.00" data-prev-close="1902.00" data-cost="1500.00" data-quantity="100" data-hold-days="186" onclick="openAssetSheet('600519')">
+        <div class="asset-row-head">
+          <div class="asset-title">
+            <span class="asset-name">贵州茅台</span>
+            <span class="asset-code">600519</span>
+            <span class="asset-type-badge stock">股票</span>
+          </div>
+          <div class="asset-mv">
+            <span class="asset-mv-label">市值</span>
+            <span class="asset-mv-value">191,600.00</span>
+          </div>
         </div>
-        <div class="asset-right">
-          <span class="asset-value-label">市值</span>
-          <span class="asset-price">191,600.00</span>
-          <span class="asset-last-price">最新价 1,916.00</span>
-          <span class="asset-pnl up">+41,600.00 · +27.73%</span>
+        <div class="asset-row-meta">
+          <span class="asset-meta-item"><i>持仓天数</i><b>186 天</b></span>
+          <span class="asset-meta-item"><i>持仓量</i><b>100 股</b></span>
+          <span class="asset-meta-item"><i>成本价</i><b>¥1,500.00</b></span>
+          <span class="asset-meta-item"><i>股价</i><b class="up">+0.74%</b></span>
         </div>
-      </div>
-      <div class="asset-item" data-code="00700" data-type="stock" data-type-label="股票" data-price="420.30" data-cost="382.00" data-quantity="100" data-hold-days="92" onclick="openAssetSheet('00700')">
-        <div class="asset-left">
-          <span class="asset-code">00700</span>
-          <span class="asset-name">腾讯控股</span>
-          <div class="asset-meta"><span class="asset-type-badge">股票</span><span class="asset-hold-days">持仓 92 天</span></div>
-        </div>
-        <div class="asset-right">
-          <span class="asset-value-label">市值</span>
-          <span class="asset-price">42,030.00</span>
-          <span class="asset-last-price">最新价 420.30</span>
-          <span class="asset-pnl up">+3,830.00 · +10.03%</span>
-        </div>
-      </div>
-      <div class="asset-item" data-code="110022" data-type="fund" data-type-label="基金" data-price="4.20" data-cost="4.90" data-quantity="100" data-hold-days="318" onclick="openAssetSheet('110022')">
-        <div class="asset-left">
-          <span class="asset-code">110022</span>
-          <span class="asset-name">易方达消费</span>
-          <div class="asset-meta"><span class="asset-type-badge">基金</span><span class="asset-hold-days">持仓 318 天</span></div>
-        </div>
-        <div class="asset-right">
-          <span class="asset-value-label">市值</span>
-          <span class="asset-price">420.00</span>
-          <span class="asset-last-price">最新价 4.20</span>
-          <span class="asset-pnl down">-70.00 · -14.29%</span>
+        <div class="asset-row-price">
+          <span class="asset-last-price">最新价 <b>¥1,916.00</b></span>
+          <div class="asset-pnl-group">
+            <span class="asset-pnl-today up">今日 +¥1,400.00 · +0.74%</span>
+            <span class="asset-pnl-hold up">持仓 +¥41,600.00 · +27.73%</span>
+          </div>
         </div>
       </div>
-      <div class="asset-item" data-code="AAPL" data-type="stock" data-type-label="股票" data-price="1568.40" data-cost="1420.00" data-quantity="12" data-hold-days="74" onclick="openAssetSheet('AAPL')">
-        <div class="asset-left">
-          <span class="asset-code">AAPL</span>
-          <span class="asset-name">苹果公司</span>
-          <div class="asset-meta"><span class="asset-type-badge">股票</span><span class="asset-hold-days">持仓 74 天</span></div>
+      <div class="asset-item" data-code="00700" data-type="stock" data-type-label="股票" data-price="420.30" data-prev-close="410.20" data-cost="382.00" data-quantity="100" data-hold-days="92" onclick="openAssetSheet('00700')">
+        <div class="asset-row-head">
+          <div class="asset-title">
+            <span class="asset-name">腾讯控股</span>
+            <span class="asset-code">00700</span>
+            <span class="asset-type-badge stock">股票</span>
+          </div>
+          <div class="asset-mv">
+            <span class="asset-mv-label">市值</span>
+            <span class="asset-mv-value">42,030.00</span>
+          </div>
         </div>
-        <div class="asset-right">
-          <span class="asset-value-label">市值</span>
-          <span class="asset-price">¥18,820.80</span>
-          <span class="asset-last-price">最新价 ¥1,568.40</span>
-          <span class="asset-pnl up">+1,780.80 · +10.45%</span>
+        <div class="asset-row-meta">
+          <span class="asset-meta-item"><i>持仓天数</i><b>92 天</b></span>
+          <span class="asset-meta-item"><i>持仓量</i><b>100 股</b></span>
+          <span class="asset-meta-item"><i>成本价</i><b>¥382.00</b></span>
+          <span class="asset-meta-item"><i>股价</i><b class="up">+2.46%</b></span>
+        </div>
+        <div class="asset-row-price">
+          <span class="asset-last-price">最新价 <b>¥420.30</b></span>
+          <div class="asset-pnl-group">
+            <span class="asset-pnl-today up">今日 +¥1,010.00 · +2.46%</span>
+            <span class="asset-pnl-hold up">持仓 +¥3,830.00 · +10.03%</span>
+          </div>
+        </div>
+      </div>
+      <div class="asset-item" data-code="110022" data-type="fund" data-type-label="基金" data-price="4.20" data-prev-close="4.32" data-cost="4.90" data-quantity="100" data-hold-days="318" onclick="openAssetSheet('110022')">
+        <div class="asset-row-head">
+          <div class="asset-title">
+            <span class="asset-name">易方达消费</span>
+            <span class="asset-code">110022</span>
+            <span class="asset-type-badge fund">基金</span>
+          </div>
+          <div class="asset-mv">
+            <span class="asset-mv-label">市值</span>
+            <span class="asset-mv-value">420.00</span>
+          </div>
+        </div>
+        <div class="asset-row-meta">
+          <span class="asset-meta-item"><i>持仓天数</i><b>318 天</b></span>
+          <span class="asset-meta-item"><i>持仓量</i><b>100 份</b></span>
+          <span class="asset-meta-item"><i>成本价</i><b>¥4.90</b></span>
+          <span class="asset-meta-item"><i>股价</i><b class="down">-2.78%</b></span>
+        </div>
+        <div class="asset-row-price">
+          <span class="asset-last-price">最新价 <b>¥4.20</b></span>
+          <div class="asset-pnl-group">
+            <span class="asset-pnl-today down">今日 -¥12.00 · -2.78%</span>
+            <span class="asset-pnl-hold down">持仓 -¥70.00 · -14.29%</span>
+          </div>
+        </div>
+      </div>
+      <div class="asset-item" data-code="AAPL" data-type="stock" data-type-label="股票" data-price="1568.40" data-prev-close="1542.00" data-cost="1420.00" data-quantity="12" data-hold-days="74" onclick="openAssetSheet('AAPL')">
+        <div class="asset-row-head">
+          <div class="asset-title">
+            <span class="asset-name">苹果公司</span>
+            <span class="asset-code">AAPL</span>
+            <span class="asset-type-badge stock">股票</span>
+          </div>
+          <div class="asset-mv">
+            <span class="asset-mv-label">市值</span>
+            <span class="asset-mv-value">¥18,820.80</span>
+          </div>
+        </div>
+        <div class="asset-row-meta">
+          <span class="asset-meta-item"><i>持仓天数</i><b>74 天</b></span>
+          <span class="asset-meta-item"><i>持仓量</i><b>12 股</b></span>
+          <span class="asset-meta-item"><i>成本价</i><b>¥1,420.00</b></span>
+          <span class="asset-meta-item"><i>股价</i><b class="up">+1.71%</b></span>
+        </div>
+        <div class="asset-row-price">
+          <span class="asset-last-price">最新价 <b>¥1,568.40</b></span>
+          <div class="asset-pnl-group">
+            <span class="asset-pnl-today up">今日 +¥316.80 · +1.71%</span>
+            <span class="asset-pnl-hold up">持仓 +¥1,780.80 · +10.45%</span>
+          </div>
+        </div>
+      </div>
+      <!-- 无代码资产：存款 → 显示到期日 -->
+      <div class="asset-item asset-item-no-code" data-code="DEP001" data-type="deposit" data-type-label="存款" data-price="1.0" data-prev-close="1.0" data-cost="1.0" data-quantity="50000" data-hold-days="120" data-maturity="2026-12-31" data-rate="2.15" onclick="openAssetSheet('DEP001')">
+        <div class="asset-row-head">
+          <div class="asset-title">
+            <span class="asset-name">一年期定期存款</span>
+            <span class="asset-type-badge deposit">存款</span>
+          </div>
+          <div class="asset-mv">
+            <span class="asset-mv-label">本金</span>
+            <span class="asset-mv-value">50,000.00</span>
+          </div>
+        </div>
+        <div class="asset-row-meta">
+          <span class="asset-meta-item"><i>持有天数</i><b>120 天</b></span>
+          <span class="asset-meta-item"><i>本金</i><b>¥50,000</b></span>
+          <span class="asset-meta-item"><i>年化利率</i><b>2.15%</b></span>
+          <span class="asset-meta-item mat"><i>到期日</i><b class="maturity">2026-12-31</b></span>
+        </div>
+        <div class="asset-row-price">
+          <span class="asset-last-price">预期本息 <b>¥51,075.00</b></span>
+          <div class="asset-pnl-group">
+            <span class="asset-pnl-today up">今日 +¥2.95 · 利息累计</span>
+            <span class="asset-pnl-hold up">持有 +¥355.00 · 0.71%</span>
+          </div>
+        </div>
+      </div>
+      <!-- 无代码资产：理财 -->
+      <div class="asset-item asset-item-no-code" data-code="WL001" data-type="wealth" data-type-label="理财" data-price="1.012" data-prev-close="1.010" data-cost="1.0" data-quantity="30000" data-hold-days="68" data-maturity="2026-09-20" data-rate="3.25" onclick="openAssetSheet('WL001')">
+        <div class="asset-row-head">
+          <div class="asset-title">
+            <span class="asset-name">招银理财·月开鑫</span>
+            <span class="asset-type-badge wealth">理财</span>
+          </div>
+          <div class="asset-mv">
+            <span class="asset-mv-label">市值</span>
+            <span class="asset-mv-value">30,360.00</span>
+          </div>
+        </div>
+        <div class="asset-row-meta">
+          <span class="asset-meta-item"><i>持有天数</i><b>68 天</b></span>
+          <span class="asset-meta-item"><i>本金</i><b>¥30,000</b></span>
+          <span class="asset-meta-item"><i>年化利率</i><b>3.25%</b></span>
+          <span class="asset-meta-item mat"><i>到期日</i><b class="maturity">2026-09-20</b></span>
+        </div>
+        <div class="asset-row-price">
+          <span class="asset-last-price">最新净值 <b>1.0120</b></span>
+          <div class="asset-pnl-group">
+            <span class="asset-pnl-today up">今日 +¥6.00 · +0.20%</span>
+            <span class="asset-pnl-hold up">持有 +¥360.00 · +1.20%</span>
+          </div>
         </div>
       </div>
       <div class="asset-empty-state" id="assetEmptyState">
@@ -5588,7 +5774,8 @@ function signedPercent(value) {
 function getAssetData(code) {
   const item = document.querySelector(`.asset-item[data-code="${code}"]`);
   if (!item) return null;
-  const price = numberFromText(item.dataset.price || item.querySelector('.asset-price')?.textContent);
+  const price = numberFromText(item.dataset.price);
+  const prevClose = numberFromText(item.dataset.prevClose || item.dataset.cost);
   const cost = numberFromText(item.dataset.cost);
   const quantity = numberFromText(item.dataset.quantity);
   return {
@@ -5597,9 +5784,12 @@ function getAssetData(code) {
     type: item.dataset.type || 'other',
     typeLabel: item.dataset.typeLabel || '其他',
     price,
+    prevClose,
     cost,
     quantity,
     holdDays: numberFromText(item.dataset.holdDays),
+    maturity: item.dataset.maturity || '',
+    rate: numberFromText(item.dataset.rate),
     notes: assetInsightMap[code] || []
   };
 }
@@ -5609,7 +5799,10 @@ function calculateAssetMetrics(asset) {
   const costValue = asset.cost * asset.quantity;
   const pnl = marketValue - costValue;
   const pnlPct = asset.cost ? ((asset.price - asset.cost) / asset.cost) * 100 : 0;
-  return { marketValue, pnl, pnlPct };
+  const todayDiff = asset.price - (asset.prevClose || asset.cost);
+  const todayPnl = todayDiff * asset.quantity;
+  const todayPct = asset.prevClose ? (todayDiff / asset.prevClose) * 100 : 0;
+  return { marketValue, pnl, pnlPct, todayPnl, todayPct };
 }
 
 function formatAssetMoney(asset, value, digits = 2) {
@@ -5618,14 +5811,11 @@ function formatAssetMoney(asset, value, digits = 2) {
 }
 
 function updateAssetListRow(item, asset) {
+  // 新版卡片字段为静态 mock，这里仅做安全保护，避免空指针报错
   const metrics = calculateAssetMetrics(asset);
   const isProfit = metrics.pnl >= 0;
-  item.querySelector('.asset-price').textContent = formatAssetMoney(asset, metrics.marketValue);
-  item.querySelector('.asset-last-price').textContent = `最新价 ${formatAssetMoney(asset, asset.price)}`;
-  item.querySelector('.asset-hold-days').textContent = `持仓 ${asset.holdDays} 天`;
-  const pnlEl = item.querySelector('.asset-pnl');
-  pnlEl.textContent = `${signedNumber(metrics.pnl)} · ${signedPercent(metrics.pnlPct)}`;
-  pnlEl.className = isProfit ? 'asset-pnl up' : 'asset-pnl down';
+  const mvEl = item.querySelector('.asset-mv-value');
+  if (mvEl) mvEl.textContent = formatAssetMoney(asset, metrics.marketValue);
 }
 
 function updateTotalAssetSummary() {
@@ -6051,7 +6241,9 @@ function filterAssetSearchResults() {
       return;
     }
     list.innerHTML = renderRecordSearchResults(getHoldingSearchOptions());
-    if (!activeRecordAssetData && !activeAddAssetCode && recordFlowState !== 'idle') setRecordFlow('idle');
+    // 仅当用户已进入搜索/交易/新增流程（trade/add/idle）时，才自动切回 idle；
+    // category/simple 阶段不应被这里反向跳回。
+    if (!activeRecordAssetData && !activeAddAssetCode && ['trade','add','idle'].includes(recordFlowState) && recordFlowState !== 'idle') setRecordFlow('idle');
     return;
   }
 
