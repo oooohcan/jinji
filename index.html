@@ -985,9 +985,9 @@ body {
   background:rgba(164,74,63,0.04);
 }
 .asset-txn-card {
-  margin:12px 16px 24px;
+  margin:12px 0 24px;
   background:var(--card);
-  border:1px solid rgba(164,74,63,0.06);
+  border:1px solid rgba(164,74,63,0.08);
   border-radius:14px;
   overflow:hidden;
 }
@@ -996,13 +996,9 @@ body {
   align-items:center;
   justify-content:space-between;
   padding:14px 16px;
-  cursor:pointer;
-  user-select:none;
+  border-bottom:1px solid var(--input-bg);
 }
-.asset-txn-header:active {
-  background:var(--input-bg);
-}
-.asset-txn-header-left {
+.asset-txn-title-row {
   display:flex;
   align-items:center;
   gap:8px;
@@ -1010,36 +1006,13 @@ body {
   font-size:15px;
   font-weight:600;
 }
-.asset-txn-header-left svg {
+.asset-txn-title-row svg {
   width:20px;
   height:20px;
   fill:var(--brand);
 }
-.asset-txn-header-right {
-  display:flex;
-  align-items:center;
-  gap:6px;
-  color:var(--text-muted);
-  font-size:13px;
-}
-.asset-txn-chevron {
-  width:18px;
-  height:18px;
-  fill:var(--text-muted);
-  transition:transform 0.2s;
-}
-.asset-txn-card.open .asset-txn-chevron {
-  transform:rotate(180deg);
-}
-.asset-txn-body {
-  display:none;
-  border-top:1px solid var(--input-bg);
-}
-.asset-txn-card.open .asset-txn-body {
-  display:block;
-}
 .asset-txn-list {
-  padding:6px 16px 4px;
+  padding:0 16px;
   display:flex;
   flex-direction:column;
 }
@@ -1047,7 +1020,7 @@ body {
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:10px 0;
+  padding:12px 0;
   border-bottom:1px dashed var(--input-bg);
   gap:10px;
 }
@@ -1057,7 +1030,7 @@ body {
 .asset-txn-row-left {
   display:flex;
   flex-direction:column;
-  gap:2px;
+  gap:3px;
   min-width:0;
   flex:1;
 }
@@ -1075,7 +1048,7 @@ body {
   display:flex;
   flex-direction:column;
   align-items:flex-end;
-  gap:2px;
+  gap:3px;
   flex-shrink:0;
 }
 .asset-txn-row-amount {
@@ -1099,34 +1072,42 @@ body {
   background:rgba(205,92,92,0.12);
   color:var(--negative);
 }
+/* 4笔后倒三角展开 */
 .asset-txn-more {
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:4px;
-  width:calc(100% - 32px);
-  margin:8px 16px 14px;
-  padding:10px 0;
-  background:var(--input-bg);
+  width:100%;
+  padding:8px 0 12px;
+  background:transparent;
   border:none;
-  border-radius:10px;
-  font-size:13px;
-  color:var(--brand);
-  font-weight:600;
   cursor:pointer;
+  color:var(--text-muted);
   font-family:var(--font-body);
-  transition:all 0.2s;
 }
 .asset-txn-more:active {
-  background:rgba(164,74,63,0.08);
+  opacity:0.6;
 }
-.asset-txn-more svg {
-  width:14px;
-  height:14px;
-  fill:var(--brand);
+.asset-txn-more-icon {
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:var(--input-bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 0.2s;
+}
+.asset-txn-card.open .asset-txn-more-icon {
+  transform:rotate(180deg);
+}
+.asset-txn-more-icon svg {
+  width:16px;
+  height:16px;
+  fill:var(--text-muted);
 }
 .asset-txn-empty {
-  padding:20px 16px;
+  padding:18px 16px;
   text-align:center;
   font-size:13px;
   color:var(--text-muted);
@@ -1451,10 +1432,106 @@ body {
   color:var(--negative);
   font-weight:600;
 }
-.notes-history-tag.trend-watch {
-  background:rgba(255,165,0,0.12);
-  color:#e68a00;
+/* 历史笔记入口按钮（insights 页） */
+.history-entry-wrap {
+  margin:18px 16px 32px;
+}
+.history-entry-btn {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  padding:14px 16px;
+  background:var(--card);
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:14px;
+  cursor:pointer;
+  font-family:var(--font-body);
+  text-align:left;
+  transition:all 0.2s;
+}
+.history-entry-btn:active {
+  background:var(--input-bg);
+}
+.history-entry-left {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  min-width:0;
+}
+.history-entry-left svg {
+  width:22px;
+  height:22px;
+  fill:var(--brand);
+  flex-shrink:0;
+}
+.history-entry-text {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+.history-entry-title {
+  font-size:15px;
   font-weight:600;
+  color:var(--text);
+}
+.history-entry-sub {
+  font-size:12px;
+  color:var(--text-muted);
+}
+.history-entry-count {
+  font-size:11px;
+  color:var(--text-muted);
+  background:var(--input-bg);
+  padding:2px 8px;
+  border-radius:10px;
+  font-weight:500;
+  font-variant-numeric:lining-nums;
+}
+.history-entry-arrow {
+  width:18px;
+  height:18px;
+  fill:var(--text-muted);
+  flex-shrink:0;
+}
+
+/* 历史笔记半弹框 */
+.history-sheet-body {
+  padding:0 0 24px;
+}
+.history-sheet-search {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--input-bg);
+  border-radius:12px;
+  padding:10px 14px;
+  margin:0 16px 12px;
+}
+.history-sheet-search svg {
+  width:18px;
+  height:18px;
+  fill:var(--text-muted);
+  flex-shrink:0;
+}
+.history-sheet-search input {
+  flex:1;
+  border:none;
+  background:transparent;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  font-family:var(--font-body);
+}
+.history-sheet-search input::placeholder {
+  color:var(--text-muted);
+}
+.history-sheet-list {
+  margin:0 16px 0;
+  max-height:calc(88vh - 130px);
+  overflow-y:auto;
 }
 
 /* Record Page */
@@ -3728,138 +3805,19 @@ body {
       </div>
     </div>
 
-    <div class="insight-history">
-      <div class="section-title" style="margin:4px 0 10px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="openNoteHistoryFromInsights()">
-        <span>历史笔记</span>
-        <span class="history-mini-tag" style="background:var(--input-bg); color:var(--text-muted);">查看全部 ›</span>
-      </div>
-
-      <div class="history-item" data-history-id="history-ai-chip" onclick="toggleHistoryItem(this)">
-        <div class="history-item-header">
-          <div class="history-title-row">
-            <span class="history-item-title">半导体：AI芯片需求持续增长</span>
-            <span class="history-item-date">05-20</span>
-          </div>
-          <div class="history-tags-preview">
-            <span class="history-mini-tag up">看多</span>
-            <span class="history-mini-tag">半导体</span>
-            <span class="history-asset-pill">苹果公司等 2 项</span>
+    <!-- 历史笔记入口（半弹框方式呈现） -->
+    <div class="history-entry-wrap">
+      <button class="history-entry-btn" onclick="openHistoryNotesSheet()">
+        <div class="history-entry-left">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <div class="history-entry-text">
+            <div class="history-entry-title">历史笔记</div>
+            <div class="history-entry-sub">回看已存入的决策信号</div>
           </div>
         </div>
-        <div class="history-item-expand">
-          <div class="history-detail" style="padding-top:16px;">
-            <div style="margin-bottom:12px;">
-              <span class="tag tag-up">看多</span>
-              <span class="tag">半导体</span>
-              <span class="tag">成长</span>
-            </div>
-            <p class="history-note-copy">
-              AI芯片需求持续扩张，国产替代进程加速。
-            </p>
-            <div class="history-assets-title">提及持仓资产</div>
-            <div class="history-asset-list">
-              <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
-                <div class="history-asset-main">
-                  <span class="history-asset-name">苹果公司</span>
-                  <span class="history-asset-code">AAPL · 端侧 AI 与芯片周期</span>
-                </div>
-                <span class="history-asset-trend up">看多 +7%</span>
-              </div>
-              <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
-                <div class="history-asset-main">
-                  <span class="history-asset-name">腾讯控股</span>
-                  <span class="history-asset-code">00700 · 云算力需求</span>
-                </div>
-                <span class="history-asset-trend neutral">观望 +3%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="history-item" data-history-id="history-consumption" onclick="toggleHistoryItem(this)">
-        <div class="history-item-header">
-          <div class="history-title-row">
-            <span class="history-item-title">消费板块估值回归，白酒龙头稳定</span>
-            <span class="history-item-date">05-18</span>
-          </div>
-          <div class="history-tags-preview">
-            <span class="history-mini-tag down">观望</span>
-            <span class="history-mini-tag">消费</span>
-            <span class="history-asset-pill">贵州茅台等 2 项</span>
-          </div>
-        </div>
-        <div class="history-item-expand">
-          <div class="history-detail" style="padding-top:16px;">
-            <div style="margin-bottom:12px;">
-              <span class="tag tag-down">观望</span>
-              <span class="tag">消费</span>
-            </div>
-            <p class="history-note-copy">
-              短期估值偏高，白酒龙头分红现金流稳定。
-            </p>
-            <div class="history-assets-title">提及持仓资产</div>
-            <div class="history-asset-list">
-              <div class="history-asset-signal" data-code="600519" onclick="openAssetDetailFromHistory(event,'600519')">
-                <div class="history-asset-main">
-                  <span class="history-asset-name">贵州茅台</span>
-                  <span class="history-asset-code">600519 · 白酒龙头</span>
-                </div>
-                <span class="history-asset-trend neutral">观望 -6%</span>
-              </div>
-              <div class="history-asset-signal" data-code="110022" onclick="openAssetDetailFromHistory(event,'110022')">
-                <div class="history-asset-main">
-                  <span class="history-asset-name">易方达消费</span>
-                  <span class="history-asset-code">110022 · 消费基金</span>
-                </div>
-                <span class="history-asset-trend down">谨慎 -5%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="history-item" data-history-id="history-hk-tech" onclick="toggleHistoryItem(this)">
-        <div class="history-item-header">
-          <div class="history-title-row">
-            <span class="history-item-title">加息预期升温，港股科技承压</span>
-            <span class="history-item-date">05-15</span>
-          </div>
-          <div class="history-tags-preview">
-            <span class="history-mini-tag down">谨慎</span>
-            <span class="history-mini-tag">港股科技</span>
-            <span class="history-asset-pill">腾讯控股等 2 项</span>
-          </div>
-        </div>
-        <div class="history-item-expand">
-          <div class="history-detail" style="padding-top:16px;">
-            <div style="margin-bottom:12px;">
-              <span class="tag tag-down">谨慎</span>
-              <span class="tag">金融</span>
-            </div>
-            <p class="history-note-copy">
-              加息预期下港股科技股承压。
-            </p>
-            <div class="history-assets-title">提及持仓资产</div>
-            <div class="history-asset-list">
-              <div class="history-asset-signal" data-code="00700" onclick="openAssetDetailFromHistory(event,'00700')">
-                <div class="history-asset-main">
-                  <span class="history-asset-name">腾讯控股</span>
-                  <span class="history-asset-code">00700 · 港股科技权重</span>
-                </div>
-                <span class="history-asset-trend down">谨慎 -5%</span>
-              </div>
-              <div class="history-asset-signal" data-code="AAPL" onclick="openAssetDetailFromHistory(event,'AAPL')">
-                <div class="history-asset-main">
-                  <span class="history-asset-name">苹果公司</span>
-                  <span class="history-asset-code">AAPL · 全球科技估值</span>
-                </div>
-                <span class="history-asset-trend neutral">观望 +2%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <span class="history-entry-count" id="historyEntryCount">3</span>
+        <svg class="history-entry-arrow" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
     </div>
   </div>
 
@@ -4007,22 +3965,25 @@ body {
     <div class="txn-page-list" id="txnPageList"></div>
   </div>
 
-  <!-- 历史笔记页（与记笔记页的历史笔记区域复用同一组数据 + 跳转交互） -->
-  <div class="page" id="page-notes-history">
-    <div class="sub-page-header">
-      <button class="sub-page-back" onclick="openNoteHistoryBack()">
-        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-      </button>
-      <h1 class="sub-page-title">历史笔记</h1>
-      <span class="sub-page-spacer"></span>
-    </div>
-    <div class="notes-history-toolbar">
-      <div class="notes-history-search">
-        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input id="noteHistorySearch" type="text" placeholder="搜索笔记标题、内容、标签" oninput="filterNotesHistory()">
+  <!-- 历史笔记半弹框（学习记资产 sheet 样式） -->
+  <div class="modal-overlay" id="historyNotesModal" onclick="if(event.target===this) closeHistoryNotesSheet()">
+    <div class="record-sheet" onclick="event.stopPropagation()">
+      <div class="record-sheet-header">
+        <div class="sheet-title">
+          <span class="sheet-name">历史笔记</span>
+        </div>
+        <div class="sheet-header-actions">
+          <button class="sheet-save-btn" onclick="closeHistoryNotesSheet()">完成</button>
+        </div>
+      </div>
+      <div class="sheet-body history-sheet-body">
+        <div class="history-sheet-search">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input id="noteHistorySearch" type="text" placeholder="搜索笔记标题、内容、标签" oninput="filterNotesHistory()">
+        </div>
+        <div class="insight-history history-sheet-list" id="notesHistoryList"></div>
       </div>
     </div>
-    <div class="insight-history notes-history-list" id="notesHistoryList"></div>
   </div>
 
   <!-- Tab Bar -->
@@ -4314,25 +4275,20 @@ body {
         </div>
       </div>
 
-      <!-- 资产交易记录卡片（可展开） -->
+      <!-- 资产交易记录卡片（同笔记预测宽度，4笔后倒三角展开） -->
       <div class="asset-txn-card" id="assetTxnCard">
-        <div class="asset-txn-header" onclick="toggleAssetTxnCard()">
-          <div class="asset-txn-header-left">
+        <div class="asset-txn-header">
+          <div class="asset-txn-title-row">
             <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-            <span class="asset-txn-title">交易记录</span>
-          </div>
-          <div class="asset-txn-header-right">
-            <span class="asset-txn-count" id="assetTxnCount">8 笔</span>
-            <svg class="asset-txn-chevron" id="assetTxnChevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+            <span>交易记录</span>
           </div>
         </div>
-        <div class="asset-txn-body" id="assetTxnBody">
-          <div class="asset-txn-list" id="assetTxnList"></div>
-          <button class="asset-txn-more" onclick="openTransactionFromAsset()">
-            <span>查看全部交易记录</span>
-            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-          </button>
-        </div>
+        <div class="asset-txn-list" id="assetTxnList"></div>
+        <button class="asset-txn-more" id="assetTxnMore" onclick="toggleAssetTxnExpand()">
+          <span class="asset-txn-more-icon">
+            <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -4416,49 +4372,57 @@ function openTransactionBack() {
 let txnReturnTo = 'me';
 
 function openNoteHistory() {
-  // 从「我的」进入历史笔记：直接打开独立页
+  // 从「我的」进入历史笔记：半弹框方式呈现
   noteHistoryReturnTo = 'me';
-  switchTab('notes-history');
+  openHistoryNotesSheet();
 }
 
 function openNoteHistoryFromInsights() {
-  // 从「记笔记」(insights) 进入历史笔记：复用同一组数据，并记住返回到 insights
+  // 从「记笔记」(insights) 进入历史笔记：半弹框方式呈现
   noteHistoryReturnTo = 'insights';
-  switchTab('notes-history');
+  openHistoryNotesSheet();
 }
 
 function openNoteHistoryBack() {
-  // 根据进入来源决定返回路径
-  if (noteHistoryReturnTo === 'insights') {
-    switchTab('insights');
-  } else {
-    switchTab('me');
-  }
+  // 兼容旧调用
+  closeHistoryNotesSheet();
+}
+
+function openHistoryNotesSheet() {
+  document.getElementById('historyNotesModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  renderNotesHistoryPage();
+}
+
+function closeHistoryNotesSheet() {
+  document.getElementById('historyNotesModal').classList.remove('show');
+  document.body.style.overflow = '';
   noteHistoryReturnTo = 'me';
 }
 
-// 资产交易记录卡片：展开/收起
-function toggleAssetTxnCard() {
-  const card = document.getElementById('assetTxnCard');
-  if (!card) return;
-  card.classList.toggle('open');
-  if (card.classList.contains('open')) {
-    renderAssetTxnCard();
-  }
+// 资产交易记录卡片：宽度与笔记预测一致，超过 4 笔时底部倒三角展开
+let assetTxnExpanded = false;
+
+function toggleAssetTxnExpand() {
+  assetTxnExpanded = !assetTxnExpanded;
+  renderAssetTxnCard();
 }
 
 function renderAssetTxnCard() {
   const listEl = document.getElementById('assetTxnList');
-  const countEl = document.getElementById('assetTxnCount');
+  const moreBtn = document.getElementById('assetTxnMore');
+  const card = document.getElementById('assetTxnCard');
   if (!listEl) return;
   const code = (typeof activeAssetData !== 'undefined' && activeAssetData?.code) || document.getElementById('assetDetailCode')?.textContent || '';
   const all = (typeof TXN_DEMO_DATA !== 'undefined') ? TXN_DEMO_DATA.filter(t => !code || t.code === code) : [];
-  if (countEl) countEl.textContent = `${all.length} 笔`;
   if (all.length === 0) {
     listEl.innerHTML = '<div class="asset-txn-empty">该资产暂无交易记录</div>';
+    if (moreBtn) moreBtn.style.display = 'none';
     return;
   }
-  const show = all.slice(0, 3);
+  // 默认按时间倒序
+  const sorted = all.slice().sort((a,b) => a.date < b.date ? 1 : -1);
+  const show = assetTxnExpanded ? sorted : sorted.slice(0, 4);
   listEl.innerHTML = show.map(t => `
     <div class="asset-txn-row">
       <div class="asset-txn-row-left">
@@ -4471,12 +4435,32 @@ function renderAssetTxnCard() {
       </div>
     </div>
   `).join('');
+  // 控制底部倒三角按钮：超过 4 笔才显示
+  if (moreBtn) {
+    if (sorted.length > 4) {
+      moreBtn.style.display = 'flex';
+    } else {
+      moreBtn.style.display = 'none';
+    }
+  }
+  if (card) {
+    if (assetTxnExpanded && sorted.length > 4) card.classList.add('open');
+    else card.classList.remove('open');
+  }
+  assetTxnExpanded = assetTxnExpanded; // 保持
 }
 
 // 交易记录页：示例数据 + 渲染 + 筛选
 const TXN_DEMO_DATA = [
+  // 600519 贵州茅台 - 6 笔，验证倒三角
   { date:'2026-06-18', type:'SELL', typeLabel:'卖出', category:'stock', code:'600519', name:'贵州茅台', price:1928.50, qty:10, amount:19285.00, note:'获利了结部分仓位' },
-  { date:'2026-06-15', type:'BUY',  typeLabel:'买入', category:'stock', code:'000858', name:'五粮液',   price:138.60,  qty:200, amount:27720.00, note:'逢低加仓' },
+  { date:'2026-04-22', type:'BUY',  typeLabel:'买入', category:'stock', code:'600519', name:'贵州茅台', price:1685.00, qty:20, amount:33700.00, note:'回调加仓' },
+  { date:'2026-02-10', type:'BUY',  typeLabel:'买入', category:'stock', code:'600519', name:'贵州茅台', price:1572.30, qty:30, amount:47169.00, note:'分批建仓' },
+  { date:'2025-12-05', type:'BUY',  typeLabel:'买入', category:'stock', code:'600519', name:'贵州茅台', price:1500.00, qty:50, amount:75000.00, note:'底部建仓' },
+  { date:'2025-09-18', type:'DIVIDEND', typeLabel:'分红', category:'stock', code:'600519', name:'贵州茅台', price:0, qty:0, amount:3200.00, note:'现金分红' },
+  { date:'2025-06-20', type:'SELL', typeLabel:'卖出', category:'stock', code:'600519', name:'贵州茅台', price:1620.00, qty:10, amount:16200.00, note:'阶段性止盈' },
+  // 00700 腾讯控股
+  { date:'2026-06-15', type:'BUY',  typeLabel:'买入', category:'stock', code:'00700', name:'五粮液',   price:138.60,  qty:200, amount:27720.00, note:'逢低加仓' },
   { date:'2026-06-12', type:'BUY',  typeLabel:'买入', category:'fund',  code:'007119', name:'睿远成长', price:2.345,   qty:5000,amount:11725.00, note:'定投加仓' },
   { date:'2026-06-08', type:'SELL', typeLabel:'卖出', category:'fund',  code:'110022', name:'易方达消费',price:3.612,   qty:2000,amount:7224.00,  note:'止盈赎回' },
   { date:'2026-06-03', type:'BUY',  typeLabel:'买入', category:'stock', code:'601318', name:'中国平安', price:48.20,   qty:300, amount:14460.00, note:'左侧建仓' },
@@ -4670,7 +4654,7 @@ function switchTab(tabName) {
   const targetPage = document.getElementById('page-' + tabName);
   if (targetPage) targetPage.classList.add('active');
 
-  const isSubPage = (tabName === 'transactions' || tabName === 'notes-history' || tabName === 'asset-detail' || tabName === 'record');
+  const isSubPage = (tabName === 'transactions' || tabName === 'asset-detail' || tabName === 'record');
   if (tabBar) {
     tabBar.style.display = isSubPage ? 'none' : '';
   }
@@ -4684,8 +4668,6 @@ function switchTab(tabName) {
   currentTab = tabName;
   if (tabName === 'transactions') {
     renderTransactionPage();
-  } else if (tabName === 'notes-history') {
-    renderNotesHistoryPage();
   }
   window.scrollTo(0, 0);
 }
@@ -5851,6 +5833,8 @@ function openAssetSheet(code) {
   fillAssetDetail(asset);
   renderPredictions(asset.notes);
   checkNoteConflicts(asset.notes);
+  renderAssetTxnCard();
+  assetTxnExpanded = false;
   document.getElementById('assetDetailModal').classList.add('show');
   document.body.style.overflow = 'hidden';
   document.querySelector('#assetDetailModal .sheet-body')?.scrollTo({ top: 0, behavior: 'auto' });
