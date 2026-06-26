@@ -10039,6 +10039,8 @@
           closeAccountModal();
           closeAssetSheet();
           closeRecordSheet();
+          closeHistoryNotesSheet();
+          closeHistoryTransactionsSheet();
           return;
         }
         if (sortMenuOpen && !e.target.closest(".sort-control")) {
@@ -10062,6 +10064,8 @@
             closeAccountModal();
             closeAssetSheet();
             closeRecordSheet();
+            closeHistoryNotesSheet();
+            closeHistoryTransactionsSheet();
             return;
           }
         },
