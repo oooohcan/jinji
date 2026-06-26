@@ -22,8 +22,8 @@
   --text-muted: #999;
   --border: #e8e6e3;
   --input-bg: #f5f4f2;
-  --positive: #c0392b;
-  --negative: #27ae60;
+  --positive: #2E8B57;
+  --negative: #CD5C5C;
   --shadow: 0 2px 24px rgba(164,74,63,0.08);
   --shadow-lg: 0 8px 32px rgba(164,74,63,0.12);
   --radius: 24px;
@@ -33,10 +33,11 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --tab-height: 56px;
+  --tab-height: 64px;
   --page-top: max(0px, var(--safe-top));
   --tab-total-height: calc(var(--tab-height) + var(--safe-bottom));
   --app-height: 100vh;
+  --app-height: 100dvh;
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {
@@ -51,8 +52,11 @@ html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  padding: 0;
+  padding-bottom: 0;
   margin: 0;
+}
+html {
+  height: -webkit-fill-available;
 }
 body {
   font-family: var(--font-body);
@@ -62,8 +66,8 @@ body {
   line-height: 1.5;
   letter-spacing: -0.01em;
   font-weight: 400;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 .app-container {
@@ -74,6 +78,7 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--bg);
+  padding-bottom: 0;
 }
 
 .page {
@@ -87,7 +92,7 @@ body {
   transform: translateY(8px);
   pointer-events: none;
   transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  padding-bottom: 20px;
+  padding-bottom: 12px;
   box-sizing: border-box;
 }
 .page.active {
@@ -103,15 +108,17 @@ body {
 }
 
 .tab-bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
   height: var(--tab-total-height);
   padding-bottom: var(--safe-bottom);
   padding-top: 6px;
-  background: rgba(255,255,255,0.96);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid rgba(0,0,0,0.05);
@@ -219,8 +226,8 @@ body {
   background: var(--input-bg);
   color: var(--text-secondary);
 }
-.tag-up { background: rgba(192,57,43,0.08); color: var(--positive); }
-.tag-down { background: rgba(39,174,96,0.08); color: var(--negative); }
+.tag-up { background: rgba(46,139,87,0.08); color: var(--positive); }
+.tag-down { background: rgba(205,92,92,0.08); color: var(--negative); }
 
 /* Portfolio */
 .summary-card {
@@ -304,19 +311,14 @@ body {
   display:block;
   font-size:22px;
   font-weight:600;
+  color: var(--positive);
   font-variant-numeric: lining-nums;
   text-shadow: none;
   width: 100%;
   min-width: 0;
-  transition: opacity 0.3s ease, filter 0.3s ease, color 0.3s ease;
+  transition: opacity 0.3s ease, filter 0.3s ease;
   white-space:nowrap;
 }
-.summary-col .value.small.up { color: var(--positive); }
-.summary-col .value.small.down { color: var(--negative); }
-.summary-col .value.small.neutral { color: var(--text-secondary); }
-#todayPnLPct.up { color: var(--positive); }
-#todayPnLPct.down { color: var(--negative); }
-#todayPnLPct.neutral { color: var(--text-secondary); }
 .summary-col .value.small.privacy-hide {
   opacity: 0.3;
   filter: blur(2px);
@@ -425,19 +427,14 @@ body {
   border: 1.5px dashed var(--border);
 }
 
-.holdings-card {
-  margin: 0 16px 22px;
-  background: var(--card);
-  border: 1px solid rgba(164,74,63,0.06);
-  border-radius: 18px;
-  box-shadow: 0 10px 22px rgba(164,74,63,0.05);
-  overflow: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
 .holdings-toolbar {
+  margin: 0 16px;
   padding: 12px 16px 10px;
-  background: var(--card);
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(164,74,63,0.06);
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 8px 18px rgba(164,74,63,0.05);
   position: relative;
 }
 .holdings-toolbar-top {
@@ -577,13 +574,17 @@ body {
 }
 
 #assetList {
-  margin: 0;
+  margin: 0 16px 22px;
   background:var(--card);
+  border:1px solid rgba(164,74,63,0.06);
+  border-radius:18px;
   overflow:hidden;
   overflow-x:hidden;
+  box-shadow:0 10px 22px rgba(164,74,63,0.05);
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   width: auto;
+  max-width: calc(100% - 32px);
 }
 
 .asset-item {
@@ -693,14 +694,17 @@ body {
   line-height:1.3;
 }
 .asset-price-block .col-today {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
+  display:inline-flex;
+  flex-direction:row;
+  align-items:baseline;
+  gap:6px;
   font-size:11px;
   font-weight:600;
   line-height:1.4;
   margin-top:3px;
+  white-space:nowrap;
 }
+.col-today .today-sep { color:var(--text-muted); font-weight:400; opacity:0.6; }
 .col-today .today-amount { white-space:nowrap; }
 .col-today .today-pct { white-space:nowrap; font-size:10px; opacity:0.85; }
 .col-today.up { color:#c0392b; }
@@ -818,8 +822,8 @@ body {
   white-space:nowrap;
 }
 .extra-maturity.maturity-soon {
-  background:rgba(192,57,43,0.08);
-  color:#c0392b;
+  background:rgba(205,92,92,0.08);
+  color:var(--negative);
 }
 .extra-rate {
   font-weight:600;
@@ -1005,66 +1009,56 @@ body {
 .kline-chart-svg {
   display:block;
   width:100%;
-  height:210px;
+  height:180px;
 }
 .kline-grid {
-  stroke:rgba(164,74,63,0.06);
-  stroke-width:0.5;
-  stroke-dasharray:2 2;
+  stroke:rgba(164,74,63,0.08);
+  stroke-width:0.6;
 }
 .kline-axis-label {
   font-size:5px;
-  fill:rgba(60,50,45,0.4);
+  fill:var(--text-muted);
   font-family:var(--font-body);
-  letter-spacing:0.02em;
-  font-weight:500;
+  letter-spacing:0.04em;
 }
 .kline-value-label {
   font-size:5px;
   font-weight:700;
   font-family:var(--font-body);
 }
-.kline-area-fill {
-  opacity:1;
-}
-.kline-main-line {
+.kline-step-line {
   fill:none;
-  stroke:var(--brand);
-  stroke-width:1.3;
+  stroke:#2a2a2a;
+  stroke-width:0.9;
+  stroke-linecap:round;
+  stroke-linejoin:miter;
+}
+.kline-step-dot {
+  fill:#2a2a2a;
+}
+.kline-ref-line {
+  stroke:var(--negative);
+  stroke-width:0.5;
+  stroke-dasharray:2 2;
+  opacity:0.7;
+}
+.return-line {
+  fill:none;
+  stroke:var(--brand-accent);
+  stroke-width:0.9;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
-.kline-start-dot {
-  fill:rgba(164,74,63,0.3);
-  stroke:var(--card);
-  stroke-width:0.8;
-}
-.kline-end-dot {
-  fill:var(--brand);
+.return-dot {
+  fill:var(--brand-accent);
   stroke:#fff;
-  stroke-width:1.0;
-  filter:url(#klineGlow);
-}
-.kline-end-dot-ring {
-  fill:var(--brand);
-  opacity:0.2;
-}
-.kline-ref-line {
-  stroke:rgba(164,74,63,0.15);
   stroke-width:0.4;
-  stroke-dasharray:1.5 2;
-  opacity:0.8;
 }
-.kline-return-label {
-  font-size:5.5px;
+.return-label {
+  font-size:5px;
   font-weight:700;
   font-family:var(--font-body);
-}
-.kline-end-value-tag {
-  font-size:5px;
-  font-weight:600;
-  font-family:var(--font-body);
-  fill:#fff;
+  fill:var(--brand-accent);
 }
 .stats-summary-card {
   display:flex;
@@ -1285,11 +1279,11 @@ body {
   font-weight:600;
 }
 .asset-txn-row-tag.buy {
-  background:rgba(192,57,43,0.12);
+  background:rgba(46,139,87,0.12);
   color:var(--positive);
 }
 .asset-txn-row-tag.sell {
-  background:rgba(39,174,96,0.12);
+  background:rgba(205,92,92,0.12);
   color:var(--negative);
 }
 /* 4笔后倒三角展开 */
@@ -1577,11 +1571,11 @@ body {
   font-weight:600;
 }
 .txn-page-type-tag.buy {
-  background:rgba(192,57,43,0.12);
+  background:rgba(46,139,87,0.12);
   color:var(--positive);
 }
 .txn-page-type-tag.sell {
-  background:rgba(39,174,96,0.12);
+  background:rgba(205,92,92,0.12);
   color:var(--negative);
 }
 .txn-empty {
@@ -1681,12 +1675,12 @@ body {
   color:var(--text-muted);
 }
 .notes-history-tag.trend-bull {
-  background:rgba(192,57,43,0.12);
+  background:rgba(46,139,87,0.12);
   color:var(--positive);
   font-weight:600;
 }
 .notes-history-tag.trend-bear {
-  background:rgba(39,174,96,0.12);
+  background:rgba(205,92,92,0.12);
   color:var(--negative);
   font-weight:600;
 }
@@ -2342,11 +2336,11 @@ body {
   font-weight:600;
 }
 .scan-badge.new {
-  background:rgba(192,57,43,0.1);
+  background:rgba(46,139,87,0.1);
   color:var(--positive);
 }
 .scan-badge.exist {
-  background:rgba(39,174,96,0.1);
+  background:rgba(205,92,92,0.1);
   color:var(--negative);
 }
 
@@ -2544,8 +2538,8 @@ body {
   font-weight:600;
   padding:1px 6px;
   border-radius:4px;
-  background:rgba(164,74,63,0.08);
-  color:var(--brand);
+  background:rgba(46,139,87,0.12);
+  color:#2e8b57;
   flex-shrink:0;
 }
 .sr-right-top {
@@ -2588,8 +2582,8 @@ body {
   background:rgba(0,0,0,0.08);
   margin-right:8px;
 }
-.sr-pct.up { color:#c0392b; font-weight:600; }
-.sr-pct.dn { color:#27ae60; font-weight:600; }
+.sr-pct.up { color:#d14b4b; font-weight:600; }
+.sr-pct.dn { color:#2e8b57; font-weight:600; }
 .sr-tag-new {
   font-size:11px;
   padding:1px 7px;
@@ -2864,6 +2858,8 @@ body {
 }
 .detail-value.profit { color:var(--positive); }
 .detail-value.loss { color:var(--negative); }
+.detail-value .pnl-amount { display:block; }
+.detail-value .pnl-pct { display:block; font-size:13px; font-weight:600; opacity:0.85; margin-top:2px; }
 .detail-edit-input {
   display:none;
   padding:10px 12px;
@@ -2983,7 +2979,7 @@ body {
   margin-top:4px;
 }
 .days-to-maturity.soon {
-  color:#c0392b;
+  color:var(--negative);
 }
 .asset-txn-card {
   background:var(--card);
@@ -3368,11 +3364,11 @@ body {
   white-space:nowrap;
 }
 .history-mini-tag.up {
-  background:rgba(192,57,43,0.08);
+  background:rgba(46,139,87,0.08);
   color:var(--positive);
 }
 .history-mini-tag.down {
-  background:rgba(39,174,96,0.08);
+  background:rgba(205,92,92,0.08);
   color:var(--negative);
 }
 .history-asset-pill {
@@ -3453,11 +3449,11 @@ body {
 }
 .history-asset-trend.up {
   color:var(--positive);
-  background:rgba(192,57,43,0.08);
+  background:rgba(46,139,87,0.08);
 }
 .history-asset-trend.down {
   color:var(--negative);
-  background:rgba(39,174,96,0.08);
+  background:rgba(205,92,92,0.08);
 }
 .history-asset-trend.neutral {
   color:var(--brand);
@@ -3506,7 +3502,7 @@ body {
   width:7px;
   height:7px;
   border-radius:50%;
-  background:var(--brand-light);
+  background:var(--positive);
 }
 .me-stats {
   display:flex;
@@ -3771,11 +3767,11 @@ body {
   font-size:11px;
 }
 .txn-type.buy {
-  background:rgba(192,57,43,0.12);
+  background:rgba(46,139,87,0.12);
   color:var(--positive);
 }
 .txn-type.sell {
-  background:rgba(39,174,96,0.12);
+  background:rgba(205,92,92,0.12);
   color:var(--negative);
 }
 .txn-qty {
@@ -3840,11 +3836,11 @@ body {
   background:var(--border);
 }
 .me-asset-btn.danger {
-  background:rgba(192,57,43,0.1);
-  color:#c0392b;
+  background:rgba(205,92,92,0.1);
+  color:var(--negative);
 }
 .me-asset-btn.danger:active {
-  background:rgba(192,57,43,0.2);
+  background:rgba(205,92,92,0.2);
 }
 .me-note-list {
   display:flex;
@@ -4135,11 +4131,11 @@ body {
   margin-bottom:8px;
 }
 .tag-bull {
-  background:rgba(192,57,43,0.15);
+  background:rgba(46,139,87,0.15);
   color:var(--positive);
 }
 .tag-bear {
-  background:rgba(39,174,96,0.15);
+  background:rgba(205,92,92,0.15);
   color:var(--negative);
 }
 .note-content {
@@ -4367,9 +4363,39 @@ body {
 }
 
 </style>
+
+<script>
+// iOS PWA 动态视口高度管理（修复 iOS 26 PWA 底部留白）
+(function() {
+  function setAppHeight() {
+    var vv = window.visualViewport;
+    var h = (vv && vv.height) ? vv.height : window.innerHeight;
+    var top = (vv && typeof vv.offsetTop === 'number') ? vv.offsetTop : 0;
+    document.documentElement.style.setProperty('--app-height', h + 'px');
+    document.documentElement.style.setProperty('--viewport-top', top + 'px');
+  }
+  setAppHeight();
+  window.addEventListener('resize', setAppHeight);
+  window.addEventListener('orientationchange', function() { setTimeout(setAppHeight, 100); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setAppHeight);
+    window.visualViewport.addEventListener('scroll', setAppHeight);
+  }
+  window.addEventListener('focus', setAppHeight);
+  window.addEventListener('pageshow', setAppHeight);
+  window.addEventListener('load', setAppHeight);
+  // 防止底部橡皮筋留白
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 1) return;
+    var target = e.target;
+    var scrollable = target.closest('.page, .page-content, .asset-list, .summary-card, .detail-card, .modal-body');
+    if (!scrollable) e.preventDefault();
+  }, { passive: false });
+})();
+</script>
+
 </head>
 <body>
-<script>document.documentElement.style.setProperty('--app-height',window.innerHeight+'px');</script>
 
 <div class="app-container" id="app">
 
@@ -4385,8 +4411,8 @@ body {
           <div class="summary-divider"></div>
           <div class="summary-col">
             <span class="label">今日盈亏</span>
-            <span class="value small up" id="todayPnL">+2,340.50</span>
-            <span class="label up" style="margin-top:6px;" id="todayPnLPct">+1.85%</span>
+            <span class="value small" id="todayPnL">+2,340.50</span>
+            <span class="label" style="margin-top:6px;" id="todayPnLPct">+1.85%</span>
           </div>
         </div>
         <div class="summary-actions">
@@ -4401,29 +4427,15 @@ body {
 
     <div class="stats-panel" id="homeStatsPanel">
       <div class="stats-chart-wrap">
-        <svg class="kline-chart-svg" viewBox="0 0 120 100" preserveAspectRatio="none" aria-label="总资产走势图">
-          <defs>
-            <linearGradient id="klineAreaGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="rgba(164,74,63,0.20)"/>
-              <stop offset="100%" stop-color="rgba(164,74,63,0.0)"/>
-            </linearGradient>
-            <filter id="klineGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="1.2" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
+        <svg class="kline-chart-svg" viewBox="0 0 120 96" preserveAspectRatio="none" aria-label="总资产K线">
           <g id="klineYAxis"></g>
           <g id="klineXAxis"></g>
-          <g id="klineGrid">
-            <line class="kline-grid" x1="14" y1="22" x2="116" y2="22"/>
-            <line class="kline-grid" x1="14" y1="50" x2="116" y2="50"/>
-            <line class="kline-grid" x1="14" y1="78" x2="116" y2="78"/>
-          </g>
+          <line class="kline-grid" x1="14" y1="22" x2="114" y2="22"/>
+          <line class="kline-grid" x1="14" y1="50" x2="114" y2="50"/>
+          <line class="kline-grid" x1="14" y1="78" x2="114" y2="78"/>
           <g id="klineRefLine"></g>
-          <g id="klineAreaGroup"></g>
-          <g id="klineLineGroup"></g>
-          <g id="klineDotsGroup"></g>
-          <g id="klineLabelGroup"></g>
+          <g id="klineStepSeries"></g>
+          <g id="klineReturnSeries"></g>
         </svg>
       </div>
       <div class="stats-range-bar" id="statsRangeBar">
@@ -4446,7 +4458,6 @@ body {
       </button>
     </div>
 
-    <div class="holdings-card">
     <div class="holdings-toolbar">
       <div class="holdings-toolbar-top">
         <div class="holdings-title">
@@ -4500,7 +4511,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,916.00</div>
-            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-pct">+0.74%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-sep">·</span><span class="today-pct">+0.74%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4518,7 +4529,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥41,600 | +27.73%</span>
+            <span class="sub-value up">+¥41,600 · +27.73%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4528,6 +4539,9 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:57.3%"></span></span>
               <span class="weight-value">57.3%</span>
             </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 27.73%</span>
           </div>
         </div>
       </div>
@@ -4543,7 +4557,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">HK$420.30</div>
-            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-pct">+2.46%</span></div>
+            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-sep">·</span><span class="today-pct">+2.46%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4561,7 +4575,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥3,830 | +10.03%</span>
+            <span class="sub-value up">+¥3,830 · +10.03%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4571,6 +4585,9 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:12.6%"></span></span>
               <span class="weight-value">12.6%</span>
             </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 10.03%</span>
           </div>
         </div>
       </div>
@@ -4586,7 +4603,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥4.20</div>
-            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-pct">-2.78%</span></div>
+            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-sep">·</span><span class="today-pct">-2.78%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4604,7 +4621,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value down">-¥70.00 | -14.29%</span>
+            <span class="sub-value down">-¥70.00 · -14.29%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4614,6 +4631,9 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:0.1%"></span></span>
               <span class="weight-value">0.1%</span>
             </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--negative);font-size:10px;">持仓收益率 -14.29%</span>
           </div>
         </div>
       </div>
@@ -4629,7 +4649,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,568.40</div>
-            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-pct">+1.71%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-sep">·</span><span class="today-pct">+1.71%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4647,7 +4667,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥1,781 | +10.45%</span>
+            <span class="sub-value up">+¥1,781 · +10.45%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4657,6 +4677,9 @@ body {
               <span class="weight-bar"><span class="weight-bar-fill" style="width:5.6%"></span></span>
               <span class="weight-value">5.6%</span>
             </span>
+          </div>
+          <div class="extra-right">
+            <span style="color:var(--text-muted);font-size:10px;">持仓收益率 10.45%</span>
           </div>
         </div>
       </div>
@@ -4672,7 +4695,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥50,354</div>
-            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-pct">累计利息</span></div>
+            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-sep">·</span><span class="today-pct">累计利息</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4690,7 +4713,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥354 | +0.71%</span>
+            <span class="sub-value up">+¥354 · +0.71%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4719,7 +4742,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥30,182</div>
-            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-pct">+0.01%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-sep">·</span><span class="today-pct">+0.01%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4737,7 +4760,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥182 | +0.61%</span>
+            <span class="sub-value up">+¥182 · +0.61%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4759,7 +4782,6 @@ body {
         <div class="asset-empty-copy" id="assetEmptyCopy">添加一项持仓后，这里会同步展示市值、盈亏和持仓时间。</div>
         <button class="asset-empty-action" onclick="openRecordSheet('add')">新增资产</button>
       </div>
-    </div>
     </div>
   </div>
 
@@ -5358,11 +5380,11 @@ body {
         </div>
         <div class="detail-card">
           <span class="detail-label">今日盈亏</span>
-          <span class="detail-value today-up" id="detailTodayPnL">+¥1,400 | +0.74%</span>
+          <span class="detail-value today-up" id="detailTodayPnL"><span class="pnl-amount">+¥1,400</span><span class="pnl-pct">+0.74%</span></span>
         </div>
         <div class="detail-card">
           <span class="detail-label">持仓盈亏</span>
-          <span class="detail-value profit" id="detailPnL">+¥41,600.00 | +27.73%</span>
+          <span class="detail-value profit" id="detailPnL"><span class="pnl-amount">+¥41,600</span><span class="pnl-pct">+27.73%</span></span>
         </div>
         <div class="detail-card wide editable fixed-income-only">
           <span class="detail-label">到期日</span>
@@ -5377,6 +5399,10 @@ body {
         <div class="detail-card fixed-income-only">
           <span class="detail-label">距到期天数</span>
           <span class="days-to-maturity" id="detailDaysToMaturity">还剩 188 天</span>
+        </div>
+        <div class="detail-card wide">
+          <span class="detail-label">持仓收益率</span>
+          <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
         </div>
       </div>
       <input type="hidden" id="editPrice">
@@ -5438,20 +5464,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.stopPropagation();
     });
   });
-  setAppHeight();
-  window.addEventListener('resize', setAppHeight);
-  window.addEventListener('orientationchange', function() { setTimeout(setAppHeight, 100); });
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', function() { setAppHeight(); });
-  }
-  setTimeout(setAppHeight, 300);
-  setTimeout(setAppHeight, 1000);
 });
-
-function setAppHeight() {
-  const doc = document.documentElement;
-  doc.style.setProperty('--app-height', window.innerHeight + 'px');
-}
 
 function switchMeTab(tabName) { /* 已废弃：我的页面改为平铺菜单 */ }
 
@@ -6607,22 +6620,13 @@ function updateAssetListRow(item, asset) {
 function updateTotalAssetSummary() {
   const diff = totalAssetSnapshots.todayOne - totalAssetSnapshots.previousOne;
   const yieldPct = totalAssetSnapshots.previousOne ? diff / totalAssetSnapshots.previousOne * 100 : 0;
-  const isUp = diff > 0;
-  const isDn = diff < 0;
-  const pnlClass = isUp ? 'up' : isDn ? 'down' : 'neutral';
   const setText = (id, val) => {
     const el = document.getElementById(id);
     if (el) el.textContent = val;
   };
-  const setClass = (id, cls) => {
-    const el = document.getElementById(id);
-    if (el) { el.classList.remove('up','down','neutral'); el.classList.add(cls); }
-  };
   setText('totalAsset', formatNumber(totalAssetSnapshots.todayOne));
   setText('todayPnL', signedNumber(diff));
   setText('todayPnLPct', signedPercent(yieldPct));
-  setClass('todayPnL', pnlClass);
-  setClass('todayPnLPct', pnlClass);
   setText('dailyAssetDiff', signedNumber(diff));
   setText('dailyAssetYield', signedPercent(yieldPct));
   setText('prevOneValue', formatNumber(totalAssetSnapshots.previousOne, 0));
@@ -6632,34 +6636,31 @@ function updateTotalAssetSummary() {
 }
 
 function updateTotalAssetKline(days) {
+  // 兼容旧调用：若使用 #totalAssetKlineSeries，回退到旧版绘制
   const oldSeries = document.getElementById('totalAssetKlineSeries');
-  if (oldSeries && !document.getElementById('klineLineGroup')) {
+  if (oldSeries && !document.getElementById('klineStepSeries')) {
     drawKlineLegacy(oldSeries, days);
     return;
   }
-  const areaGroup = document.getElementById('klineAreaGroup');
-  const lineGroup = document.getElementById('klineLineGroup');
-  const dotsGroup = document.getElementById('klineDotsGroup');
-  const labelGroup = document.getElementById('klineLabelGroup');
+  const stepSeries = document.getElementById('klineStepSeries');
+  const retSeries = document.getElementById('klineReturnSeries');
   const refLineGroup = document.getElementById('klineRefLine');
   const yAxis = document.getElementById('klineYAxis');
   const xAxis = document.getElementById('klineXAxis');
-  if (!areaGroup || !Array.isArray(days) || days.length === 0) return;
+  if (!stepSeries || !Array.isArray(days) || days.length === 0) return;
 
-  const top = 16;
-  const bottom = 84;
-  const values = days.map(d => Number(d.todayOne || 0));
-  const firstValue = Number(days[0].previousOne || values[0]);
-  const allValues = [firstValue, ...values];
-  const minValue = Math.min(...allValues);
-  const maxValue = Math.max(...allValues);
-  const padding = Math.max((maxValue - minValue) * 0.12, maxValue * 0.002);
+  const top = 18;
+  const bottom = 82;
+  const values = days.flatMap(d => [Number(d.previousOne || 0), Number(d.todayOne || 0)]);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const padding = Math.max((maxValue - minValue) * 0.15, maxValue * 0.002);
   const range = Math.max(maxValue - minValue + padding * 2, 1);
   const yForValue = (v) => bottom - ((v - minValue + padding) / range) * (bottom - top);
 
   const ns = 'http://www.w3.org/2000/svg';
-  const chartLeft = 16;
-  const chartRight = 116;
+  const chartLeft = 18;
+  const chartRight = 118;
   const slot = (chartRight - chartLeft) / Math.max(days.length, 1);
 
   const make = (tag, attrs) => {
@@ -6668,102 +6669,91 @@ function updateTotalAssetKline(days) {
     return el;
   };
 
-  [areaGroup, lineGroup, dotsGroup, labelGroup, refLineGroup, yAxis, xAxis].forEach(g => g && (g.innerHTML = ''));
+  [stepSeries, retSeries, refLineGroup, yAxis, xAxis].forEach(g => g && (g.innerHTML = ''));
 
   // Y 轴刻度
   const yTicks = 3;
   for (let i = 0; i < yTicks; i++) {
     const v = minValue - padding + (range * i) / (yTicks - 1);
     const y = yForValue(v);
-    const text = make('text', { class: 'kline-axis-label', x: 13, y: (y + 1.5).toFixed(2), 'text-anchor': 'end' });
+    const text = make('text', { class: 'kline-axis-label', x: 13, y: y.toFixed(2), 'text-anchor': 'end' });
     text.textContent = formatKlineValue(v);
     yAxis.appendChild(text);
   }
 
   // X 轴刻度
-  const xLabelCount = Math.min(Math.max(3, Math.ceil(days.length / 2)), 4);
+  const xLabelCount = Math.min(days.length, 5);
   for (let i = 0; i < xLabelCount; i++) {
     const idx = Math.round((i / (xLabelCount - 1)) * (days.length - 1));
-    const x = chartLeft + slot * (idx + 0.5);
-    const text = make('text', { class: 'kline-axis-label', x: x.toFixed(2), y: '95', 'text-anchor': 'middle' });
+    const x = chartLeft + slot * idx + slot / 2;
+    const text = make('text', { class: 'kline-axis-label', x: x.toFixed(2), y: '93', 'text-anchor': 'middle' });
     text.textContent = days[idx].label;
     xAxis.appendChild(text);
   }
 
-  // 平滑贝塞尔曲线点
-  const rawPoints = [[chartLeft, yForValue(firstValue)]];
-  days.forEach((d, i) => {
+  // 阶梯线（净资产）—— 黑色阶梯折线
+  const points = days.map((d, i) => {
     const v = Number(d.todayOne || 0);
-    rawPoints.push([chartLeft + slot * (i + 1), yForValue(v)]);
+    return [chartLeft + slot * i + slot / 2, yForValue(v)];
   });
 
-  function polylinePath(pts) {
-    if (pts.length < 2) return '';
-    return 'M ' + pts.map(p => `${p[0].toFixed(2)} ${p[1].toFixed(2)}`).join(' L ');
+  let pathD = '';
+  for (let i = 0; i < points.length; i++) {
+    if (i === 0) pathD += `M ${points[i][0].toFixed(2)} ${points[i][1].toFixed(2)}`;
+    else {
+      const prevX = points[i - 1][0];
+      pathD += ` L ${prevX.toFixed(2)} ${points[i][1].toFixed(2)} L ${points[i][0].toFixed(2)} ${points[i][1].toFixed(2)}`;
+    }
+  }
+  stepSeries.appendChild(make('path', { class: 'kline-step-line', d: pathD }));
+  // 阶梯起点圆点
+  if (points[0]) {
+    stepSeries.appendChild(make('circle', {
+      class: 'kline-step-dot', cx: points[0][0].toFixed(2), cy: points[0][1].toFixed(2), r: '1.1'
+    }));
   }
 
-  const lineD = polylinePath(rawPoints);
-
-  // 面积填充路径
-  const areaD = lineD + ` L ${rawPoints[rawPoints.length - 1][0].toFixed(2)} ${bottom.toFixed(2)} L ${rawPoints[0][0].toFixed(2)} ${bottom.toFixed(2)} Z`;
-  areaGroup.appendChild(make('path', {
-    class: 'kline-area-fill',
-    d: areaD,
-    fill: 'url(#klineAreaGradient)'
-  }));
-
-  // 主线
-  lineGroup.appendChild(make('path', { class: 'kline-main-line', d: lineD }));
-
-  // 起点圆点
-  dotsGroup.appendChild(make('circle', {
-    class: 'kline-start-dot', cx: rawPoints[0][0].toFixed(2), cy: rawPoints[0][1].toFixed(2), r: '1.4'
-  }));
-
-  // 末端圆点
-  const lastPt = rawPoints[rawPoints.length - 1];
-  dotsGroup.appendChild(make('circle', {
-    class: 'kline-end-dot-ring', cx: lastPt[0].toFixed(2), cy: lastPt[1].toFixed(2), r: '3.0'
-  }));
-  dotsGroup.appendChild(make('circle', {
-    class: 'kline-end-dot', cx: lastPt[0].toFixed(2), cy: lastPt[1].toFixed(2), r: '1.8'
-  }));
-
-  // 末端收益率标签
-  const lastDay = days[days.length - 1];
-  const lastReturn = lastDay.previousOne ? ((Number(lastDay.todayOne) - Number(lastDay.previousOne)) / Number(lastDay.previousOne)) * 100 : 0;
-  const isUp = lastReturn >= 0;
-  const labelColor = isUp ? 'var(--positive)' : 'var(--negative)';
-
-  // 末端虚线参考线
-  refLineGroup.appendChild(make('line', {
-    class: 'kline-ref-line', x1: lastPt[0].toFixed(2), y1: top, x2: lastPt[0].toFixed(2), y2: bottom
-  }));
-
-  // 收益率标签背景
-  const tagW = 18;
-  const tagH = 5.5;
-  const tagX = lastPt[0] - tagW - 2;
-  const tagY = Math.max(top + 1, lastPt[1] - tagH - 2);
-  const tagRect = make('rect', {
-    x: tagX.toFixed(2),
-    y: tagY.toFixed(2),
-    width: tagW,
-    height: tagH,
-    rx: '1.2',
-    ry: '1.2',
-    fill: labelColor
+  // 收益率线
+  const returns = days.map(d => {
+    const p = Number(d.previousOne || 0);
+    const c = Number(d.todayOne || 0);
+    return p ? ((c - p) / p) * 100 : 0;
   });
-  labelGroup.appendChild(tagRect);
+  const rMin = Math.min(...returns);
+  const rMax = Math.max(...returns);
+  const rPad = Math.max((rMax - rMin) * 0.25, 0.5);
+  const rRange = Math.max(rMax - rMin + rPad * 2, 1);
+  const yForReturn = (v) => bottom - ((v - rMin + rPad) / rRange) * (bottom - top);
 
-  const returnText = make('text', {
-    class: 'kline-end-value-tag',
-    x: (tagX + tagW / 2).toFixed(2),
-    y: (tagY + tagH - 1.5).toFixed(2),
-    'text-anchor': 'middle'
-  });
-  returnText.textContent = (isUp ? '+' : '') + lastReturn.toFixed(2) + '%';
-  labelGroup.appendChild(returnText);
+  const returnPts = days.map((d, i) => [chartLeft + slot * i + slot / 2, yForReturn(returns[i])]);
+  if (returnPts.length > 1) {
+    const d = returnPts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)}`).join(' ');
+    retSeries.appendChild(make('path', { class: 'return-line', d }));
+    returnPts.forEach(([x, y]) => {
+      retSeries.appendChild(make('circle', {
+        class: 'return-dot', cx: x.toFixed(2), cy: y.toFixed(2), r: '1.0'
+      }));
+    });
+    // 末端标记
+    const [lx, ly] = returnPts[returnPts.length - 1];
+    refLineGroup.appendChild(make('circle', {
+      class: 'return-dot', cx: lx.toFixed(2), cy: ly.toFixed(2), r: '1.8'
+    }));
+    // 标签
+    const label = make('text', {
+      class: 'return-label', x: (lx - 1).toFixed(2), y: Math.max(15, ly - 3).toFixed(2), 'text-anchor': 'end'
+    });
+    label.textContent = signedPercent(returns[returns.length - 1]);
+    refLineGroup.appendChild(label);
+  }
+
+  // 红色虚线参考线（穿过最右侧点）
+  if (returnPts.length > 0) {
+    const [lx, ly] = returnPts[returnPts.length - 1];
+    refLineGroup.appendChild(make('line', {
+      class: 'kline-ref-line', x1: lx.toFixed(2), y1: top, x2: lx.toFixed(2), y2: bottom
+    }));
+  }
 }
 
 function formatKlineValue(v) {
@@ -6775,8 +6765,8 @@ function formatKlineValue(v) {
 // 旧版 K 线绘制（保留兼容）
 function drawKlineLegacy(series, days) {
   if (!series || !Array.isArray(days) || days.length === 0) return;
-  const upColor = '#c0392b';
-  const downColor = '#27ae60';
+  const upColor = '#A44A3F';
+  const downColor = '#2E8B57';
   const flatColor = '#999999';
   const top = 12;
   const bottom = 54;
@@ -7403,14 +7393,17 @@ function fillAssetDetail(asset) {
   const weightBar = document.getElementById('detailWeightBar');
   weightBar.style.width = Math.min(weight, 100) + '%';
 
-  const todayPnlText = `${isTodayUp ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.todayPnl))} | ${isTodayUp ? '+' : '-'}${Math.abs(metrics.todayPct).toFixed(2)}%`;
+  const todayPnlAmount = `${isTodayUp ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.todayPnl))}`;
+  const todayPnlPct = `${isTodayUp ? '+' : '-'}${Math.abs(metrics.todayPct).toFixed(2)}%`;
   const todayPnlEl = document.getElementById('detailTodayPnL');
-  todayPnlEl.textContent = todayPnlText;
+  todayPnlEl.innerHTML = `<span class="pnl-amount">${todayPnlAmount}</span><span class="pnl-pct">${todayPnlPct}</span>`;
   todayPnlEl.className = `detail-value ${isTodayUp ? 'today-up' : metrics.todayPnl < 0 ? 'today-down' : 'today-neutral'}`;
 
-  const pnlText = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))} | ${isProfit ? '+' : '-'}${Math.abs(metrics.pnlPct).toFixed(2)}%`;
-  document.getElementById('detailPnL').textContent = pnlText;
-  document.getElementById('detailPnL').className = isProfit ? 'detail-value profit' : 'detail-value loss';
+  const pnlAmount = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))}`;
+  const pnlPct = `${isProfit ? '+' : '-'}${Math.abs(metrics.pnlPct).toFixed(2)}%`;
+  const pnlEl = document.getElementById('detailPnL');
+  pnlEl.innerHTML = `<span class="pnl-amount">${pnlAmount}</span><span class="pnl-pct">${pnlPct}</span>`;
+  pnlEl.className = isProfit ? 'detail-value profit' : 'detail-value loss';
 
   const content = document.getElementById('assetDetailContent');
   content.classList.toggle('asset-fixed-income', fixedIncome);
