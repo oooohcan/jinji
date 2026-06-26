@@ -33,9 +33,11 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --tab-height: 72px;
+  --tab-height: 64px;
   --page-top: max(0px, var(--safe-top));
-  --tab-total-height: calc(var(--tab-height) + 9px + var(--safe-bottom));
+  --tab-total-height: calc(var(--tab-height) + var(--safe-bottom));
+  --app-height: 100vh;
+  --app-height: 100dvh;
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {
@@ -71,10 +73,7 @@ body {
 .app-container {
   width: 100%;
   max-width: 430px;
-  height: 100%;
-  height: 100vh;
-  height: -webkit-fill-available;
-  height: fill-available;
+  height: var(--app-height);
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -116,9 +115,9 @@ body {
   width: 100%;
   max-width: 430px;
   margin: 0 auto;
-  height: calc(var(--tab-height) + var(--safe-bottom) + 9px);
+  height: var(--tab-total-height);
   padding-bottom: var(--safe-bottom);
-  padding-top: 8px;
+  padding-top: 6px;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -131,7 +130,7 @@ body {
 }
 @supports (padding-bottom: constant(safe-area-inset-bottom)) {
   .tab-bar {
-    height: calc(var(--tab-height) + constant(safe-area-inset-bottom, 0px) + 9px);
+    height: calc(var(--tab-height) + constant(safe-area-inset-bottom, 0px));
     padding-bottom: constant(safe-area-inset-bottom, 0px);
   }
 }
@@ -695,18 +694,21 @@ body {
   line-height:1.3;
 }
 .asset-price-block .col-today {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
+  display:inline-flex;
+  flex-direction:row;
+  align-items:baseline;
+  gap:6px;
   font-size:11px;
   font-weight:600;
   line-height:1.4;
   margin-top:3px;
+  white-space:nowrap;
 }
+.col-today .today-sep { color:var(--text-muted); font-weight:400; opacity:0.6; }
 .col-today .today-amount { white-space:nowrap; }
 .col-today .today-pct { white-space:nowrap; font-size:10px; opacity:0.85; }
-.col-today.up { color:#d14b4b; }
-.col-today.down { color:#2e8b57; }
+.col-today.up { color:#c0392b; }
+.col-today.down { color:#27ae60; }
 .col-today.neutral { color:var(--text-secondary); }
 
 /* 第二行：持仓量 | 成本价 | 市值 | 持仓盈亏（4列网格） */
@@ -746,8 +748,8 @@ body {
   line-height:1.3;
   letter-spacing:-0.02em;
 }
-.asset-sub-cell .sub-value.up { color:#d14b4b; }
-.asset-sub-cell .sub-value.down { color:#2e8b57; }
+.asset-sub-cell .sub-value.up { color:#c0392b; }
+.asset-sub-cell .sub-value.down { color:#27ae60; }
 .asset-sub-cell:last-child { align-items:flex-end; }
 
 /* 第三行：辅助信息（持仓占比、到期信息等） */
@@ -2856,6 +2858,8 @@ body {
 }
 .detail-value.profit { color:var(--positive); }
 .detail-value.loss { color:var(--negative); }
+.detail-value .pnl-amount { display:block; }
+.detail-value .pnl-pct { display:block; font-size:13px; font-weight:600; opacity:0.85; margin-top:2px; }
 .detail-edit-input {
   display:none;
   padding:10px 12px;
@@ -4359,6 +4363,37 @@ body {
 }
 
 </style>
+
+<script>
+// iOS PWA 动态视口高度管理（修复 iOS 26 PWA 底部留白）
+(function() {
+  function setAppHeight() {
+    var vv = window.visualViewport;
+    var h = (vv && vv.height) ? vv.height : window.innerHeight;
+    var top = (vv && typeof vv.offsetTop === 'number') ? vv.offsetTop : 0;
+    document.documentElement.style.setProperty('--app-height', h + 'px');
+    document.documentElement.style.setProperty('--viewport-top', top + 'px');
+  }
+  setAppHeight();
+  window.addEventListener('resize', setAppHeight);
+  window.addEventListener('orientationchange', function() { setTimeout(setAppHeight, 100); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setAppHeight);
+    window.visualViewport.addEventListener('scroll', setAppHeight);
+  }
+  window.addEventListener('focus', setAppHeight);
+  window.addEventListener('pageshow', setAppHeight);
+  window.addEventListener('load', setAppHeight);
+  // 防止底部橡皮筋留白
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 1) return;
+    var target = e.target;
+    var scrollable = target.closest('.page, .page-content, .asset-list, .summary-card, .detail-card, .modal-body');
+    if (!scrollable) e.preventDefault();
+  }, { passive: false });
+})();
+</script>
+
 </head>
 <body>
 
@@ -4476,7 +4511,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,916.00</div>
-            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-pct">+0.74%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-sep">·</span><span class="today-pct">+0.74%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4494,7 +4529,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥41,600 (+27.73%)</span>
+            <span class="sub-value up">+¥41,600 · +27.73%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4522,7 +4557,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">HK$420.30</div>
-            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-pct">+2.46%</span></div>
+            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-sep">·</span><span class="today-pct">+2.46%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4540,7 +4575,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥3,830 (+10.03%)</span>
+            <span class="sub-value up">+¥3,830 · +10.03%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4568,7 +4603,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥4.20</div>
-            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-pct">-2.78%</span></div>
+            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-sep">·</span><span class="today-pct">-2.78%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4586,7 +4621,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value down">-¥70.00 (-14.29%)</span>
+            <span class="sub-value down">-¥70.00 · -14.29%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4614,7 +4649,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,568.40</div>
-            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-pct">+1.71%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-sep">·</span><span class="today-pct">+1.71%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4632,7 +4667,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥1,781 (+10.45%)</span>
+            <span class="sub-value up">+¥1,781 · +10.45%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4660,7 +4695,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥50,354</div>
-            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-pct">累计利息</span></div>
+            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-sep">·</span><span class="today-pct">累计利息</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4678,7 +4713,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥354 (+0.71%)</span>
+            <span class="sub-value up">+¥354 · +0.71%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4707,7 +4742,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥30,182</div>
-            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-pct">+0.01%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-sep">·</span><span class="today-pct">+0.01%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4725,7 +4760,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥182 (+0.61%)</span>
+            <span class="sub-value up">+¥182 · +0.61%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -5345,11 +5380,11 @@ body {
         </div>
         <div class="detail-card">
           <span class="detail-label">今日盈亏</span>
-          <span class="detail-value today-up" id="detailTodayPnL">+¥1,400 (+0.74%)</span>
+          <span class="detail-value today-up" id="detailTodayPnL"><span class="pnl-amount">+¥1,400</span><span class="pnl-pct">+0.74%</span></span>
         </div>
         <div class="detail-card">
           <span class="detail-label">持仓盈亏</span>
-          <span class="detail-value profit" id="detailPnL">+¥41,600</span>
+          <span class="detail-value profit" id="detailPnL"><span class="pnl-amount">+¥41,600</span><span class="pnl-pct">+27.73%</span></span>
         </div>
         <div class="detail-card wide editable fixed-income-only">
           <span class="detail-label">到期日</span>
@@ -7358,15 +7393,17 @@ function fillAssetDetail(asset) {
   const weightBar = document.getElementById('detailWeightBar');
   weightBar.style.width = Math.min(weight, 100) + '%';
 
-  const todayPnlText = `${isTodayUp ? '+' : ''}${currency}${formatNumber(metrics.todayPnl)} (${isTodayUp ? '+' : ''}${metrics.todayPct.toFixed(2)}%)`;
+  const todayPnlAmount = `${isTodayUp ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.todayPnl))}`;
+  const todayPnlPct = `${isTodayUp ? '+' : '-'}${Math.abs(metrics.todayPct).toFixed(2)}%`;
   const todayPnlEl = document.getElementById('detailTodayPnL');
-  todayPnlEl.textContent = todayPnlText;
+  todayPnlEl.innerHTML = `<span class="pnl-amount">${todayPnlAmount}</span><span class="pnl-pct">${todayPnlPct}</span>`;
   todayPnlEl.className = `detail-value ${isTodayUp ? 'today-up' : metrics.todayPnl < 0 ? 'today-down' : 'today-neutral'}`;
 
-  document.getElementById('detailPnL').textContent = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))}`;
-  document.getElementById('detailPnLPct').textContent = signedPercent(metrics.pnlPct);
-  document.getElementById('detailPnL').className = isProfit ? 'detail-value profit' : 'detail-value loss';
-  document.getElementById('detailPnLPct').className = isProfit ? 'detail-value profit' : 'detail-value loss';
+  const pnlAmount = `${isProfit ? '+' : '-'}${currency}${formatNumber(Math.abs(metrics.pnl))}`;
+  const pnlPct = `${isProfit ? '+' : '-'}${Math.abs(metrics.pnlPct).toFixed(2)}%`;
+  const pnlEl = document.getElementById('detailPnL');
+  pnlEl.innerHTML = `<span class="pnl-amount">${pnlAmount}</span><span class="pnl-pct">${pnlPct}</span>`;
+  pnlEl.className = isProfit ? 'detail-value profit' : 'detail-value loss';
 
   const content = document.getElementById('assetDetailContent');
   content.classList.toggle('asset-fixed-income', fixedIncome);
