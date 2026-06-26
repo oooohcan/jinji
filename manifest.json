@@ -1,0 +1,17 @@
+{
+  "name": "金汲",
+  "short_name": "金汲",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf9f7",
+  "theme_color": "#a44a3f",
+  "start_url": "./index.html",
+  "icons": [
+    {
+      "src": "https://cdn.jsdelivr.net/gh/oooohcan/jinji@main/icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
