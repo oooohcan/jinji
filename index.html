@@ -33,9 +33,11 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --tab-height: 72px;
+  --tab-height: 64px;
   --page-top: max(0px, var(--safe-top));
-  --tab-total-height: calc(var(--tab-height) + 9px + var(--safe-bottom));
+  --tab-total-height: calc(var(--tab-height) + var(--safe-bottom));
+  --app-height: 100vh;
+  --app-height: 100dvh;
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {
@@ -71,13 +73,10 @@ body {
 .app-container {
   width: 100%;
   max-width: 430px;
-  height: 100%;
-  height: 100vh;
-  height: -webkit-fill-available;
-  height: fill-available;
+  height: var(--app-height);
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: var(--bg);
   padding-bottom: 0;
 }
@@ -116,9 +115,9 @@ body {
   width: 100%;
   max-width: 430px;
   margin: 0 auto;
-  height: calc(var(--tab-height) + var(--safe-bottom) + 9px);
+  height: var(--tab-total-height);
   padding-bottom: var(--safe-bottom);
-  padding-top: 8px;
+  padding-top: 6px;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -131,7 +130,7 @@ body {
 }
 @supports (padding-bottom: constant(safe-area-inset-bottom)) {
   .tab-bar {
-    height: calc(var(--tab-height) + constant(safe-area-inset-bottom, 0px) + 9px);
+    height: calc(var(--tab-height) + constant(safe-area-inset-bottom, 0px));
     padding-bottom: constant(safe-area-inset-bottom, 0px);
   }
 }
@@ -578,7 +577,7 @@ body {
   margin: 0 16px 22px;
   background:var(--card);
   border:1px solid rgba(164,74,63,0.06);
-  border-radius:18px;
+  border-radius:0 0 18px 18px;
   overflow:hidden;
   overflow-x:hidden;
   box-shadow:0 10px 22px rgba(164,74,63,0.05);
@@ -705,8 +704,9 @@ body {
 }
 .col-today .today-amount { white-space:nowrap; }
 .col-today .today-pct { white-space:nowrap; font-size:10px; opacity:0.85; }
-.col-today.up { color:#d14b4b; }
-.col-today.down { color:#2e8b57; }
+.col-today .today-sep { color: inherit; }
+.col-today.up { color:#c0392b; }
+.col-today.down { color:#27ae60; }
 .col-today.neutral { color:var(--text-secondary); }
 
 /* 第二行：持仓量 | 成本价 | 市值 | 持仓盈亏（4列网格） */
@@ -746,8 +746,8 @@ body {
   line-height:1.3;
   letter-spacing:-0.02em;
 }
-.asset-sub-cell .sub-value.up { color:#d14b4b; }
-.asset-sub-cell .sub-value.down { color:#2e8b57; }
+.asset-sub-cell .sub-value.up { color:#c0392b; }
+.asset-sub-cell .sub-value.down { color:#27ae60; }
 .asset-sub-cell:last-child { align-items:flex-end; }
 
 /* 第三行：辅助信息（持仓占比、到期信息等） */
@@ -2451,18 +2451,36 @@ body {
   flex:1;
   min-width:0;
 }
-.sheet-eyebrow {
-  font-size:11px;
-  color:var(--text-muted);
-  text-transform:uppercase;
-  letter-spacing:0.08em;
-  font-weight:600;
+.sheet-name-row {
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  flex-wrap:nowrap;
+  min-width:0;
 }
 .sheet-name {
   font-family:var(--font-display);
   font-size:20px;
   font-weight:700;
   letter-spacing:-0.02em;
+  white-space:nowrap;
+}
+.sheet-name-code {
+  font-size:12px;
+  color:var(--text-muted);
+  font-weight:500;
+  white-space:nowrap;
+}
+.sheet-name-tag {
+  display:inline-block;
+  padding:1px 6px;
+  border-radius:4px;
+  font-size:10px;
+  font-weight:600;
+  background:var(--input-bg);
+  color:var(--text-secondary);
+  white-space:nowrap;
+  flex-shrink:0;
 }
 .sheet-status {
   display:block;
@@ -2470,7 +2488,9 @@ body {
   color:var(--text-muted);
   font-size:12px;
   line-height:1.35;
-  max-width:240px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .sheet-status.profit { color:var(--positive); }
 .sheet-status.loss { color:var(--negative); }
@@ -2962,8 +2982,8 @@ body {
   margin-left:8px;
   vertical-align:middle;
 }
-.detail-type-tag.type-stock { background:rgba(209,75,75,0.08); color:#d14b4b; }
-.detail-type-tag.type-fund { background:rgba(46,139,87,0.08); color:#2e8b57; }
+.detail-type-tag.type-stock { background:rgba(192,57,43,0.08); color:#c0392b; }
+.detail-type-tag.type-fund { background:rgba(39,174,96,0.08); color:#27ae60; }
 .detail-type-tag.type-deposit { background:rgba(212,175,55,0.1); color:#b8941f; }
 .detail-type-tag.type-wealth { background:rgba(74,111,164,0.08); color:#4a6fa4; }
 .detail-type-tag.type-etf { background:rgba(156,84,164,0.08); color:#9c54a4; }
@@ -4359,6 +4379,46 @@ body {
 }
 
 </style>
+
+<script>
+// iOS PWA dynamic viewport height management (fix bottom whitespace on iOS 26 PWA)
+(function() {
+  function isPWA() {
+    return window.navigator.standalone === true || 
+           window.matchMedia('(display-mode: standalone)').matches;
+  }
+
+  function setAppHeight() {
+    // In PWA mode, let CSS use 100dvh (don't override via JS)
+    if (isPWA()) {
+      // Remove inline style to let CSS 100dvh take effect
+      document.documentElement.style.removeProperty('--app-height');
+      return;
+    }
+
+    // In browser mode, use visualViewport.height to handle address bar
+    var vv = window.visualViewport;
+    var h = (vv && vv.height) ? vv.height : window.innerHeight;
+    var top = (vv && typeof vv.offsetTop === 'number') ? vv.offsetTop : 0;
+    document.documentElement.style.setProperty('--app-height', h + 'px');
+    document.documentElement.style.setProperty('--viewport-top', top + 'px');
+  }
+  setAppHeight();
+  window.addEventListener('resize', setAppHeight);
+  window.addEventListener('orientationchange', function() { setTimeout(setAppHeight, 100); });
+  window.addEventListener('focus', setAppHeight);
+  window.addEventListener('pageshow', setAppHeight);
+  window.addEventListener('load', function() { setTimeout(setAppHeight, 50); });
+  // Prevent bottom rubber-band whitespace
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 1) return;
+    var target = e.target;
+    var scrollable = target.closest('.page, .page-content, .asset-list, .summary-card, .detail-card, .modal-body');
+    if (!scrollable) e.preventDefault();
+  }, { passive: false });
+})();
+</script>
+
 </head>
 <body>
 
@@ -4476,7 +4536,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,916.00</div>
-            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-pct">+0.74%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥1,400</span><span class="today-sep">·</span><span class="today-pct">+0.74%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4494,7 +4554,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥41,600 (+27.73%)</span>
+            <span class="sub-value up">+¥41,600 · +27.73%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4522,7 +4582,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">HK$420.30</div>
-            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-pct">+2.46%</span></div>
+            <div class="col-today up"><span class="today-amount">+HK$1,010</span><span class="today-sep">·</span><span class="today-pct">+2.46%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4540,7 +4600,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥3,830 (+10.03%)</span>
+            <span class="sub-value up">+¥3,830 · +10.03%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4568,7 +4628,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥4.20</div>
-            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-pct">-2.78%</span></div>
+            <div class="col-today down"><span class="today-amount">-¥12.00</span><span class="today-sep">·</span><span class="today-pct">-2.78%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4586,7 +4646,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value down">-¥70.00 (-14.29%)</span>
+            <span class="sub-value down">-¥70.00 · -14.29%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4614,7 +4674,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥1,568.40</div>
-            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-pct">+1.71%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥316.80</span><span class="today-sep">·</span><span class="today-pct">+1.71%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4632,7 +4692,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥1,781 (+10.45%)</span>
+            <span class="sub-value up">+¥1,781 · +10.45%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4660,7 +4720,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥50,354</div>
-            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-pct">累计利息</span></div>
+            <div class="col-today neutral"><span class="today-amount">+¥2.95/日</span><span class="today-sep">·</span><span class="today-pct">累计利息</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4678,7 +4738,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥354 (+0.71%)</span>
+            <span class="sub-value up">+¥354 · +0.71%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -4707,7 +4767,7 @@ body {
           </div>
           <div class="asset-price-block">
             <div class="col-price">¥30,182</div>
-            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-pct">+0.01%</span></div>
+            <div class="col-today up"><span class="today-amount">+¥2.67</span><span class="today-sep">·</span><span class="today-pct">+0.01%</span></div>
           </div>
         </div>
         <div class="asset-row-sub">
@@ -4725,7 +4785,7 @@ body {
           </div>
           <div class="asset-sub-cell">
             <span class="sub-label">持仓盈亏</span>
-            <span class="sub-value up">+¥182 (+0.61%)</span>
+            <span class="sub-value up">+¥182 · +0.61%</span>
           </div>
         </div>
         <div class="asset-row-extra">
@@ -5294,10 +5354,12 @@ body {
   <div class="record-sheet">
     <div class="record-sheet-header">
       <div class="sheet-title">
-        <span class="sheet-eyebrow" id="detailAssetCode">600519</span>
-        <span class="detail-type-tag type-stock" id="detailTypeTag">股票</span>
-        <span class="sheet-name" id="detailAssetName">贵州茅台</span>
-        <span class="sheet-status profit" id="detailAssetStatus">盈利 +41,600.00 · +27.73% · 3 条笔记</span>
+        <div class="sheet-name-row">
+          <span class="sheet-name" id="detailAssetName">贵州茅台</span>
+          <span class="sheet-name-code" id="detailAssetCode">600519</span>
+          <span class="sheet-name-tag type-stock" id="detailTypeTag">股票</span>
+        </div>
+        <span class="sheet-status profit" id="detailAssetStatus">盈利 +41,600.00 · +27.73% · 3 条笔记 · 观点分歧</span>
       </div>
     </div>
     <div class="sheet-body" id="assetDetailContent">
