@@ -36,8 +36,8 @@
         --text-muted: #999;
         --border: #e8e6e3;
         --input-bg: #f5f4f2;
-        --positive: #2e8b57;
-        --negative: #cd5c5c;
+        --positive: #cd5c5c;
+        --negative: #2e8b57;
         --shadow: 0 2px 24px rgba(164, 74, 63, 0.08);
         --shadow-lg: 0 8px 32px rgba(164, 74, 63, 0.12);
         --radius: 24px;
@@ -113,15 +113,11 @@
         .tab-bar {
           position: fixed;
           bottom: 0;
-          height: calc(
-            var(--tab-height) + env(safe-area-inset-bottom, 0px)
-          );
+          height: calc(var(--tab-height) + env(safe-area-inset-bottom, 0px));
           padding-bottom: env(safe-area-inset-bottom, 0px);
         }
         .page {
-          bottom: calc(
-            var(--tab-height) + env(safe-area-inset-bottom, 0px)
-          );
+          bottom: calc(var(--tab-height) + env(safe-area-inset-bottom, 0px));
         }
       }
       @media (display-mode: standalone) and (padding-bottom: constant(safe-area-inset-bottom)) {
@@ -803,12 +799,12 @@
         line-height: 1.4;
       }
       .type-tag.type-stock {
-        background: rgba(209, 75, 75, 0.08);
-        color: #d14b4b;
-      }
-      .type-tag.type-fund {
         background: rgba(46, 139, 87, 0.08);
         color: #2e8b57;
+      }
+      .type-tag.type-fund {
+        background: rgba(209, 75, 75, 0.08);
+        color: #d14b4b;
       }
       .type-tag.type-deposit {
         background: rgba(212, 175, 55, 0.1);
@@ -1509,11 +1505,11 @@
         font-weight: 600;
       }
       .asset-txn-row-tag.buy {
-        background: rgba(46, 139, 87, 0.12);
+        background: rgba(205, 92, 92, 0.12);
         color: var(--positive);
       }
       .asset-txn-row-tag.sell {
-        background: rgba(205, 92, 92, 0.12);
+        background: rgba(46, 139, 87, 0.12);
         color: var(--negative);
       }
       /* 4笔后倒三角展开 */
@@ -1808,11 +1804,11 @@
         font-weight: 600;
       }
       .txn-page-type-tag.buy {
-        background: rgba(46, 139, 87, 0.12);
+        background: rgba(205, 92, 92, 0.12);
         color: var(--positive);
       }
       .txn-page-type-tag.sell {
-        background: rgba(205, 92, 92, 0.12);
+        background: rgba(46, 139, 87, 0.12);
         color: var(--negative);
       }
       .txn-empty {
@@ -2767,7 +2763,8 @@
         color: var(--text-muted);
         font-size: 12px;
         line-height: 1.35;
-        max-width: 240px;
+        max-width: 100%;
+        white-space: nowrap;
       }
       .sheet-status.profit {
         color: var(--positive);
@@ -2850,8 +2847,8 @@
         font-weight: 600;
         padding: 1px 6px;
         border-radius: 4px;
-        background: rgba(46, 139, 87, 0.12);
-        color: #2e8b57;
+        background: rgba(205, 92, 92, 0.12);
+        color: #cd5c5c;
         flex-shrink: 0;
       }
       .sr-right-top {
@@ -2895,11 +2892,11 @@
         margin-right: 8px;
       }
       .sr-pct.up {
-        color: #d14b4b;
+        color: #2e8b57;
         font-weight: 600;
       }
       .sr-pct.dn {
-        color: #2e8b57;
+        color: #d14b4b;
         font-weight: 600;
       }
       .sr-tag-new {
@@ -3307,12 +3304,12 @@
         align-self: center;
       }
       .detail-type-tag.type-stock {
-        background: rgba(209, 75, 75, 0.08);
-        color: #d14b4b;
-      }
-      .detail-type-tag.type-fund {
         background: rgba(46, 139, 87, 0.08);
         color: #2e8b57;
+      }
+      .detail-type-tag.type-fund {
+        background: rgba(209, 75, 75, 0.08);
+        color: #d14b4b;
       }
       .detail-type-tag.type-deposit {
         background: rgba(212, 175, 55, 0.1);
@@ -4168,11 +4165,11 @@
         font-size: 11px;
       }
       .txn-type.buy {
-        background: rgba(46, 139, 87, 0.12);
+        background: rgba(205, 92, 92, 0.12);
         color: var(--positive);
       }
       .txn-type.sell {
-        background: rgba(205, 92, 92, 0.12);
+        background: rgba(46, 139, 87, 0.12);
         color: var(--negative);
       }
       .txn-qty {
@@ -6965,7 +6962,7 @@
         <div class="asset-txn-row-info">${t.typeLabel} ${t.qty} @ ¥${t.price.toFixed(2)}</div>
       </div>
       <div class="asset-txn-row-right">
-        <div class="asset-txn-row-amount ${t.type === "BUY" ? "buy" : "sell"}">${t.type === "BUY" ? "-" : "+"}¥${t.amount.toLocaleString("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+        <div class="asset-txn-row-amount ${t.type === "BUY" ? "buy" : "sell"}">${t.type === "BUY" ? "+" : "-"}¥${t.amount.toLocaleString("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
         <div class="asset-txn-row-tag ${t.type === "BUY" ? "buy" : "sell"}">${t.typeLabel}</div>
       </div>
     </div>
@@ -8486,29 +8483,51 @@
           return [chartLeft + slot * i + slot / 2, yForValue(v)];
         });
 
-        let pathD = "";
-        for (let i = 0; i < points.length; i++) {
-          if (i === 0)
-            pathD += `M ${points[i][0].toFixed(2)} ${points[i][1].toFixed(2)}`;
-          else {
-            const prevX = points[i - 1][0];
-            pathD += ` L ${prevX.toFixed(2)} ${points[i][1].toFixed(2)} L ${points[i][0].toFixed(2)} ${points[i][1].toFixed(2)}`;
-          }
-        }
-        stepSeries.appendChild(
-          make("path", { class: "kline-step-line", d: pathD }),
-        );
-        // 阶梯起点圆点
-        if (points[0]) {
+        // K线蜡烛图（中国红涨绿跌）
+        const upColor = "#cd5c5c";
+        const downColor = "#2e8b57";
+        const flatColor = "#999999";
+        const bodyWidth = Math.min(8, slot * 0.45);
+
+        days.forEach((day, index) => {
+          const openValue = Number(day.previousOne || 0);
+          const closeValue = Number(day.todayOne || 0);
+          const diff = closeValue - openValue;
+          const candleColor =
+            diff > 0 ? upColor : diff < 0 ? downColor : flatColor;
+          const x = chartLeft + slot * index + slot / 2;
+          const openY = yForValue(openValue);
+          const closeY = yForValue(closeValue);
+          const bodyTop = Math.min(openY, closeY);
+          const naturalHeight = Math.abs(closeY - openY);
+          const bodyHeight = Math.max(naturalHeight, 3);
+          const bodyY = naturalHeight < 3 ? bodyTop - 1.5 : bodyTop;
+          const wickTop = Math.max(top - 1, bodyY - 3.5);
+          const wickBottom = Math.min(bottom + 1, bodyY + bodyHeight + 3.5);
+
           stepSeries.appendChild(
-            make("circle", {
-              class: "kline-step-dot",
-              cx: points[0][0].toFixed(2),
-              cy: points[0][1].toFixed(2),
-              r: "1.1",
+            make("line", {
+              x1: x.toFixed(2),
+              y1: wickTop.toFixed(2),
+              x2: x.toFixed(2),
+              y2: wickBottom.toFixed(2),
+              stroke: candleColor,
+              "stroke-width": "1.1",
+              "stroke-linecap": "round",
             }),
           );
-        }
+          stepSeries.appendChild(
+            make("rect", {
+              x: (x - bodyWidth / 2).toFixed(2),
+              y: bodyY.toFixed(2),
+              width: bodyWidth.toFixed(2),
+              height: bodyHeight.toFixed(2),
+              rx: "1.2",
+              fill: candleColor,
+              opacity: diff === 0 ? "0.38" : "0.9",
+            }),
+          );
+        });
 
         // 收益率线
         const returns = days.map((d) => {
@@ -8590,8 +8609,8 @@
       // 旧版 K 线绘制（保留兼容）
       function drawKlineLegacy(series, days) {
         if (!series || !Array.isArray(days) || days.length === 0) return;
-        const upColor = "#A44A3F";
-        const downColor = "#2E8B57";
+        const upColor = "#cd5c5c";
+        const downColor = "#2e8b57";
         const flatColor = "#999999";
         const top = 12;
         const bottom = 54;
@@ -9169,8 +9188,8 @@
           etf: { tag: "E", color: "#b8860b" },
           gold: { tag: "金", color: "#c9a227" },
           silver: { tag: "银", color: "#8a8a8a" },
-          deposit: { tag: "存", color: "#2e8b57" },
-          wealth: { tag: "理", color: "#2e8b57" },
+          deposit: { tag: "存", color: "#cd5c5c" },
+          wealth: { tag: "理", color: "#cd5c5c" },
           other: { tag: "其", color: "#666" },
         };
         return assets
@@ -10014,6 +10033,14 @@
       });
 
       document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("modal-overlay")) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeAccountModal();
+          closeAssetSheet();
+          closeRecordSheet();
+          return;
+        }
         if (sortMenuOpen && !e.target.closest(".sort-control")) {
           toggleSortMenu();
         }
@@ -10021,23 +10048,25 @@
           scopeTipOpen = false;
           document.getElementById("scopeTip")?.classList.remove("show");
         }
-        if (e.target.classList.contains("modal-overlay")) {
-          closeAccountModal();
-          closeAssetSheet();
-          closeRecordSheet();
-        }
       });
 
-      document.addEventListener("touchstart", (e) => {
-        if (
-          e.target.closest(".modal-overlay") &&
-          e.target.classList.contains("modal-overlay")
-        ) {
-          closeAccountModal();
-          closeAssetSheet();
-          closeRecordSheet();
-        }
-      });
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          if (
+            e.target.closest(".modal-overlay") &&
+            e.target.classList.contains("modal-overlay")
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAccountModal();
+            closeAssetSheet();
+            closeRecordSheet();
+            return;
+          }
+        },
+        { passive: false },
+      );
     </script>
   </body>
 </html>
