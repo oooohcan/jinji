@@ -17,6 +17,8 @@
       rel="apple-touch-icon"
       href="https://cdn.jsdelivr.net/gh/oooohcan/jinji@main/icon.png"
     />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#a44a3f" />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -97,6 +99,43 @@
         overflow: hidden;
         background: var(--bg);
         padding-bottom: 0;
+      }
+
+      /* iOS 26 PWA standalone 模式：100dvh 仍可能含 home indicator，
+         用 100svh 兜底并显式贴底，避免底部空白 */
+      @media (display-mode: standalone) {
+        :root {
+          --app-height: 100svh;
+        }
+        .app-container {
+          height: 100svh;
+        }
+        .tab-bar {
+          position: fixed;
+          bottom: 0;
+          height: calc(
+            var(--tab-height) + env(safe-area-inset-bottom, 0px)
+          );
+          padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        .page {
+          bottom: calc(
+            var(--tab-height) + env(safe-area-inset-bottom, 0px)
+          );
+        }
+      }
+      @media (display-mode: standalone) and (padding-bottom: constant(safe-area-inset-bottom)) {
+        .tab-bar {
+          height: calc(
+            var(--tab-height) + constant(safe-area-inset-bottom, 0px)
+          );
+          padding-bottom: constant(safe-area-inset-bottom, 0px);
+        }
+        .page {
+          bottom: calc(
+            var(--tab-height) + constant(safe-area-inset-bottom, 0px)
+          );
+        }
       }
 
       .page {
@@ -683,7 +722,7 @@
         margin: 0 16px 22px;
         background: var(--card);
         border: 1px solid rgba(164, 74, 63, 0.06);
-        border-radius: 18px;
+        border-radius: 0 0 18px 18px;
         overflow: hidden;
         overflow-x: hidden;
         box-shadow: 0 10px 22px rgba(164, 74, 63, 0.05);
@@ -838,9 +877,9 @@
         white-space: nowrap;
       }
       .col-today .today-sep {
-        color: var(--text-muted);
+        color: inherit;
         font-weight: 400;
-        opacity: 0.6;
+        opacity: 0.7;
       }
       .col-today .today-amount {
         white-space: nowrap;
@@ -1533,6 +1572,8 @@
         font-weight: 500;
         line-height: 1.4;
         text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
       }
       .notes-warning .warning-icon {
         font-size: 15px;
@@ -1540,9 +1581,10 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
       }
       .notes-warning .warning-text {
-        flex: 0 1 auto;
+        flex: 0 0 auto;
       }
       /* 交易记录：左侧文字加深，避免看起来发灰 */
       .asset-txn-row-date {
@@ -2696,26 +2738,31 @@
       }
       .sheet-title {
         display: flex;
-        flex-direction: column;
-        gap: 2px;
+        flex-direction: row;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 6px 8px;
         flex: 1;
         min-width: 0;
       }
       .sheet-eyebrow {
-        font-size: 11px;
+        font-size: 12px;
         color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
+        text-transform: none;
+        letter-spacing: 0.04em;
         font-weight: 600;
+        white-space: nowrap;
       }
       .sheet-name {
         font-family: var(--font-display);
         font-size: 20px;
         font-weight: 700;
         letter-spacing: -0.02em;
+        white-space: nowrap;
       }
       .sheet-status {
         display: block;
+        flex-basis: 100%;
         margin-top: 4px;
         color: var(--text-muted);
         font-size: 12px;
@@ -3254,8 +3301,10 @@
         border-radius: 4px;
         font-size: 11px;
         font-weight: 600;
-        margin-left: 8px;
         vertical-align: middle;
+        white-space: nowrap;
+        flex-shrink: 0;
+        align-self: center;
       }
       .detail-type-tag.type-stock {
         background: rgba(209, 75, 75, 0.08);
@@ -5085,11 +5134,6 @@
                   <span class="weight-value">57.3%</span>
                 </span>
               </div>
-              <div class="extra-right">
-                <span style="color: var(--text-muted); font-size: 10px"
-                  >持仓收益率 27.73%</span
-                >
-              </div>
             </div>
           </div>
           <div
@@ -5149,11 +5193,6 @@
                   ></span>
                   <span class="weight-value">12.6%</span>
                 </span>
-              </div>
-              <div class="extra-right">
-                <span style="color: var(--text-muted); font-size: 10px"
-                  >持仓收益率 10.03%</span
-                >
               </div>
             </div>
           </div>
@@ -5215,11 +5254,6 @@
                   <span class="weight-value">0.1%</span>
                 </span>
               </div>
-              <div class="extra-right">
-                <span style="color: var(--negative); font-size: 10px"
-                  >持仓收益率 -14.29%</span
-                >
-              </div>
             </div>
           </div>
           <div
@@ -5279,11 +5313,6 @@
                   ></span>
                   <span class="weight-value">5.6%</span>
                 </span>
-              </div>
-              <div class="extra-right">
-                <span style="color: var(--text-muted); font-size: 10px"
-                  >持仓收益率 10.45%</span
-                >
               </div>
             </div>
           </div>
@@ -6508,10 +6537,10 @@
         <div class="record-sheet-header">
           <div class="sheet-title">
             <span class="sheet-eyebrow" id="detailAssetCode">600519</span>
+            <span class="sheet-name" id="detailAssetName">贵州茅台</span>
             <span class="detail-type-tag type-stock" id="detailTypeTag"
               >股票</span
             >
-            <span class="sheet-name" id="detailAssetName">贵州茅台</span>
             <span class="sheet-status profit" id="detailAssetStatus"
               >盈利 +41,600.00 · +27.73% · 3 条笔记</span
             >
@@ -6630,10 +6659,6 @@
               <span class="days-to-maturity" id="detailDaysToMaturity"
                 >还剩 188 天</span
               >
-            </div>
-            <div class="detail-card wide">
-              <span class="detail-label">持仓收益率</span>
-              <span class="detail-value profit" id="detailPnLPct">+27.73%</span>
             </div>
           </div>
           <input type="hidden" id="editPrice" />
